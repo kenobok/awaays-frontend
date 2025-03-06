@@ -4,7 +4,7 @@ import HeroCarousel from '../components/home/HeroCarousel';
 const Home = () => {
 
     return (
-        <div className='my-10'>
+        <div className='my-10' style={{height: '1500px'}}>
             <HeroCarousel />
         </div>
     );
