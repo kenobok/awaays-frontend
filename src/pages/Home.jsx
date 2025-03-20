@@ -1,11 +1,16 @@
 import React from 'react';
-import HeroCarousel from '../components/home/HeroCarousel';
+import Hero from '../components/home/Hero';
+import Features from '../components/home/Features'
+import HowItWorks from '../components/home/HowItWorks'
+import '../assets/styles/home.css'
 
 const Home = () => {
 
     return (
-        <div className='my-10' style={{height: '1500px'}}>
-            <HeroCarousel />
+        <div className='relative'>
+            <Hero />
+            <Features />
+            <HowItWorks />
         </div>
     );
 };

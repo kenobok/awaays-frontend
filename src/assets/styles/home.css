@@ -1,0 +1,342 @@
+.hero {
+    position: relative;
+    padding: 0 3rem;
+    transform: translateY(10rem);
+    margin-bottom: 10rem;
+    height: auto;
+    z-index: 2;
+    overflow: hidden;
+}
+.hero-text {
+    position: relative;
+    text-align: center;
+    padding-left: 1rem;
+    overflow: hidden;
+}
+.hero-text h1 {
+    color: var(--p-color);
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    font-family: "Rowdies", Arial, sans-serif;
+    font-size: 4rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 4rem;
+    letter-spacing: 0rem;
+    overflow: hidden;
+}
+.hero-text h1 > span {
+    font-size: 2.8rem;
+    color: #333;
+}
+.hero-text p {
+    color: #555;
+    padding: 0;
+    margin: 0;
+    max-width: 30rem;
+    font-family: "Josefin Sans",  Arial, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 2rem;
+}
+
+.hero .hero-slide {
+    position: relative;
+    width: 40rem;
+    height: 28rem;
+    overflow: hidden;
+}
+.hero .hero-slide::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/ovalbg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 2;
+}
+.hero .hero-slide img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.how-it-works {
+    box-shadow: 0 0 1rem rgba(0,0,0,0.3);
+}
+.how-it-works h2 {
+    color: #fff;
+}
+.hiwis {
+    position: relative;
+    height: 90%;
+}
+.hiwi-outer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+}
+.hiwi-outer .hiwi {
+    display: flex;
+    color: var(--p-color);
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    width: 8rem;
+    height: 8rem;
+    margin: 0 auto 1rem auto;
+    border-radius: 50%;
+    box-shadow: 0 0 1rem rgba(0,0,0,.15);
+    transform: translateY(0.5rem);
+}
+.hiwi-outer:nth-of-type(even) .hiwi {
+    margin: 1rem auto 0 auto;
+    transform: translateY(13.3rem);
+}
+.hiwi-outer .hiwi::after {
+    content: "";
+    position: absolute;
+    top: 7.1rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    background: #ddd;
+    border-top-right-radius: 2rem;
+    transform: rotate(315deg);
+    box-shadow: 0 0 1rem rgba(0,0,0,.15);
+}
+.hiwi-outer:nth-of-type(even) .hiwi::after {
+    top: 0.1rem;
+    transform: rotate(138deg);
+}
+.hiwi-outer p {
+    position: absolute;
+    font-size: 0.9rem;
+    line-height: 1.3rem;
+    /* text-align: center; */
+}
+.hiwi-outer p b:nth-child(1) {
+    font-size: 1.1rem;
+    text-align: center;
+}
+.hiwi-outer:nth-of-type(odd) p {
+    bottom: 0;
+}
+
+/* ============== FEATURES ============= */
+.single-feature {
+    box-shadow: 0 0 1rem rgba(0, 0, 0, .13);
+}
+.single-feature:hover {
+    box-shadow: 0 0 2rem rgba(0, 0, 0, .1);
+}
+
+
+/* ============== MEDIA QUERIES ============== */
+@media (max-width: 1230px) {
+    .hero h1 {
+        font-size: 3.5rem;
+        line-height: 3.5rem;
+        margin-bottom: 1.2rem;
+    }
+    .hero h1 > span {
+        font-size: 2.45rem;
+    }
+    .hero p {
+        max-width: 24rem;
+        font-size: 1.4rem;
+        line-height: 1.8rem;
+    }
+}
+
+@media (max-width: 1150px) {
+    .hero h1 {
+        font-size: 2.9rem;
+        line-height: 2.9rem;
+        margin-bottom: 1rem;
+    }
+    .hero h1 > span {
+        font-size: 2.01rem;
+    }
+    .hero p {
+        max-width: 20.2rem;
+        font-size: 1.3rem;
+        line-height: 1.65rem;
+    }
+}
+
+@media (max-width: 1080px) {
+    .hero h1 {
+        font-size: 2.5rem;
+        line-height: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    .hero h1 > span {
+        font-size: 1.74rem;
+    }
+    .hero p {
+        max-width: 20.4rem;
+        font-size: 1.25rem;
+        line-height: 1.6rem;
+    }
+    .hero .hero-slide {
+        width: 32rem;
+        height: 23rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero {
+        transform: translateY(6rem);
+        margin-bottom: 5rem;
+    }
+    .hero .hero-text {
+        padding-left: 0;
+    }
+    .hero h1 {
+        font-size: 4rem;
+        line-height: 4rem;
+        margin-bottom: 1.7rem;
+    }
+    .hero h1 > span {
+        font-size: 2.8rem;
+    }
+    .hero p {
+        max-width: 65%;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        margin: 0 auto;
+    }
+    .hero .hero-slide-wrp {
+        margin-top: 5rem;
+    }
+    .hero .hero-slide {
+        width: 40rem;
+        height: 28rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero {
+        padding: 1rem;
+    }
+    .hero h1 {
+        font-size: 3.5rem;
+        line-height: 3.5rem;
+    }
+    .hero h1 > span {
+        font-size: 2.44rem;
+    }
+    .hero p {
+        max-width: 80%;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        margin: 0 auto;
+    }
+    .hero .hero-slide {
+        width: 34rem;
+        height: 24rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 3rem;
+        line-height: 3.2rem;
+        margin-bottom: 1rem;
+    }
+    .hero h1 > span {
+        font-size: 2.08rem;
+    }
+    .hero p {
+        max-width: 85%;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        margin: 0 auto;
+    }
+    .hero .hero-slide-wrp {
+        margin-top: 3rem;
+    }
+    .hero .hero-slide {
+        width: 30rem;
+        height: 21rem;
+    }
+}
+
+@media (max-width: 505px) {
+    .hero h1 {
+        font-size: 2.5rem;
+        line-height: 2.6rem;
+        margin-bottom: 1rem;
+    }
+    .hero h1 > span {
+        font-size: 1.73rem;
+    }
+    .hero p {
+        max-width: 90%;
+        font-size: 1.4rem;
+        line-height: 1.8rem;
+        margin: 0 auto;
+    }
+    .hero .hero-slide {
+        width: 20rem;
+        height: 14rem;
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1300px) {
+    .hiwi-outer .hiwi {
+        transform: translateY(0rem);
+    }
+    .hiwi-outer:nth-of-type(even) .hiwi {
+        transform: translateY(12.8rem);
+    }
+}
+
+@media (min-width: 1081px) and (max-width: 1200px) {
+    .hiwi-outer .hiwi {
+        transform: translateY(-.3rem);
+    }
+    .hiwi-outer:nth-of-type(even) .hiwi {
+        transform: translateY(13.6rem);
+    }
+    .hiwi-outer .hiwi::after {
+        top: 5.7rem;
+    }
+    .hiwi-outer .hiwi {
+        width: 6.5rem;
+        height: 6.5rem;
+        font-size: 2.5rem;
+    }
+}
+
+@media (min-width: 993px) and (max-width: 1080px) {
+    .hiwi-outer .hiwi {
+        margin: 0 auto;
+        transform: translateY(3.5rem);
+        opacity: .2;
+    }
+    .hiwi-outer:nth-of-type(even) .hiwi {
+        margin: 0 auto;
+        transform: translateY(3.5rem);
+    }
+    .hiwis {
+        position: relative;
+        height: 87.5%;
+    }
+    .hiwi-outer p {
+        top: 0.5rem;
+    }
+}
+
