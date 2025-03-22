@@ -1,0 +1,43 @@
+.auth-img {
+    background-image: url('../images/awaays1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0 15rem 15rem 0
+}
+.auth-form {
+    box-shadow: 0 0 15px rgba(0,0,0,.2);
+}
+.auth-switch button {
+    padding: .7rem 3rem;
+    background: var(--bg-color);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-bottom: 2px solid rgba(0,0,0,0);
+    transform: translateX(-2px);
+}
+.auth-switch button:hover,
+.auth-switch button:focus {
+    border: none;
+    outline: none;
+    color: var(--bg-color);
+    background: var(--p-color);
+    border-bottom: 2px solid rgba(0,0,0,.3);
+}
+.auth-switch button:nth-child(1) {
+    border-radius: 1rem 0 0 1rem;
+    clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%);
+}
+.auth-switch button:nth-child(2) {
+    border-radius: 0 1rem 1rem 0;
+    clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+.continue-with-google button {
+    font-size: .75rem;
+    font-family: Arial, sans-serif;
+    padding: 9px 12px;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0,0,0,.7);
+}
+

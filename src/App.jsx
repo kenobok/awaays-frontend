@@ -1,21 +1,45 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/utils/Header';
-import Footer from './components/utils/Footer';
-import Home from './pages/Home';
+import { RouterProvider } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import router from './router';
 import './App.css';
 
 
 const App = () => {
 
     return (
-        <Router>
-            <Header />
-            <Home />
-            <Footer />
-        </Router>
+        <AuthProvider>
+            <RouterProvider router={router} />
+        </AuthProvider>
     )
 }
 
 export default App;
 
+
+
+// import { useAuth } from "../context/AuthContext";
+// import { Link } from "react-router-dom";
+
+// const Navbar = () => {
+//   const { user, logout } = useAuth();
+
+//   return (
+//     <nav className="p-4 bg-blue-600 text-white flex justify-between">
+//       <Link to="/" className="text-lg font-bold">Giveaway</Link>
+      
+//       {user ? (
+//         <div>
+//           <span>Welcome, {user.name}!</span>
+//           <button onClick={logout} className="ml-4 bg-red-500 px-2 py-1 rounded">
+//             Logout
+//           </button>
+//         </div>
+//       ) : (
+//         <Link to="/login" className="bg-green-500 px-3 py-1 rounded">Login</Link>
+//       )}
+//     </nav>
+//   );
+// };
+
+// export default Navbar;

@@ -7,11 +7,11 @@ import '../assets/styles/home.css'
 const Home = () => {
 
     return (
-        <div className='relative'>
+        <main className='relative'>
             <Hero />
             <Features />
             <HowItWorks />
-        </div>
+        </main>
     );
 };
 

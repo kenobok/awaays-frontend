@@ -21,8 +21,8 @@ const Features = () => {
             <div className="flex justify-evenly flex-wrap gap-x-5 gap-y-10 py-10 px-5 overflow-hidden">
                 {[
                     { icon: gift, title: "Give & Receive for Free", text: "Share what you don’t need; collect what you need for free, just kindness through. A platform where generosity flows. Helping each other, everyone grows." },
-                    { icon: chat, title: "Secure Messaging", text: "Talk with confidence, your privacy stays. No scams, no spam, just safe relays. Connect with others without a doubt. Connect with confidence whenever you can." },
                     { icon: community, title: "Trusted Community", text: "Join a network of kind-hearted people. Built on honesty, trust, and care. More than just a platform, we’re here to unite. A place to grow, a caring community." },
+                    { icon: chat, title: "Secure Messaging", text: "Talk with confidence, your privacy stays. No scams, no spam, just safe relays. Connect with others without a doubt. Connect with confidence whenever you can." },
                 ].map((feature, index) => (
 
                     <motion.div key={index} className="single-feature w-[20rem] bg-white p-6 max-[900px]:px-4 rounded-2xl text-center cursor-pointer transition-all overflow-hidden" initial={{ opacity: 0, y: 200 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.1 }} whileHover={{ scale: 1.02 }}>

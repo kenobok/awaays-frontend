@@ -16,30 +16,40 @@
 .hero-text h1 {
     color: var(--p-color);
     padding: 0;
-    margin: 0 0 1.5rem 0;
+    margin: 0;
     font-family: "Rowdies", Arial, sans-serif;
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: 300;
     text-transform: uppercase;
-    line-height: 4rem;
+    line-height: 3.5rem;
     letter-spacing: 0rem;
     overflow: hidden;
 }
-.hero-text h1 > span {
-    font-size: 2.8rem;
-    color: #333;
+.hero-text h1:nth-child(2) {
+    font-size: 2rem;
+    color: #666;
+    font-weight: 100;
 }
 .hero-text p {
     color: #555;
     padding: 0;
-    margin: 0;
+    margin: 1.5rem 0 0 0;
     max-width: 30rem;
     font-family: "Josefin Sans",  Arial, sans-serif;
     font-size: 1.5rem;
     font-weight: 400;
     line-height: 2rem;
 }
-
+.hero a {
+    font-size: 1.2rem;
+    box-shadow: 0 1px 5px rgba(0,0,0,.5);
+}
+.hero a:hover {
+    color: #fff;
+    font-weight: bold;
+    transform: scale(1.1);
+    transition: all .3s ease-in-out;
+}
 .hero .hero-slide {
     position: relative;
     width: 40rem;
@@ -72,43 +82,53 @@
 }
 
 
+/* ============== FEATURES ============= */
+.single-feature {
+    box-shadow: 0 0 1.5rem rgba(0, 0, 0, .1);
+}
+.single-feature:hover {
+    box-shadow: 0 0 2rem rgba(0, 0, 0, .1);
+}
+
+
+/* ============== HOW IT WORKS ============= */
 .how-it-works {
     box-shadow: 0 0 1rem rgba(0,0,0,0.3);
 }
 .how-it-works h2 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     color: #fff;
-}
-.hiwis {
-    position: relative;
-    height: 90%;
 }
 .hiwi-outer {
     position: relative;
     width: 100%;
     height: 100%;
     padding: .5rem;
+    text-align: center;
 }
 .hiwi-outer .hiwi {
+    position: relative;
     display: flex;
-    color: var(--p-color);
+    color: #fff;
     justify-content: center;
     align-items: center;
     font-size: 3rem;
     width: 8rem;
     height: 8rem;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto 2rem auto;
     border-radius: 50%;
     box-shadow: 0 0 1rem rgba(0,0,0,.15);
-    transform: translateY(0.5rem);
 }
 .hiwi-outer:nth-of-type(even) .hiwi {
-    margin: 1rem auto 0 auto;
-    transform: translateY(13.3rem);
+    margin: 2rem auto 0 auto;
 }
 .hiwi-outer .hiwi::after {
     content: "";
     position: absolute;
-    top: 7.1rem;
+    top: 7rem;
     width: 0.7rem;
     height: 0.7rem;
     background: #ddd;
@@ -117,106 +137,115 @@
     box-shadow: 0 0 1rem rgba(0,0,0,.15);
 }
 .hiwi-outer:nth-of-type(even) .hiwi::after {
-    top: 0.1rem;
+    top: 0.2rem;
     transform: rotate(138deg);
 }
-.hiwi-outer p {
-    position: absolute;
-    font-size: 0.9rem;
-    line-height: 1.3rem;
-    /* text-align: center; */
-}
-.hiwi-outer p b:nth-child(1) {
-    font-size: 1.1rem;
+.hiwi-outer h4 {
+    color: #777;
+    font-size: 1.2rem;
+    font-weight: bold;
     text-align: center;
 }
-.hiwi-outer:nth-of-type(odd) p {
-    bottom: 0;
+.hiwi-outer p {
+    line-height: 1.25rem;
+    text-align: center;
 }
-
-/* ============== FEATURES ============= */
-.single-feature {
-    box-shadow: 0 0 1rem rgba(0, 0, 0, .13);
+.hiwi-outer a {
+    display: inline-block;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 550;
+    color: #fff;
+    background: var(--p-color);
+    padding: 0.2rem 1.5rem;
+    margin-top: 0.5rem;
+    border-radius: 0.7rem;
+    box-shadow: 0 .5px 5px rgba(0,0,0,.4);
+    cursor: pointer;
 }
-.single-feature:hover {
-    box-shadow: 0 0 2rem rgba(0, 0, 0, .1);
+.hiwi-outer a:hover {
+    transform: scale(1.1);
+    transition: all .5s ease-in-out;
+    outline: none;
 }
 
 
 /* ============== MEDIA QUERIES ============== */
-@media (max-width: 1230px) {
+@media (max-width: 1300px) {
     .hero h1 {
-        font-size: 3.5rem;
-        line-height: 3.5rem;
-        margin-bottom: 1.2rem;
+        font-size: 3rem;
+        line-height: 3rem;
     }
-    .hero h1 > span {
-        font-size: 2.45rem;
+    .hero h1:nth-child(2) {
+        font-size: 1.7rem;
     }
     .hero p {
         max-width: 24rem;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         line-height: 1.8rem;
     }
 }
 
-@media (max-width: 1150px) {
-    .hero h1 {
-        font-size: 2.9rem;
-        line-height: 2.9rem;
-        margin-bottom: 1rem;
-    }
-    .hero h1 > span {
-        font-size: 2.01rem;
-    }
-    .hero p {
-        max-width: 20.2rem;
-        font-size: 1.3rem;
-        line-height: 1.65rem;
-    }
+@media (max-width: 1180px) {
+    .hero .hero-slide {
+        width: 34.5rem;
+        height: 24rem;
+    } 
 }
 
 @media (max-width: 1080px) {
     .hero h1 {
         font-size: 2.5rem;
         line-height: 2.5rem;
-        margin-bottom: 1rem;
     }
-    .hero h1 > span {
-        font-size: 1.74rem;
+    .hero h1:nth-child(2) {
+        font-size: 1.45rem;
     }
     .hero p {
-        max-width: 20.4rem;
-        font-size: 1.25rem;
-        line-height: 1.6rem;
+        max-width: 20rem;
+        font-size: 1.15rem;
+        line-height: 1.5rem;
     }
     .hero .hero-slide {
         width: 32rem;
         height: 23rem;
     }
+    .hiwi-outer {
+        margin-bottom: 2rem;
+    }
+    .hiwi-outer .hiwi {
+        margin: 0 auto 1rem auto;
+    }
+    .hiwi-outer:nth-of-type(even) .hiwi {
+        margin: 1rem auto 0 auto;
+    }
+    .hiwi-outer:nth-child(3),
+    .hiwi-outer:nth-child(4) {
+        margin-bottom: 0;
+    }
 }
 
 @media (max-width: 992px) {
     .hero {
-        transform: translateY(6rem);
+        transform: translateY(9rem);
         margin-bottom: 5rem;
     }
     .hero .hero-text {
         padding-left: 0;
     }
     .hero h1 {
-        font-size: 4rem;
-        line-height: 4rem;
-        margin-bottom: 1.7rem;
+        font-size: 3rem;
+        line-height: 3rem;
     }
-    .hero h1 > span {
-        font-size: 2.8rem;
+    .hero h1:nth-child(2) {
+        font-size: 1.7rem;
     }
     .hero p {
-        max-width: 65%;
-        font-size: 1.5rem;
-        line-height: 2rem;
-        margin: 0 auto;
+        max-width: 50%;
+        font-size: 1.2rem;
+        line-height: 1.5rem;
+        margin: 1rem auto 0 auto;
     }
     .hero .hero-slide-wrp {
         margin-top: 5rem;
@@ -229,114 +258,64 @@
 
 @media (max-width: 767px) {
     .hero {
+        transform: translateY(7rem);
+    }
+    .hero {
         padding: 1rem;
     }
     .hero h1 {
-        font-size: 3.5rem;
-        line-height: 3.5rem;
+        font-size: 2.5rem;
+        line-height: 2.5rem;
     }
-    .hero h1 > span {
-        font-size: 2.44rem;
+    .hero h1:nth-child(2) {
+        font-size: 1.4rem;
     }
     .hero p {
         max-width: 80%;
-        font-size: 1.5rem;
-        line-height: 2rem;
-        margin: 0 auto;
+        margin: 1rem auto 0 auto;
     }
     .hero .hero-slide {
-        width: 34rem;
+        width: 35rem;
         height: 24rem;
     }
 }
 
 @media (max-width: 576px) {
-    .hero h1 {
-        font-size: 3rem;
-        line-height: 3.2rem;
-        margin-bottom: 1rem;
-    }
-    .hero h1 > span {
-        font-size: 2.08rem;
-    }
-    .hero p {
-        max-width: 85%;
-        font-size: 1.5rem;
-        line-height: 2rem;
-        margin: 0 auto;
-    }
-    .hero .hero-slide-wrp {
-        margin-top: 3rem;
-    }
     .hero .hero-slide {
-        width: 30rem;
+        width: 30.5rem;
         height: 21rem;
     }
 }
 
 @media (max-width: 505px) {
     .hero h1 {
-        font-size: 2.5rem;
-        line-height: 2.6rem;
-        margin-bottom: 1rem;
+        font-size: 2rem;
+        line-height: 2.1rem;
     }
-    .hero h1 > span {
-        font-size: 1.73rem;
+    .hero h1:nth-child(2) {
+        font-size: 1.2rem;
     }
     .hero p {
         max-width: 90%;
-        font-size: 1.4rem;
-        line-height: 1.8rem;
-        margin: 0 auto;
+        font-size: 1.1rem;
+        line-height: 1.5rem;
     }
     .hero .hero-slide {
         width: 20rem;
         height: 14rem;
     }
-}
-
-@media (min-width: 1201px) and (max-width: 1300px) {
-    .hiwi-outer .hiwi {
-        transform: translateY(0rem);
+    .hiwi-outer,
+    .hiwi-outer:nth-of-type(3) {
+        margin-bottom: 1.5rem;
     }
     .hiwi-outer:nth-of-type(even) .hiwi {
-        transform: translateY(12.8rem);
+        margin: 0 auto 1rem auto;
     }
-}
-
-@media (min-width: 1081px) and (max-width: 1200px) {
-    .hiwi-outer .hiwi {
-        transform: translateY(-.3rem);
-    }
-    .hiwi-outer:nth-of-type(even) .hiwi {
-        transform: translateY(13.6rem);
-    }
-    .hiwi-outer .hiwi::after {
-        top: 5.7rem;
-    }
-    .hiwi-outer .hiwi {
-        width: 6.5rem;
-        height: 6.5rem;
-        font-size: 2.5rem;
+    .hiwi-outer:nth-of-type(even) .hiwi::after {
+        top: 7rem;
+        transform: rotate(315deg);
     }
 }
 
-@media (min-width: 993px) and (max-width: 1080px) {
-    .hiwi-outer .hiwi {
-        margin: 0 auto;
-        transform: translateY(3.5rem);
-        opacity: .2;
-    }
-    .hiwi-outer:nth-of-type(even) .hiwi {
-        margin: 0 auto;
-        transform: translateY(3.5rem);
-    }
-    .hiwis {
-        position: relative;
-        height: 87.5%;
-    }
-    .hiwi-outer p {
-        top: 0.5rem;
-    }
-}
+
 

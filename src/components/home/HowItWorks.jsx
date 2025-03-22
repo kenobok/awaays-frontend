@@ -30,28 +30,36 @@ import hiw from '../../assets/images/hiw1.png'
 const HowItWorks = () => {
     return (
         <section className="overflow-hidden">
-            <motion.div className="how-it-works flex gap-x-7 align-start p-10 bg-gray-400 my-5 overflow-hidden" initial={{ opacity: 0, y: 200 }}  whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1, delay: 0.1 }}>
-                <div className="my-auto">
-                    <img loading="lazy" src={hiw} alt="how it works" className="w-[20rem] max-[1081px]:w-[15rem] rounded-4xl" />
+            <motion.div className="how-it-works flex justify-around max-[768px]:flex-col items-center gap-x-7 p-10 max-[768px]:px-5 bg-gray-400 my-5 overflow-hidden rounded-4xl" initial={{ opacity: 0, y: 200 }}  whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1, delay: 0.1 }}>
+                <div className="w-[15rem] mt-10 max-[1081px]:self-start max-[768px]:w-[100%] max-[768px]:mt-0 max-[768px]:mb-10">
+                    <img loading="lazy" src={hiw} alt="how it works" className=" h-[100%] rounded-4xl" />
                 </div>
-                <div className="w-[100%]">
-                    <h2 className="text-center m-0 mb-2 p-0 text-2xl font-semibold text-white">How It works</h2>
-                    <div className="hiwis flex max-[993px]:flex-col gap-x-6 bg-white w-[100%] rounded-4xl p-3 overflow-hidden">
-                        <div className="hiwi-outer max-[993px]:grow-6 flex-wrap flex-1 p-1">
-                            <div className="hiwi"><FontAwesomeIcon icon="user-plus"/></div>
-                            <p><b>Join | Login</b><br/>Sign up for free to become a member. Already a member? Simply login and start exploring! To give away items or find something you need, you need to sign up or login by clicking on <b className="text-[var(--p-color)]">Join</b> button.</p>
+                <div className="flex-1 relative pt-10">
+                    <h2 className="text-center m-0 mb-4 p-0 text-2xl font-semibold text-white">How It works</h2>
+                    <div className="hiwis relative grid grid-cols-4 max-[1081px]:grid-cols-2 max-[506px]:grid-cols-1 gap-x-6 max-[506px]:gap-x-0 bg-white w-[100%] rounded-4xl p-3 overflow-hidden">
+                        <div className="hiwi-outer p-1">
+                            <div className="hiwi bg-gray-400"><FontAwesomeIcon icon="user-plus"/></div>
+                            <h4>Join | Login</h4>
+                            <p>Sign up for free to become a member. Already a member? Simply login and start exploring! To give away items or find something you need, you need to sign up or login by clicking on <b className="text-[var(--p-color)]">Join</b> button.</p>
+                            <Link className="">Join</Link>
                         </div>
-                        <div className="hiwi-outer max-[993px]:grow-6 flex-1 p-1">
-                            <p><b>Giving</b><br/>To easily list items you no longer need, click on <b className="text-[var(--p-color)]">Give Item</b> button. Fill the form correctly and submit. We will review your post to ensure it complies with our policies before it will be visible to other users.</p>
-                            <div className="hiwi"><FontAwesomeIcon icon="hand-holding"/> <FontAwesomeIcon icon="gifts" className="absolute min-[1081px]:top-[1.8rem] max-[1200px]:top-[1.8rem] min-[1081px]:text-[1.4rem] max-[1200px]:text-[1.4rem] text-[1.7rem] top-[0] min-[1201px]:top-[2.5rem]"/></div>
+                        <div className="hiwi-outer max-[506px]:flex flex-col  p-1">
+                            <h4 className="order-2">Giving</h4>
+                            <p className="order-3">To easily list items for giveaway, click on <b className="text-[var(--p-color)]">Give Item</b> button. Fill out the form and submit it. We will review your items to ensure they comply with our policies before it becomes visible to other users.</p>
+                            <Link className="order-4 mx-auto">Give Item</Link>
+                            <div className="hiwi bg-gray-400 order-1"><FontAwesomeIcon icon="hand-holding"/> <FontAwesomeIcon icon="gifts" className="absolute text-[1.7rem] top-[2.5rem]"/></div>
                         </div>
-                        <div className="hiwi-outer max-[993px]:grow-6 flex-1 p-1">
-                            <div className="hiwi"><FontAwesomeIcon icon="hands-holding"/> <FontAwesomeIcon icon="box" className="absolute min-[1081px]:top-[1.8rem] max-[1200px]:top-[1.8rem] min-[1081px]:text-[1.4rem] max-[1200px]:text-[1.4rem] text-[1.7rem] top-[80px] min-[1201px]:top-[2.5rem]"/></div>
-                            <p><b>Collecting</b><br/>To collect items, simply click on <b className="text-[var(--p-color)]">Browse Items</b> button and browse through the list of available items. Remember to collect only the item you truly need, as you can only collect one item per day.</p>
+                        <div className="hiwi-outer p-1">
+                            <div className="hiwi bg-gray-400"><FontAwesomeIcon icon="hands-holding"/> <FontAwesomeIcon icon="box" className="absolute text-[1.7rem] top-[2.2rem]"/></div>
+                            <h4>Collecting</h4>
+                            <p>To collect items, simply click on <b className="text-[var(--p-color)]">Giveaways</b> button and browse through the list of available items. Remember to collect only the item you truly need, as you can only collect one item per day.</p>
+                            <Link className="">Giveaways</Link>
                         </div>
-                        <div className="hiwi-outer max-[993px]:grow-6 flex-1 p-1">
-                            <p><b>Community</b><br/>Wanting to learn something new, exchange ideas, or simply have fun, our vibrant and diverse community offers a welcoming space for everyone to interact, grow, and build lasting connections.</p>
-                            <div className="hiwi"><FontAwesomeIcon icon="users"/></div>
+                        <div className="hiwi-outer p-1 max-[506px]:flex flex-col">
+                            <h4 className="order-2">Community</h4>
+                            <p className="order-3">Wanting to learn something new, exchange ideas, or simply have fun, our vibrant and diverse community offers a welcoming space for everyone to interact, grow, and build lasting connections.</p>
+                            <Link className="order-4 mx-auto">Community</Link>
+                            <div className="hiwi bg-gray-400 order-1"><FontAwesomeIcon icon="users"/></div>
                         </div>
                     </div>
                 </div>

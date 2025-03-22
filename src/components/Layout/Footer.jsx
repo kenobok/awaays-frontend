@@ -32,7 +32,7 @@ export default function Footer() {
 
 
     return (
-        <footer>
+        <footer className="mt-[15rem]">
             <div className="relative px-[8rem] max-[768px]:px-[4rem] pt-[12rem] max-[768px]:pt-[8rem] pb-[8rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <Link to="/" className="block mb-5">
                     <img loading="lazy" src={logo} alt="logo" className="w-[12rem] max-[768px]:w-[10rem] mx-auto"/>
@@ -47,11 +47,11 @@ export default function Footer() {
                 </div>
 
                 <div className="text-center w-[100%] mb-5">
-                    <Link to="">About Us</Link>
-                    <Link to="">Contact Us</Link>
-                    <Link to="">Privacy Policy</Link>
-                    <Link to="">Terms & condition</Link>
-                    <Link to="">FAQ</Link>
+                    <Link to="about-us">About Us</Link>
+                    <Link to="contact-us">Contact Us</Link>
+                    <Link to="privacy-policy">Privacy Policy</Link>
+                    <Link to="terms-and-conditions">Terms & condition</Link>
+                    <Link to="FAQs">FAQs</Link>
                 </div>
 
                 <div className="text-center w-[100%] mb-5">
@@ -63,10 +63,10 @@ export default function Footer() {
                     </div>
 
                     <div>
-                        <h4>Newsletter</h4>
+                        <h4 style={{ color:'#fff' }}>Newsletter</h4>
                         <form className="mx-auto" >
                             <input type="email" placeholder="Your email address" className='border-2 border-white focus:outline-none rounded-md p-2 mb-4 w-[100%] block text-white'/>
-                            <button type="submit" className="p-1 px-3 text-white rounded-lg shadow-md cursor-pointer text-sm" style={{background:'var(--p-color)'}}>Subscribe</button>
+                            <button type="submit" className="p-1 px-3 text-[#444] bg-gray-200 rounded-lg shadow-sm cursor-pointer text-sm">Subscribe</button>
                         </form>
                     </div>
                 </div>

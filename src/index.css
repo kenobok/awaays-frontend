@@ -11,15 +11,15 @@
 * {
     box-sizing: border-box;
     overflow-x: hidden;
+    font-family: "Josefin Sans",  Arial, sans-serif;
 }
 
 html,
 body {
     font-family: "Nunito", sans-serif;
     background-color: #f7f8ff;
-    color: #777;
-    font-family: "Josefin Sans" Arial, sans-serif;
-    font-size: 16px;
+    color: #666;
+    font-size: 16.5px;
 }
 
 body.no-scroll {
@@ -81,7 +81,7 @@ li {
 }
 
 a:hover {
-    color: var(--p-color);
+    /* color: var(--p-color); */
     text-decoration: none;
 }
 
