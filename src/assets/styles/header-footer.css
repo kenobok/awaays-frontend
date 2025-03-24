@@ -59,19 +59,23 @@
 
 /* ========= FOOTER =========== */
 footer {
-    background: linear-gradient(180deg, var(--bg-color) 0%, var(--p-color) 100%);
+    /* background: linear-gradient(180deg, var(--bg-color) 0%, var(--p-color) 100%); */
+    background-image: url("../images/about-hero.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
     width: 100%;
     border-top-left-radius: 300px;
     border-top-right-radius: 300px;
 }
 footer h4 {
-    color: #666;
+    color: #eee;
     font-weight: 600;
     margin-bottom: 10px;
 }
 footer a {
     display: block;
-    color: #444;
+    color: #eee;
     font-weight: 500;
     margin-bottom: 15px;
 }
@@ -126,11 +130,11 @@ footer a:hover {
         right: -20rem;
         height: 100vh;
         padding: 100px 30px;
+        text-align: center;
         background: #fff;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        opacity: .5s;
-        text-align: center;
-        transition: all .3s ease-in-out;
+        /* opacity: .5; */
+        /* transition: all .3s ease-in-out; */
     }
     .show-menu {
         opacity: 1;

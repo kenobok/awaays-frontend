@@ -5,16 +5,6 @@ import gift from '../../assets/images/gift.png'
 import chat from '../../assets/images/chat.png'
 import community from '../../assets/images/community.png'
 
-const featureVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: { duration: 0.6, ease: "easeOut", bounce: 0.4 }
-    }
-};
-
 const Features = () => {
     return (
         <section className="features px-5 py-10 pt-15 overflow-hidden">
@@ -25,7 +15,7 @@ const Features = () => {
                     { icon: chat, title: "Secure Messaging", text: "Talk with confidence, your privacy stays. No scams, no spam, just safe relays. Connect with others without a doubt. Connect with confidence whenever you can." },
                 ].map((feature, index) => (
 
-                    <motion.div key={index} className="single-feature w-[20rem] bg-white p-6 max-[900px]:px-4 rounded-2xl text-center cursor-pointer transition-all overflow-hidden" initial={{ opacity: 0, y: 200 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.1 }} whileHover={{ scale: 1.02 }}>
+                    <motion.div key={index} className="single-feature w-[20rem] bg-white p-6 max-[900px]:px-4 rounded-2xl text-center cursor-pointer transition-all overflow-hidden" initial={{ opacity: 0, y: 200 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1 }} whileHover={{ scale: 1.02 }}>
                         <motion.div className="mb-5 py-1 w-[100%]" animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}>
                             <img src={feature.icon} className="w-[80%] m-auto rounded-2xl" alt='icon'/>
                         </motion.div>

@@ -65,13 +65,13 @@ const FAQs = () => {
             <h1 className="text-3xl font-bold mb-10 text-center max-[941px]:mb-7">FAQs</h1>
             <section className="space-y-4">
                 {faqsData.map((faq, index) => (
-                    <section key={index} className="border rounded-lg p-4">
+                    <div key={index} className="border border-gray-300 py-5 rounded-lg p-4">
                         <button className="flex justify-between items-center w-full text-lg font-semibold text-indigo-900 cursor-pointer leading-[1.3rem]" onClick={() => toggleFAQ(index)}>
                             {faq.question}
                             <span>{openIndex === index ? "▲" : "▼"}</span>
                         </button>
                         {openIndex === index && <p className="mt-2 text-gray-700 leading-[1.2rem]">{faq.answer}</p>}
-                    </section>
+                    </div>
                 ))}
             </section>
         </main>

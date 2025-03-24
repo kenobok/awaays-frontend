@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -81,9 +80,9 @@ const Header = () => {
                         <Link to="" onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>
                         <Link to="" onClick={isMobile ? handleMenuToggle : undefined}>Giveaways</Link>
                         <Link to="" onClick={isMobile ? handleMenuToggle : undefined}>Community</Link>
-                        <Link to="" onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
-                        <Link to="FAQs" onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
-                        <Link to="join" onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>
+                        <Link to="/#howitworks" onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
+                        <Link to="/FAQs" onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
+                        <Link to="/auth" onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>
                     </div>
                     <form className="relative flex align-center py-[13px] peer">
                         <input name="search" type="search" placeholder="Search..." onFocus={handleFocus} onBlur={handleBlur} ref={searchInputRef} />
@@ -92,7 +91,7 @@ const Header = () => {
                         </span>
                     </form>
                 </div>
-                <div onClick={handleMenuToggle} ref={menuIconRef} className={`relative w-[30px] h-[25px] my-auto cursor-pointer overflow-hidden transition-all duration-300 min-[941px]:hidden z-[5] ${isFocused ? 'hide-menu-bar' : ''}`} aria-label="Toggle menu">
+                <div onClick={handleMenuToggle} ref={menuIconRef} className={`relative w-[30px] h-[25px] my-auto cursor-pointer overflow-hidden transition-all duration-300 min-[941px]:hidden z-[5] ${isFocused ? 'hide-menu-bar' : ''}`}>
                     <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ${isOpen ? 'rotate-45 top-[11px] bg-[#777]' : 'top-0 right-0 bg-[#777]'}`}></div>
                     <div className={`h-[3px] w-[85%] absolute transition-all duration-300 ${isOpen ? 'opacity-0 top-0 bg-[#777]': 'opacity-100 top-[11px] bg-[#777]'}`}></div>
                     <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ${isOpen ? '-rotate-45 top-[11px] bg-[#777]' : 'bottom-0 right-0 bg-[#777]'}`}></div>

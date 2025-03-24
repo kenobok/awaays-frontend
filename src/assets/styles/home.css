@@ -93,14 +93,13 @@
 
 /* ============== HOW IT WORKS ============= */
 .how-it-works {
-    box-shadow: 0 0 1rem rgba(0,0,0,0.3);
+    box-shadow: 0 0 1rem rgba(0,0,0,0.1);
 }
 .how-it-works h2 {
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    color: #fff;
 }
 .hiwi-outer {
     position: relative;
@@ -112,7 +111,7 @@
 .hiwi-outer .hiwi {
     position: relative;
     display: flex;
-    color: #fff;
+    color: var(--p-color);
     justify-content: center;
     align-items: center;
     font-size: 3rem;
@@ -120,7 +119,7 @@
     height: 8rem;
     margin: 0 auto 2rem auto;
     border-radius: 50%;
-    box-shadow: 0 0 1rem rgba(0,0,0,.15);
+    /* box-shadow: 0 0 1rem rgba(255,255,255,1); */
 }
 .hiwi-outer:nth-of-type(even) .hiwi {
     margin: 2rem auto 0 auto;
@@ -131,7 +130,7 @@
     top: 7rem;
     width: 0.7rem;
     height: 0.7rem;
-    background: #ddd;
+    background: var(--p-color);
     border-top-right-radius: 2rem;
     transform: rotate(315deg);
     box-shadow: 0 0 1rem rgba(0,0,0,.15);

@@ -33,19 +33,19 @@ const ContactUs = () => {
             <form onSubmit={handleSubmit} className="space-y-3 py-1">
                 <div className="form-input">
                     <label htmlFor="contactUsName" className={`block text-gray-700 font-medium ${inputFocus.name ? 'is-focus' : ''}`}>Full Name</label>
-                    <input type="text" name="name" id="contactUsName" value={formData.name} onChange={handleChange} onFocus={() => handleInputFocus("name")} onBlur={() => handleInputBlur("name")} required className="w-full p-3 border border-gray-400 rounded-lg focus:ring focus:ring-blue-300"/>
+                    <input type="text" name="name" id="contactUsName" value={formData.name} onChange={handleChange} onFocus={() => handleInputFocus("name")} onBlur={() => handleInputBlur("name")} required />
                 </div>
 
                 <div className="form-input">
                     <label htmlFor="contactUsEmail" className={`block text-gray-700 font-medium ${inputFocus.email ? 'is-focus' : ''}`}>Email</label>
-                    <input type="email" name="email" id="contactUsEmail" value={formData.email} onChange={handleChange} onFocus={() => handleInputFocus("email")} onBlur={() => handleInputBlur("email")} required className="w-full p-3 border border-gray-400 rounded-lg focus:ring focus:ring-blue-300"/>
+                    <input type="email" name="email" id="contactUsEmail" value={formData.email} onChange={handleChange} onFocus={() => handleInputFocus("email")} onBlur={() => handleInputBlur("email")} required />
                 </div>
 
                 <div className="form-input textarea">
                     <label htmlFor="contactUsMessage" className={`block text-gray-700 font-medium ${inputFocus.message ? 'is-focus' : ''}`}>Message</label>
-                    <textarea name="message" id="contactUsMessage" value={formData.message} onChange={handleChange} onFocus={() => handleInputFocus("message")} onBlur={() => handleInputBlur("message")} required className="w-full p-3 border border-gray-400 rounded-lg focus:ring focus:ring-blue-300 h-32"/>
+                    <textarea name="message" id="contactUsMessage" value={formData.message} onChange={handleChange} onFocus={() => handleInputFocus("message")} onBlur={() => handleInputBlur("message")} required className="h-32"/>
                 </div>
-                <div className="pb-2 px-2">
+                <div className="pb-2">
                     <button type="submit" className="w-full bg-[var(--p-color)] cursor-pointer text-white py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition">Send Message</button>
                 </div>
             </form>

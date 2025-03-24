@@ -47,11 +47,11 @@ export default function Footer() {
                 </div>
 
                 <div className="text-center w-[100%] mb-5">
-                    <Link to="about-us">About Us</Link>
-                    <Link to="contact-us">Contact Us</Link>
-                    <Link to="privacy-policy">Privacy Policy</Link>
-                    <Link to="terms-and-conditions">Terms & condition</Link>
-                    <Link to="FAQs">FAQs</Link>
+                    <Link to="/about-us">About Us</Link>
+                    <Link to="/contact-us">Contact Us</Link>
+                    <Link to="/privacy-policy">Privacy Policy</Link>
+                    <Link to="/terms-and-conditions">Terms & condition</Link>
+                    <Link to="/FAQs">FAQs</Link>
                 </div>
 
                 <div className="text-center w-[100%] mb-5">
@@ -59,7 +59,7 @@ export default function Footer() {
                         <FontAwesomeIcon icon="fab fa-instagram" className='text-red-600 cursor-pointer' />
                         <FontAwesomeIcon icon="fab fa-facebook" className='text-blue-600 cursor-pointer' />
                         <FontAwesomeIcon icon="fab fa-twitter" className='text-blue-500 cursor-pointer' />
-                        <FontAwesomeIcon icon="fab fa-threads" className='cursor-pointer'/>
+                        <FontAwesomeIcon icon="fab fa-threads" className='cursor-pointer text-gray-300'/>
                     </div>
 
                     <div>

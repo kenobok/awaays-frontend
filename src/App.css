@@ -1,37 +1,60 @@
 .form-input {
     position: relative;
-    padding: .7rem .5rem;
-    /* background: green; */
+    padding: 1rem 0;
+    overflow: hidden;
 }
 .form-input label {
     position: absolute;
     top: 50%;
-    left: 1.5rem;
+    left: 1rem;
     transform: translateY(-50%);
-    background: var(--bg-color);
-    padding: 0 4px;
+    font-size: 1rem;
     cursor: text;
 }
 .textarea label {
     top: 20%;
-    left: 1.5rem;
-    transform: translateY(-20%);
+    left: 1rem;
+    transform: translateY(-25%);
 }
 .form-input label.is-focus {
     top: 0;
-    transform: translateY(0);
-    transition: all .3s ease-in-out;
-}
-.form-input label.is-focus {
-    top: 0;
+    padding: 0 0.25rem;
+    transform: translateY(25%);
     background: var(--bg-color);
+    transition: all .3s ease-in-out;
+    border: none;
 }
 .form-input input,
 .form-input textarea {
-    text-indent: .5rem;
     line-height: 1.1rem;
+    width: 100%;
+    padding: 13px;
+    border-radius: .5rem;
+    border: 1px solid var(--s-color);
 }
-.form-input input:focus, 
+.form-input input[type="checkbox"] {
+    width: 1.5rem;
+    display: inline-block;
+    cursor: pointer;
+}
+.form-input input:focus,
 .form-input textarea:focus {
     outline: none;
+    border: 1.5px solid var(--p-color);
 }
+.form-input input.error,
+.PhoneInput.error input,
+.form-input textarea.error {
+    border: 1px solid #ee2727;
+}
+.form-input small {
+    position: absolute;
+    bottom: -.15rem;
+    left: 0;
+    color: #ee2727;
+}
+.form-input p small {
+    position: relative;
+    line-height: 1rem;
+}
+
