@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import isEmail from 'validator/lib/isEmail';
@@ -6,10 +6,10 @@ import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '../assets/styles/auth.css'
+import '../../assets/styles/auth.css'
 
 const AuthPage = () => {
-	const [joinUs, setJoinUs] = useState(true);
+	const [signUp, setSignUp] = useState(true);
 	const [formData, setFormData] = useState({ name: "", email: "", phone: "", password: "", agree: false});
     const [inputFocus, setInputFocus] = useState({name: false, email: false, phone: false, password: false, agree: false});
     const [passwordToggle, setPasswordToggle] = useState(false);
@@ -18,14 +18,14 @@ const AuthPage = () => {
 	const handleJoinUs = () => {
 		setFormData({ name: "", email: "", phone: "", password: "", agree: false});
 		setInputFocus({name: false, email: false, phone: false, password: false, agree: false});
-        setJoinUs(true);
+        setSignUp(true);
 		setErrors({});
     };
 
 	const handleSignIn = () => {
 		setFormData({ name: "", email: "", phone: "", password: "", agree: false});
 		setInputFocus({name: false, email: false, phone: false, password: false, agree: false});
-        setJoinUs(false);
+        setSignUp(false);
 		setErrors({});
     };
 
@@ -45,8 +45,9 @@ const AuthPage = () => {
 
     const handleChange = (e, field = null) => {
 		if (field == "phone") {
-			setFormData((prev) => ({ ...prev, phone: e }));
-			validateField("phone", e);
+			const phoneValue = e || '';
+			setFormData((prev) => ({ ...prev, phone: phoneValue }));
+			validateField("phone", phoneValue);
 		} else {
 			const { name, value, type, checked } = e.target;
 			const newValue = type == "checkbox" ? checked : value;
@@ -109,7 +110,7 @@ const AuthPage = () => {
 
 
 	return (
-		<main className="auth-wrp flex w-full m-auto overflow-hidden py-20 max-[993px]:pt-15 max-[768px]:pt-10 translate-y-[5.3rem] max-[941px]:translate-y-[4.2rem]">
+		<main className="auth-wrp flex w-full m-auto py-20 max-[993px]:pt-15 max-[768px]:pt-10 translate-y-[5.3rem] max-[941px]:translate-y-[4.2rem]">
 			<motion.section className="auth-img flex-1"
 				initial={{ opacity: 0, x: -500 }} 
 				animate={{ opacity: 1, x: 0 }} 
@@ -117,43 +118,39 @@ const AuthPage = () => {
 			>
 			</motion.section>
 
-			<motion.section className="px-30 py-10 max-[1081px]:px-20 max-[993px]:px-10 max-[501px]:px-0 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }}>
-				<div className="auth-switch relative flex justify-center mb-4 w-[23rem] max-[501px]:w-[90%] mx-auto">
-					<button onClick={ handleJoinUs } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${joinUs && 'active'}`}>JOIN US</button>
-					<button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${!joinUs && 'active'}`}>SIGN IN</button>
+			<motion.section className="px-30 py-10 max-[1081px]:px-20 max-[993px]:px-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-0 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }}>
+				<div className="auth-switch relative flex justify-center mb-4 mx-auto">
+					<button onClick={ handleJoinUs } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${signUp && 'active'}`}>SIGN UP</button>
+					<button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${!signUp && 'active'}`}>SIGN IN</button>
 				</div>
 				<motion.form onSubmit={handleSubmit} className="auth-form w-[23rem] max-[501px]:w-[90%] p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }}>
-					{ joinUs &&
-						<>
-							<div className="form-input">
-								<label htmlFor="joinUsName" className={`block text-gray-600 font-medium ${inputFocus.name ? 'is-focus' : ''}`}>Full Name</label>
-								<input type="text" name="name" id="joinUsName" className={`${errors.name ? 'error' : ''}`} value={formData.name} onChange={handleChange} onFocus={() => handleInputFocus("name")} onBlur={() => handleInputBlur("name")} />
-								{errors.name && <small>{errors.name}</small>}
-							</div>
-						</>
+					{ signUp &&
+						<div className="form-input">
+							<label htmlFor="joinUsName" className={`block text-gray-600 font-medium ${inputFocus.name ? 'is-focus' : ''}`}>Full Name</label>
+							<input type="text" name="name" id="joinUsName" className={`${errors.name ? 'error' : ''}`} value={formData.name} onChange={handleChange} onFocus={() => handleInputFocus("name")} onBlur={() => handleInputBlur("name")} />
+							{errors.name && <small>{errors.name}</small>}
+						</div>
 					}
 					<div className="form-input">
 						<label htmlFor="joinUsEmail" className={`block text-gray-600 font-medium ${inputFocus.email ? 'is-focus' : ''}`}>Email</label>
 						<input type="email" name="email" id="joinUsEmail" className={`${errors.email ? 'error' : ''}`} value={formData.email} onChange={handleChange} onFocus={() => handleInputFocus("email")} onBlur={() => handleInputBlur("email")} />
 						{errors.email && <small>{errors.email}</small>}
 					</div>
-					{ joinUs &&
-						<>
-							<div className="form-input">
-								{/* <label className={`block text-gray-600 ${inputFocus.phone ? "is-focus" : ""}`}>Phone Number</label> */}
-								<PhoneInput
-									international
-									countryCallingCodeEditable={false}
-									defaultCountry="NG"
-									value={formData.phone}
-									onChange={(phone) => handleChange(phone, "phone")}
-									onFocus={() => handleInputFocus("phone")} 
-									onBlur={() => handleInputBlur("phone")}
-									className={`${errors.phone ? 'error' : ''}`}
-								/>
-								{errors.phone && <small>{errors.phone}</small>}
-							</div>
-						</>
+					{ signUp &&
+						<div className="form-input">
+							{/* <label className={`block text-gray-600 ${inputFocus.phone ? "is-focus" : ""}`}>Phone Number</label> */}
+							<PhoneInput
+								international
+								countryCallingCodeEditable={false}
+								defaultCountry="NG"
+								value={formData.phone}
+								onChange={(phone) => handleChange(phone, "phone")}
+								onFocus={() => handleInputFocus("phone")} 
+								onBlur={() => handleInputBlur("phone")}
+								className={`${errors.phone ? 'error' : ''}`}
+							/>
+							{errors.phone && <small>{errors.phone}</small>}
+						</div>
 					}
 					<div className="form-input">
 						<label htmlFor="joinUsPassword" className={`block text-gray-600 font-medium ${inputFocus.password ? 'is-focus' : ''}`}>Password</label>
@@ -165,13 +162,13 @@ const AuthPage = () => {
 							<FontAwesomeIcon icon="eye" onClick={ handlePasswordToggle } className="absolute top-[1.9rem] right-5 cursor-pointer bg-[var(--bg-color)]" />
 						}
 					</div>
-					{ joinUs &&
-						<>
-							<div className="form-input flex space-[0rem]" style={{ padding:"2px 10px 5px 10px" }}>
+					{ signUp ?
+							<div className="form-input flex space-[0rem]" style={{ padding:"2px 0 5px 0" }}>
 								<input type="checkbox" name="agree" className="error" checked={formData.agree || false} onChange={handleChange} />
-								<p className="inline pl-3 text-[.95rem] leading-[1.2rem]">I agree to the <Link to="/terms-and-conditions" className="text-[var(--p-color)]">Terms</Link> and <Link to="/privacy-policy" className="text-[var(--p-color)]">Privacy Policy</Link> {errors.agree && <small>(Check the box)</small>}</p>
+								<p className="inline-block pl-3 text-[.95rem] leading-[1.2rem]">I agree to the <Link to="/terms-and-conditions" className="text-[var(--p-color)]">Terms</Link> and <Link to="/privacy-policy" className="text-[var(--p-color)]">Privacy Policy</Link> <cite className="text-red-500 text-sm">{errors.agree && "(check the box)"}</cite></p>
 							</div>
-						</>
+						:
+							<p className="inline-block text-[.95rem] leading-[1.2rem]">Forgot Password? <Link to="" className="text-[var(--p-color)]">Reset Password</Link></p>
 					}
 					<div className="mt-3 mb-4">
 						<button type="submit" className="w-full bg-[var(--p-color)] cursor-pointer text-white py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition">Submit</button>
@@ -189,7 +186,7 @@ const AuthPage = () => {
 				</motion.form>
 			</motion.section>
 		</main>
-  	);
+	);
 }
 
 export default AuthPage

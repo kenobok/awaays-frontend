@@ -77,10 +77,10 @@ const Header = () => {
                 </Link>
                 <div className="block min-[941px]:flex gap-x-5 align-center justify-end">
                     <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[1rem] ${isFocused ? 'min-[941px]:text-[.5rem]' : ''} ${isFocused ? 'min-[992px]:text-[.7rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
-                        <Link to="" onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>
-                        <Link to="" onClick={isMobile ? handleMenuToggle : undefined}>Giveaways</Link>
+                        <Link to="/give-item" onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>
+                        <Link to="/giveaway-items" onClick={isMobile ? handleMenuToggle : undefined}>Giveaways</Link>
                         <Link to="" onClick={isMobile ? handleMenuToggle : undefined}>Community</Link>
-                        <Link to="/#howitworks" onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
+                        <Link to="/how-it-works" onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
                         <Link to="/FAQs" onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
                         <Link to="/auth" onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>
                     </div>

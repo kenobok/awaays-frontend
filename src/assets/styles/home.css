@@ -118,8 +118,9 @@
     width: 8rem;
     height: 8rem;
     margin: 0 auto 2rem auto;
+    /* background-color: var(--bg-color); */
     border-radius: 50%;
-    /* box-shadow: 0 0 1rem rgba(255,255,255,1); */
+    box-shadow: 0 0 .5rem var(--p-color);
 }
 .hiwi-outer:nth-of-type(even) .hiwi {
     margin: 2rem auto 0 auto;

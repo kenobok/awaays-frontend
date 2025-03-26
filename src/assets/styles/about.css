@@ -7,3 +7,31 @@
 .about-hero-inner {
     background: rgba(0,0,0,.7);
 }
+
+
+/* ==========HOW IT WORKS========== */
+.howitworks-hero {
+    background-image: url('../images/hiw3.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.howitworks-hero-inner {
+    background: rgba(0,0,0,.7);
+}
+.hiw-wrp h4 {
+    color: #666;
+}
+.hiw-wrp p {
+    line-height: 1.5rem;
+}
+.hiw-wrp ul {
+    padding-left: 2rem;
+}
+.hiw-wrp ul li {
+    padding-left: .3rem;
+    line-height: 1.5rem;
+    list-style-image: url('../images/list-style-type.png');
+    overflow-x: visible ;
+}
+

@@ -9,7 +9,7 @@ const AboutUs = () => {
                 <div className="about-hero-inner inline-block p-15 max-[451px]:px-5 rounded-4xl">
                     <h1 className="text-4xl font-bold" style={{ color:'#eee' }}>Empowering Generosity, Changing Lives</h1>
                     <p className="mt-4 text-xl">Join us in creating a world where giving is effortless and impactful.</p>
-                    <Link to="" className="inline-block mt-6 px-6 py-3 mx-auto bg-[#fff] text-[var(--p-color)] font-semibold rounded-lg shadow-md hover:bg-[#ccc] hover:text-[var(--p-color)]" to="join">
+                    <Link to="/auth" className="inline-block mt-6 px-6 py-3 mx-auto bg-[#fff] text-[var(--p-color)] font-semibold rounded-lg shadow-md hover:bg-[#ccc] hover:text-[var(--p-color)]">
                         Join Us Today
                     </Link>
                 </div>

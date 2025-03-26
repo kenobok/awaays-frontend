@@ -32,6 +32,9 @@
     border-radius: .5rem;
     border: 1px solid var(--s-color);
 }
+.form-input textarea {
+    margin-bottom: -5px;
+}
 .form-input input[type="checkbox"] {
     width: 1.5rem;
     display: inline-block;
@@ -41,6 +44,7 @@
 .form-input textarea:focus {
     outline: none;
     border: 1.5px solid var(--p-color);
+    border-radius: .5rem;
 }
 .form-input input.error,
 .PhoneInput.error input,
@@ -49,12 +53,16 @@
 }
 .form-input small {
     position: absolute;
-    bottom: -.15rem;
+    bottom: -.20rem;
     left: 0;
     color: #ee2727;
 }
-.form-input p small {
+
+/* ==============CUSTOM SELECT============= */
+.give-item-wrp {
     position: relative;
-    line-height: 1rem;
+}
+.custom-select.error > div {
+    border: 1px solid #ee2727;
 }
 
