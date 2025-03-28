@@ -20,6 +20,9 @@ const GiveawayItems = () => {
             <section className={`relative w-70 ${hideFilter ? 'hidden' : ''}`}>
                 <FilterItem />
             </section>
+            <div className={`${hideFilter ? '' : 'hidden'}`}>
+                <FontAwesomeIcon icon="funnel" className="ml-2" />
+            </div>
             <motion.section className="flex-1 translate-y-[8rem] max-[993px]:translate-y-[7rem] max-[768px]:translate-y-[6rem]" initial={{ opacity: 0, y: 500 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}>
                 <div className="flex justify-evenly flex-wrap p-5 pb-50 gap-x-5 max-[561px]:gap-x-3 gap-y-7">
                     {items.length > 0 ? (
