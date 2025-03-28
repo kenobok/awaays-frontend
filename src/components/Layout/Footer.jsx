@@ -33,7 +33,7 @@ export default function Footer() {
 
     return (
         <footer className="mt-[15rem]">
-            <div className="relative px-[8rem] max-[768px]:px-[4rem] pt-[12rem] max-[768px]:pt-[8rem] pb-[8rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <section className="relative px-[8rem] max-[768px]:px-[4rem] pt-[12rem] max-[768px]:pt-[8rem] pb-[8rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <Link to="/" className="block mb-5">
                     <img loading="lazy" src={logo} alt="logo" className="w-[12rem] max-[768px]:w-[10rem] mx-auto"/>
                 </Link>
@@ -78,7 +78,7 @@ export default function Footer() {
                 <button onClick={scrollToTop} className={`back-to-top fixed bottom-10 right-10 bg-primary p-4 rounded-full shadow-md text-white z-[1] ${!bactToTop ? 'hidden text-[16px] color-[#7730fc80]' : ''}`}>
                     <FontAwesomeIcon icon="arrow-up" />
                 </button>
-            </div>
+            </section>
         </footer>
     )
 }

@@ -25,7 +25,8 @@
     border: none;
 }
 .form-input input,
-.form-input textarea {
+.form-input textarea,
+.form-input select {
     line-height: 1.1rem;
     width: 100%;
     padding: 13px;
@@ -41,14 +42,16 @@
     cursor: pointer;
 }
 .form-input input:focus,
-.form-input textarea:focus {
+.form-input textarea:focus,
+.form-input select:focus {
     outline: none;
     border: 1.5px solid var(--p-color);
     border-radius: .5rem;
 }
 .form-input input.error,
 .PhoneInput.error input,
-.form-input textarea.error {
+.form-input textarea.error,
+.form-input select.error {
     border: 1px solid #ee2727;
 }
 .form-input small {
@@ -62,7 +65,7 @@
 .give-item-wrp {
     position: relative;
 }
-.custom-select.error > div {
+/* .custom-select.error > div {
     border: 1px solid #ee2727;
-}
+} */
 

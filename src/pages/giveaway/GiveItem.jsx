@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion";
-import { GiveawayOptions, customStyles } from '../../components/giveaway/Purpose';
+import CountryStateSelector from '../../components/utils/CountryStateSelector';
+import GiveawayPurpose from '../../components/giveaway/GiveawayPurpose';
 import Select from 'react-select';
 import '../../assets/styles/giveaway.css'
 
 
 const GiveItem = () => {
-    const [formData, setFormData] = useState({ purpose: "", item: "", description: "", instructions: "", images: [] });
+    const [formData, setFormData] = useState({ purpose: "", item: "", description: "", instructions: "", country: "", state: "", images: [] });
     const [inputFocus, setInputFocus] = useState({ purpose: false, item: false, description: false, instructions: false, images: false });
-    const [selectPurpose, setSelectPurpose] = useState({ label: "Select purpose...", value: "" })
     const [errors, setErrors] = useState({});
 
     const handleInputFocus = (field) => {
@@ -23,12 +23,23 @@ const GiveItem = () => {
     };
 
     const handleChange = (e) => {
-        if (e?.target) {
-            setFormData({ ...formData, [e.target.name]: e.target.value });
-        } else if (e?.value) {
-            setFormData({ ...formData, purpose: e.value });
-        }
-        validateField(e?.target ? e.target.name : "purpose", e?.target ? e.target.value : e?.value);
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        validateField(name, value);
+    };
+
+    const handleLocationChange = (location) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            country: location.country,
+            state: location.state,
+        }));
+    
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            country: location.country ? "" : prevErrors.country,
+            state: location.state ? "" : prevErrors.state,
+        }));
     };
 
     const handleImageChange = (e) => {
@@ -53,10 +64,15 @@ const GiveItem = () => {
                 }
                 break;
             case "instructions":
-                // const instructionsWordCount = value.trim().split(/\s+/).filter(Boolean).length;
-                if (value.trim() && value.trim().split(/\s+/).filter(Boolean).length < 5) {
-                    error = "Must be at least 5 words";
+                if (!value.trim()) {
+                    error = "Pickup location or other instructions";
                 }
+                break;
+            case "country":
+                if (!value.trim()) error = "Select a country";
+                break;
+            case "state":
+                if (!value.trim()) error = "Select a state/region";
                 break;
             case "images":
                 if (value.length < 1 || value.length > 5) error = "Upload between 1 to 5 images";
@@ -75,11 +91,7 @@ const GiveItem = () => {
                 newErrors[field] = errors[field] || "This field is required";
             }
         });
-
-        if (formData['instructions'] == "") {
-            delete newErrors['instructions'];
-        }
-
+        
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length > 0) {
@@ -87,6 +99,7 @@ const GiveItem = () => {
             return;
         }
 
+        console.log(formData)
         // setFormData({ name: "", email: "", message: "" });
     };
 
@@ -95,35 +108,36 @@ const GiveItem = () => {
         <main className="give-item-wrp flex w-full m-auto overflow-x-hidden py-20 max-[993px]:pt-15 max-[768px]:pt-10 translate-y-[5.3rem] max-[941px]:translate-y-[4.2rem]">
 			<motion.section className="give-item-img flex-1" initial={{ opacity: 0, x: -500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}></motion.section>
 
-            <motion.section className="px-30 py-10 max-[1081px]:px-20 max-[993px]:px-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-0 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }}>
+            <motion.section className="p-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-5 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }}>
 				{/* <div className="relative flex justify-center mb-4 w-[23rem] max-[501px]:w-[90%] mx-auto">
 					<h2 className="text-2xl font-bold">Give Item</h2>
 				</div> */}
                 <div className="auth-switch relative flex justify-center mb-4 mx-auto">
 					<button className={`git text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold }`}>GIVE ITEM</button>
 				</div>
-				<motion.form className="give-item-form w-[23rem] max-[501px]:w-[90%] p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }} onSubmit={ handleSubmit }>
-                    <div className="form-input">
-                        {/* <label htmlFor="purpose" className={`block text-gray-600 font-medium ${inputFocus.purpose ? 'is-focus' : ''}`}>Giving Purpose</label> */}
-                        <Select options={GiveawayOptions} name="purpose" id="purpose" className={`custom-select ${errors.purpose ? 'error' : ''}`} placeholder="Select Giving Purpose..." value={GiveawayOptions.find(option => option.value === formData.purpose)} onChange={handleChange} styles={customStyles} isSearchable={false} />
-                        {errors.purpose && <small>{errors.purpose}</small>}
+				<motion.form className="give-item-form p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }} onSubmit={ handleSubmit }>
+                    <div className='flex gap-x-7 max-[601px]:flex-col'>
+                        <GiveawayPurpose value={formData.purpose} onChange={handleChange} error={errors.purpose} />
+                        <div className="form-input">
+                            <label htmlFor="item" className={`block text-gray-600 font-medium ${inputFocus.item ? 'is-focus' : ''}`}>Item Name</label>
+                            <input type="text" name="item" id="item" className={`${errors.item ? 'error' : ''}`} value={formData.item} onChange={handleChange} onFocus={() => handleInputFocus("item")} onBlur={() => handleInputBlur("item")} />
+                            {errors.item && <small>{errors.item}</small>}
+                        </div>
                     </div>
-                    <div className="form-input">
-                        <label htmlFor="item" className={`block text-gray-600 font-medium ${inputFocus.item ? 'is-focus' : ''}`}>Item Name</label>
-                        <input type="text" name="item" id="item" className={`${errors.item ? 'error' : ''}`} value={formData.item} onChange={handleChange} onFocus={() => handleInputFocus("item")} onBlur={() => handleInputBlur("item")} />
-                        {errors.item && <small>{errors.item}</small>}
+                    <div className='flex gap-x-7 max-[601px]:flex-col'>
+                        <div className="form-input textarea">
+                            <label htmlFor="description" className={`block text-gray-700 font-medium ${inputFocus.description ? 'is-focus' : ''}`}>Description</label>
+                            <textarea name="description" id="description" className={`h-25 ${errors.description ? 'error' : ''}`} value={formData.description} onChange={handleChange} onFocus={() => handleInputFocus("description")} onBlur={() => handleInputBlur("description")} />
+                            {errors.description && <small>{errors.description}</small>}
+                        </div>
+                        <div className="form-input textarea">
+                            <label htmlFor="instructions" className={`block text-gray-700 font-medium ${inputFocus.instructions ? 'is-focus' : ''}`}>Instructions</label>
+                            <textarea name="instructions" id="instructions" className={`h-25 ${errors.instructions ? 'error' : ''}`} value={formData.instructions} onChange={handleChange} onFocus={() => handleInputFocus("instructions")} onBlur={() => handleInputBlur("instructions")} />
+                            {errors.instructions && <small>{errors.instructions}</small>}
+                        </div>
                     </div>
-                    <div className="form-input textarea">
-                        <label htmlFor="description" className={`block text-gray-700 font-medium ${inputFocus.description ? 'is-focus' : ''}`}>Description</label>
-                        <textarea name="description" id="description" className={`min-h-20 max-h-30 ${errors.description ? 'error' : ''}`} value={formData.description} onChange={handleChange} onFocus={() => handleInputFocus("description")} onBlur={() => handleInputBlur("description")} />
-                        {errors.description && <small>{errors.description}</small>}
-                    </div>
-                    <div className="form-input textarea">
-                        <label htmlFor="instructions" className={`block text-gray-700 font-medium ${inputFocus.instructions ? 'is-focus' : ''}`}>Instructions <cite className="relative">(optional)</cite></label>
-                        <textarea name="instructions" id="instructions" className={`min-h-20 max-h-30 ${errors.instructions ? 'error' : ''}`} value={formData.instructions} onChange={handleChange} onFocus={() => handleInputFocus("instructions")} onBlur={() => handleInputBlur("instructions")} />
-                        {errors.instructions && <small>{errors.instructions}</small>}
-                    </div>
-                    <div className="form-input ">
+                    <CountryStateSelector value={{ country: formData.country, state: formData.state }} onChange={handleLocationChange} error={{ country: errors.country, state: errors.state }} />
+                    <div className="form-input" style={{ width: '100%' }}>
                         {/* <label htmlFor="images" className="block text-gray-600 font-medium">Upload Images</label> */}
                         <input type="file" name="images" id="images" accept="image/*" className={`${errors.images ? 'error' : ''}`} multiple onChange={handleImageChange} />
                         {errors.images && <small>{errors.images}</small>}

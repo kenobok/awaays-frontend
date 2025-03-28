@@ -43,7 +43,7 @@ const HowItWorks = () => {
                             <div className="hiwi"><FontAwesomeIcon icon="hands-holding"/> <FontAwesomeIcon icon="box" className="absolute text-[1.7rem] top-[2.2rem]"/></div>
                             <h4>Collecting</h4>
                             <p>To collect items, simply click on <b className="text-[var(--p-color)]">Giveaways</b> button and browse through the list of available items. Remember to collect only the item you truly need, as you can only collect one item per day.</p>
-                            <Link to="">Giveaways</Link>
+                            <Link to="/giveaway-items">Giveaways</Link>
                         </div>
                         <div className="hiwi-outer p-1 max-[506px]:flex flex-col">
                             <h4 className="order-2">Community</h4>

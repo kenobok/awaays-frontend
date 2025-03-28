@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from '../../assets/images/logo1.png';
 import '../../assets/styles/header-footer.css'
 
@@ -16,7 +16,7 @@ const Header = () => {
     const [isSticky, setIsSticky] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
     const isMobile = useMediaQuery({ query: "(max-width: 940px)" });
-
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -77,12 +77,12 @@ const Header = () => {
                 </Link>
                 <div className="block min-[941px]:flex gap-x-5 align-center justify-end">
                     <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[1rem] ${isFocused ? 'min-[941px]:text-[.5rem]' : ''} ${isFocused ? 'min-[992px]:text-[.7rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
-                        <Link to="/give-item" onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>
-                        <Link to="/giveaway-items" onClick={isMobile ? handleMenuToggle : undefined}>Giveaways</Link>
-                        <Link to="" onClick={isMobile ? handleMenuToggle : undefined}>Community</Link>
-                        <Link to="/how-it-works" onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
-                        <Link to="/FAQs" onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
-                        <Link to="/auth" onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>
+                        <Link to="/give-item" className={location.pathname === "/give-item" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>
+                        <Link to="/giveaway-items" className={location.pathname === "/giveaway-items" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Giveaways</Link>
+                        <Link to="" className={location.pathname === "/community" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Community</Link>
+                        <Link to="/how-it-works" className={location.pathname === "/how-it-works" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
+                        <Link to="/FAQs" className={location.pathname === "/FAQs" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
+                        <Link to="/auth" className={location.pathname === "/auth" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>
                     </div>
                     <form className="relative flex align-center py-[13px] peer">
                         <input name="search" type="search" placeholder="Search..." onFocus={handleFocus} onBlur={handleBlur} ref={searchInputRef} />
@@ -92,9 +92,9 @@ const Header = () => {
                     </form>
                 </div>
                 <div onClick={handleMenuToggle} ref={menuIconRef} className={`relative w-[30px] h-[25px] my-auto cursor-pointer overflow-hidden transition-all duration-300 min-[941px]:hidden z-[5] ${isFocused ? 'hide-menu-bar' : ''}`}>
-                    <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ${isOpen ? 'rotate-45 top-[11px] bg-[#777]' : 'top-0 right-0 bg-[#777]'}`}></div>
-                    <div className={`h-[3px] w-[85%] absolute transition-all duration-300 ${isOpen ? 'opacity-0 top-0 bg-[#777]': 'opacity-100 top-[11px] bg-[#777]'}`}></div>
-                    <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ${isOpen ? '-rotate-45 top-[11px] bg-[#777]' : 'bottom-0 right-0 bg-[#777]'}`}></div>
+                    <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 top-[11px] bg-[#777]' : 'top-0 right-0 bg-[#777]'}`}></div>
+                    <div className={`h-[3px] w-[85%] absolute transition-all duration-300 ease-in-out ${isOpen ? 'opacity-0 top-0 bg-[#777]': 'opacity-100 top-[11px] bg-[#777]'}`}></div>
+                    <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ease-in-out ${isOpen ? '-rotate-45 top-[11px] bg-[#777]' : 'bottom-0 right-0 bg-[#777]'}`}></div>
                 </div>
             </nav>
         </header>

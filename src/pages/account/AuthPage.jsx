@@ -1,6 +1,7 @@
-import { React, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
 import isEmail from 'validator/lib/isEmail';
 import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
@@ -10,21 +11,47 @@ import '../../assets/styles/auth.css'
 
 const AuthPage = () => {
 	const [signUp, setSignUp] = useState(true);
-	const [formData, setFormData] = useState({ name: "", email: "", phone: "", password: "", agree: false});
     const [inputFocus, setInputFocus] = useState({name: false, email: false, phone: false, password: false, agree: false});
     const [passwordToggle, setPasswordToggle] = useState(false);
 	const [errors, setErrors] = useState({});
+	const [formData, setFormData] = useState({ name: "", email: "", phone: "", password: "", agree: false, ip: "", isp: "", city: "", region: "", country: "", countryCode: ""});
 
-	const handleJoinUs = () => {
-		setFormData({ name: "", email: "", phone: "", password: "", agree: false});
-		setInputFocus({name: false, email: false, phone: false, password: false, agree: false});
+	useEffect(() => {
+		const fetchUserLocation = async () => {
+			try {
+				const locationData = await GetUserLocationFromAPI();	
+				setFormData((prevData) => ({
+					...prevData,
+					ip: locationData.ip,
+					isp: locationData.isp,
+					city: locationData.city,
+					region: locationData.region,
+					country: locationData.country,
+					countryCode: locationData.countryCode
+				}));
+			} catch (error) {
+				console.error("Failed to fetch location data:", error);
+			}
+		};
+	
+		fetchUserLocation();
+	}, []);
+	
+
+	const handleSignUp = () => {
+		setFormData((prevData) => ({ ...prevData, name: "", email: "", phone: "", password: "", agree: false }));		
+		setInputFocus({ name: false, email: false, phone: false, password: false, agree: false});
         setSignUp(true);
 		setErrors({});
     };
 
 	const handleSignIn = () => {
-		setFormData({ name: "", email: "", phone: "", password: "", agree: false});
-		setInputFocus({name: false, email: false, phone: false, password: false, agree: false});
+		setFormData(({ ip, isp, city, region, country, countryCode }) => ({
+			ip, isp, city, region, country, countryCode,
+			email: "",
+			password: "",
+		}));
+		setInputFocus({ email: false, password: false });
         setSignUp(false);
 		setErrors({});
     };
@@ -105,7 +132,11 @@ const AuthPage = () => {
             return;
         }
 
-        console.log("Form submitted successfully:", formData);
+		const { email, password } = formData;
+		console.log(
+			signUp ? "Sign Up form data:" : "Sign In form data:",
+			signUp ? formData : { email, password }
+		);
     };
 
 
@@ -120,7 +151,7 @@ const AuthPage = () => {
 
 			<motion.section className="px-30 py-10 max-[1081px]:px-20 max-[993px]:px-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-0 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }}>
 				<div className="auth-switch relative flex justify-center mb-4 mx-auto">
-					<button onClick={ handleJoinUs } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${signUp && 'active'}`}>SIGN UP</button>
+					<button onClick={ handleSignUp } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${signUp && 'active'}`}>SIGN UP</button>
 					<button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${!signUp && 'active'}`}>SIGN IN</button>
 				</div>
 				<motion.form onSubmit={handleSubmit} className="auth-form w-[23rem] max-[501px]:w-[90%] p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }}>
@@ -142,7 +173,7 @@ const AuthPage = () => {
 							<PhoneInput
 								international
 								countryCallingCodeEditable={false}
-								defaultCountry="NG"
+								defaultCountry={formData.countryCode}
 								value={formData.phone}
 								onChange={(phone) => handleChange(phone, "phone")}
 								onFocus={() => handleInputFocus("phone")} 
