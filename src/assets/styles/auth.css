@@ -68,11 +68,3 @@
     }
 }
 
-
-/* ========GIVE ITEM=========== */
-.auth-switch button.git {
-    border-radius: 0;
-    color: #fff;
-    background: var(--p-color);
-    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-}

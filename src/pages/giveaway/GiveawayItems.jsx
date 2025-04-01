@@ -122,13 +122,14 @@ const GiveawayItems = () => {
     const closeModal = () => {
         setIsOpen(false);
         setSelectedItem(null);
-        console.log('close Modal')
     };
 
 
     return (
         <main className={`relative overflow-hidden flex ${isOpen ? 'h-[100vh]' : ''}`}>
-            <div ref={filterRef} className={`filter-wrp w-70 ${hideFilter ? 'hidden' : ''} ${showFilter ? 'show-filter' : ''}`}>
+            <div className={`filter-wrp w-70 z-2 ${hideFilter ? 'hidden' : ''} ${showFilter ? 'show-filter' : ''}`}>
+                
+                <div  ref={filterRef} className="">
                 <FilterItem 
                     onClearFilter={handleClearFilter} 
                     onLocationChange={handleLocationChange} 
@@ -137,14 +138,16 @@ const GiveawayItems = () => {
                     onRemoveCountry={(updatedCountries) => {setFilteredItems(prev => ({...prev, country: updatedCountries}));}}
                     onRemoveState={(updatedStates) => {setFilteredItems(prev => ({...prev, state: updatedStates}));}}
                 />
+                </div>
+                <div className="filter-layer hidden max-[941px]:block"></div>
             </div>
-            <div className={`flex justify-between fixed bg-[var(--bg-color)] w-full pt-7 top-[3.5rem] left-0 text-lg z-1 ${hideFilter ? '' : 'hidden'}`}>
+            <div className={`flex justify-between fixed bg-[var(--bg-color)] w-full pt-7 top-[3.5rem] left-0 text-lg z-2 ${hideFilter ? '' : 'hidden'}`}>
                 <button ref={filterIconRef} className="ml-12 max-[768px]:ml-5 cursor-pointer" onClick={() => setShowFilter(!showFilter)}>
                     <FontAwesomeIcon icon="filter" /> {showFilter ? 'Close' : 'Filters'}
                 </button>
             </div>
             
-            <section className="relative flex-1 ml-2 max-[941px]:ml-0 translate-y-[8rem] max-[941px]:translate-y-[7rem] overflow-y-hidden">
+            <section className="relative flex-1 ml-2 max-[941px]:ml-0 translate-y-[8rem] max-[941px]:translate-y-[7rem] overflow-hidden">
                 { loading ? <Loader1 /> :
                     <motion.div className="relative grid grid-cols-4 max-[1401px]:grid-cols-3 max-[1081px]:grid-cols-2 max-[941px]:grid-cols-3 max-[768px]:grid-cols-2 max-[321px]:grid-cols-1 gap-7 max-[941px]:gap-x-5 p-5 pb-50 max-[561px]:gap-x-3" initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}>
                         {items.length > 0 ? (

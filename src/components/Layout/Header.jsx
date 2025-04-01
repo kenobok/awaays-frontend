@@ -92,9 +92,10 @@ const Header = () => {
         <header>
             <div className={`blur-bg ${blurBackground ? 'bluring' : ''}`}></div>
             <nav className={`navbar flex align-center justify-between gap-x-5 p-3 px-[20px] md:px-[50px] ${isSticky ? 'sticky' : ''}`}>
-                <Link to="/" className={`flex-1 my-auto`}>
+                <Link to="/" className={`my-auto`}>
                     <img src={logo} loading="lazy" alt="Awaays"/>
                 </Link>
+                <div className="flex-1"></div>
                 <div className="block min-[941px]:flex gap-x-5 align-center justify-end">
                     <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[1rem] ${isFocused ? 'min-[941px]:text-[.5rem]' : ''} ${isFocused ? 'min-[992px]:text-[.7rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
                         <Link to="/give-item" className={location.pathname === "/give-item" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>

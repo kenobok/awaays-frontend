@@ -112,8 +112,8 @@ const GiveItem = () => {
 				{/* <div className="relative flex justify-center mb-4 w-[23rem] max-[501px]:w-[90%] mx-auto">
 					<h2 className="text-2xl font-bold">Give Item</h2>
 				</div> */}
-                <div className="auth-switch relative flex justify-center mb-4 mx-auto">
-					<button className={`git text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold }`}>GIVE ITEM</button>
+                <div className="relative flex justify-center mb-4 mx-auto">
+					<button className={`border border-2 py-2 px-6 rounded-full shadow-lg text-center text-[var(--p-color)] text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold }`}>GIVE ITEM</button>
 				</div>
 				<motion.form className="give-item-form p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }} onSubmit={ handleSubmit }>
                     <div className='flex gap-x-7 max-[601px]:flex-col'>
