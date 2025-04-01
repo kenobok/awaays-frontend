@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import ContextProvider from './context/ContextProvider';
 import router from './router';
 import './App.css';
 
@@ -8,9 +8,9 @@ import './App.css';
 const App = () => {
 
     return (
-        <AuthProvider>
+        <ContextProvider>
             <RouterProvider router={router} />
-        </AuthProvider>
+        </ContextProvider>
     )
 }
 

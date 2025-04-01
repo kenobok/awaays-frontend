@@ -36,7 +36,7 @@ const AuthPage = () => {
 	
 		fetchUserLocation();
 	}, []);
-	
+
 
 	const handleSignUp = () => {
 		setFormData((prevData) => ({ ...prevData, name: "", email: "", phone: "", password: "", agree: false }));		

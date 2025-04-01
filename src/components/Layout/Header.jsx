@@ -1,22 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSearch } from "../../context/SearchContext";
 import logo from '../../assets/images/logo1.png';
 import '../../assets/styles/header-footer.css'
 
 
 const Header = () => {
-    const [isFocused, setIsFocused] = useState(false);
+    const isMobile = useMediaQuery({ query: "(max-width: 940px)" });
+    const location = useLocation();
     const searchInputRef = useRef(null);
     const menuIconRef = useRef(null);
     const menuRef = useRef(null);
+    const navigate = useNavigate()
+    const [isFocused, setIsFocused] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isSticky, setIsSticky] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
-    const isMobile = useMediaQuery({ query: "(max-width: 940px)" });
-    const location = useLocation();
+    const [searchQuery, setSearchQuery] = useState("");
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -37,8 +41,24 @@ const Header = () => {
         };
     }, [isSticky]);
 
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (searchQuery === "") {
+            searchInputRef.current.value = "";
+        }
+    }, [searchQuery]);
+
     const handleFocus = () => setIsFocused(true);
-    const handleBlur = () => setIsFocused(false);
+    const handleBlur = () => {
+        setSearchQuery("");
+        setIsFocused(false);
+    }
 
     const handleIconClick = () => {
         if (searchInputRef.current) {
@@ -60,12 +80,12 @@ const Header = () => {
         }
     };
 
-    useEffect(() => {
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/giveaway-items?search=${encodeURIComponent(searchQuery)}`);
+        }
+    };
 
 
     return (
@@ -84,8 +104,8 @@ const Header = () => {
                         <Link to="/FAQs" className={location.pathname === "/FAQs" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
                         <Link to="/auth" className={location.pathname === "/auth" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>
                     </div>
-                    <form className="relative flex align-center py-[13px] peer">
-                        <input name="search" type="search" placeholder="Search..." onFocus={handleFocus} onBlur={handleBlur} ref={searchInputRef} />
+                    <form onSubmit={handleSearch} className="relative flex align-center py-[13px] peer">
+                        <input name="search" type="search" placeholder="Search..." className={`${searchQuery ? 'search-active' : ''}`} value={searchQuery} onFocus={handleFocus} onBlur={handleBlur} ref={searchInputRef} onChange={(e) => setSearchQuery(e.target.value)} />
                         <span className={`text-[#aaa] absolute top-[50%] transform-[translateY(-50%)] right-[15px] ${isFocused ? 'hidden' : ''}`}>
                             <FontAwesomeIcon icon="search" onClick={handleIconClick} />
                         </span>

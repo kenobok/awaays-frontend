@@ -14,7 +14,7 @@
 
 * {
     box-sizing: border-box;
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     font-family: "Josefin Sans",  Arial, sans-serif;
 }
 
@@ -24,10 +24,16 @@ body {
     background-color: #f7f8ff;
     color: #666;
     font-size: 16.5px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-body.no-scroll {
-    overflow: hidden;
+.container-wrp {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0;
 }
 
 ::-webkit-scrollbar {
@@ -87,6 +93,9 @@ a:hover {
     /* color: var(--p-color); */
     text-decoration: none;
 }
+
+
+/* ======== PRELOADER ========== */
 
 #preloader {
     opacity: 1;

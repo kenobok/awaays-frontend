@@ -21,19 +21,26 @@
 .single-giveaway-item p {
     padding: 0 15px;
     font-size: 1.03rem;
-    line-height: 1.2rem;
+    line-height: 1.37rem;
 }
-.single-giveaway-item:hover h3,
-.single-giveaway-item:hover p {
-    color: #444;
-}
-.single-giveaway-item svg {
-    transform: translateY(-2px);
-}
-.single-giveaway-item:hover b,
-.single-giveaway-item:hover svg {
+.single-giveaway-item:hover svg,
+.single-giveaway-item:hover .font-bold {
     color: var(--p-color);
 }
+.filter-wrp.show-filter {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+/* ====== Giveaway Details Modal ======== */
+
+/* .modal-img-slide img {
+    object-fit: contain;
+    object-position: center;
+}  */
 
 @media (max-width: 767px) {
     .give-item-wrp {
@@ -63,7 +70,7 @@
     .single-giveaway-item p {
         padding: 0 10px;
         font-size: .9rem;
-        line-height: .9rem;
+        line-height: 1.15rem;
     }
     .single-giveaway-item svg {
         font-size: 10px;

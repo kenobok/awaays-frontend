@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import { Link } from 'react-router-dom'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay, EffectCards, Mousewheel } from 'swiper/modules'
 import { motion } from "framer-motion";
 import img1 from '../../assets/images/awaays1.png'
@@ -15,16 +15,17 @@ const Hero = () => {
 
 
     return (
-        <section className={`hero block min-[993px]:flex justify-evenly align-center gap-x-5`}>
+        <section className={`hero relative block min-[993px]:flex justify-evenly align-center gap-x-5`}>
+            <div className="absolute inset-0 bg-[rgba(0,0,0,.7)] backdrop-blur-[3px]"></div>
             <motion.div initial={{ opacity: 0, x: -500 }} animate={{ opacity: 1, x: 0 }} transition={{duration: 1.5, ease: "easeInOut"  }} className="hero-text m-auto">
                 <h1>Why Keep It?</h1><h1>Someone Needs it!</h1><h1>Give It Away!</h1>
                 <p>Give away what you don’t need or find something you need <b className="text-[var(--p-color)]">FOR FREE.</b> Join our community and share the joy of giving.</p>
                 <div className="flex justify-evenly mt-5 py-2">
                     <Link to="/give-item" className="inline-block bg-[var(--p-color)] text-white py-2 px-4 rounded-xl">Give Item</Link>
-                    <Link to="/giveaway-items" className="inline-block bg-gray-700 text-white py-2 px-4 rounded-xl">Giveaways</Link>
+                    <Link to="/giveaway-items" className="inline-block bg-gray-900 text-white py-2 px-4 rounded-xl">Giveaways</Link>
                 </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }} className="m-auto hero-slide-wrp">
+            <motion.div initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }} className="hero-slide-wrp">
                 <Swiper
                     modules={[Navigation, Pagination, Autoplay, EffectCards, Mousewheel]}
                     spaceBetween={0}

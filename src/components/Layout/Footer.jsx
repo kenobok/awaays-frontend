@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF, faTwitter, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
@@ -7,6 +7,7 @@ import '../../assets/styles/header-footer.css'
 
 
 export default function Footer() {
+    const location = useLocation();
     const [bactToTop, setBactToTop] = useState(false);
 
     const handleScroll = () => {
@@ -32,7 +33,7 @@ export default function Footer() {
 
 
     return (
-        <footer className="mt-[15rem]">
+        <footer className={`mt-[15rem] ${location.pathname == '/giveaway-items' ? 'hidden' : ''}`}>
             <section className="relative px-[8rem] max-[768px]:px-[4rem] pt-[12rem] max-[768px]:pt-[8rem] pb-[8rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <Link to="/" className="block mb-5">
                     <img loading="lazy" src={logo} alt="logo" className="w-[12rem] max-[768px]:w-[10rem] mx-auto"/>

@@ -1,16 +1,11 @@
-import preloader from '../../assets/images/preloader.gif'
+import '../../assets/styles/preloader.css'
 
 
-
-
-const Preloader = () => {
-
-
+const Loader1 = () => {
     return (
-        <div class="preloader">
-            
+        <div className="preloader1">
+            <div className="loader1"></div>
         </div>
     );
 };
-
-export default Preloader;
+export { Loader1 }

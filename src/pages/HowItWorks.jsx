@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import '../assets/styles/about.css'
 
 
 const HowItWorks = () => {
 
     return (
-        <main className="hiw-wrp mx-auto p-10 pb-20 rounded-lg translate-y-[6rem] max-[941px]:p-5">
+        <motion.main className="hiw-wrp mx-auto p-10 pb-20 rounded-lg translate-y-[6rem] max-[941px]:p-5" initial={{ y: 200, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1 }}>
             <section className="howitworks-hero text-center text-white rounded-3xl">
                 <div className="howitworks-hero-inner w-full h-full p-40 max-[993px]:py-20 max-[768px]:px-5 rounded-3xl">
                     <h1 className="text-4xl font-bold" style={{ color:'#eee' }}>HOW IT WORKS</h1>
@@ -142,7 +143,7 @@ const HowItWorks = () => {
                     </ul>
                 </div>
             </section>
-        </main>
+        </motion.main>
     )
 }
 

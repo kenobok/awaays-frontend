@@ -1,53 +1,175 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mockItems from "../../components/giveaway/mockItems";
 import FilterItem from '../../components/giveaway/FilterItems';
+import GiveawayItemDetails from '../../components/giveaway/GiveawayItemDetails';
+import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
+import { Loader1 } from '../../components/utils/Preloader';
 
 const GiveawayItems = () => {
-    const [items, setItems] = useState([]);
     const hideFilter = useMediaQuery({ query: "(max-width: 940px)" });
-    
+    const filterIconRef = useRef(null);
+    const filterRef = useRef(null);
+    const navigate = useNavigate();
+    const [showFilter, setShowFilter] = useState(false);
+    const [items, setItems] = useState([]);
+    const [searchParams] = useSearchParams();
+    const searchQuery = searchParams.get("search") || "";
+    const [filteredItems, setFilteredItems] = useState({ country: [], state: [] });
+    const [userLocation, setUserLocation] = useState({ country: null, state: null });
+    const [loading, setLoading] = useState(true);
+    const [isCloseToMe, setIsCloseToMe] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
 
     useEffect(() => {
-        setItems(mockItems);
+        const fetchUserLocation = async () => {
+            try {
+                const locationData = await GetUserLocationFromAPI();
+                const userLoc = { country: [locationData.country], state: locationData.region ? [locationData.region] : []};
+                setUserLocation(userLoc);
+                setFilteredItems(userLoc); 
+                filterItems(userLoc, searchQuery); 
+            } catch (error) {
+                console.error("Error fetching user location:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUserLocation();
     }, []);
 
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    useEffect(() => {
+        filterItems(filteredItems, searchQuery);
+    }, [filteredItems, searchQuery]);
+
+    const filterItems = (location, query) => {
+        let displayItems = mockItems;
+
+        if (query) {
+            displayItems = displayItems.filter((item) =>
+                item.name.toLowerCase().includes(query.toLowerCase()) ||
+                item.purpose.toLowerCase().includes(query.toLowerCase()) ||
+                item.description.toLowerCase().includes(query.toLowerCase()) ||
+                item.country.toLowerCase().includes(query.toLowerCase()) ||
+                item.state.toLowerCase().includes(query.toLowerCase())
+            );
+        }
+        if (location?.country?.length) {
+            displayItems = displayItems.filter(item => location.country.includes(item.country));
+        }
+        if (location?.state?.length) {
+            displayItems = displayItems.filter(item => location.state.includes(item.state));
+        }
+        setItems(displayItems);
+    };
+
+    const handleClickOutside = (e) => {
+        if (filterIconRef.current && !filterIconRef.current.contains(e.target) && filterRef.current && !filterRef.current.contains(e.target)) {
+            setShowFilter(false)
+        }
+    };
+
+    const handleClearFilter = () => {
+        navigate('/giveaway-items')
+        if (isCloseToMe) {
+            setFilteredItems(userLocation);
+        }
+        else {
+            setFilteredItems({country: null, state: null});
+        }
+    };
+
+    const handleLocationChange = (e) => {
+        const value = e.target.id;
+        setIsCloseToMe(value === "closeToMe");
+        if (value === "allLocation") {
+            setFilteredItems({ country: null, state: null });  
+        } else {
+            setFilteredItems({ country: userLocation.country, state: userLocation.state }); 
+        }
+    };
+
+    const handleMultipleFilter = (updatedFilters) => {
+        setFilteredItems((prev) => ({
+            country: updatedFilters.country
+                ? [...new Set([...(Array.isArray(prev?.country) ? prev.country : [prev.country]).filter(Boolean), updatedFilters.country])]
+                : prev?.country || [],
+    
+            state: updatedFilters.state
+                ? [...new Set([...(Array.isArray(prev?.state) ? prev.state : [prev.state]).filter(Boolean), updatedFilters.state])]
+                : prev?.state || [],
+        }));
+
+    };    
+
+    const openModal = (item) => {
+        setIsOpen(true);
+        setSelectedItem(item);
+    };
+
+    const closeModal = () => {
+        setIsOpen(false);
+        setSelectedItem(null);
+        console.log('close Modal')
+    };
+
+
     return (
-        <main className="overflow-hidden flex">
-            <section className={`relative w-70 ${hideFilter ? 'hidden' : ''}`}>
-                <FilterItem />
-            </section>
-            <div className={`${hideFilter ? '' : 'hidden'}`}>
-                <FontAwesomeIcon icon="funnel" className="ml-2" />
+        <main className={`relative overflow-hidden flex ${isOpen ? 'h-[100vh]' : ''}`}>
+            <div ref={filterRef} className={`filter-wrp w-70 ${hideFilter ? 'hidden' : ''} ${showFilter ? 'show-filter' : ''}`}>
+                <FilterItem 
+                    onClearFilter={handleClearFilter} 
+                    onLocationChange={handleLocationChange} 
+                    isCloseToMe={isCloseToMe} 
+                    multipleFilter={handleMultipleFilter} 
+                    onRemoveCountry={(updatedCountries) => {setFilteredItems(prev => ({...prev, country: updatedCountries}));}}
+                    onRemoveState={(updatedStates) => {setFilteredItems(prev => ({...prev, state: updatedStates}));}}
+                />
             </div>
-            <motion.section className="flex-1 translate-y-[8rem] max-[993px]:translate-y-[7rem] max-[768px]:translate-y-[6rem]" initial={{ opacity: 0, y: 500 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}>
-                <div className="flex justify-evenly flex-wrap p-5 pb-50 gap-x-5 max-[561px]:gap-x-3 gap-y-7">
-                    {items.length > 0 ? (
-                        items.map((item) => (
-                            <motion.div key={item.id} className="single-giveaway-item w-[15rem] max-[561px]:w-[12rem] max-[461px]:w-[11rem] max-[431px]:w-[10rem] max-[401px]:w-[9rem] max-[356px]:w-[8rem] max-[320px]:w-[12rem] bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1.5, ease: "easeInOut" }}>
-                                <Link to="">
-                                    <img src={item.images[0]} alt={item.name} className="w-full h-50 object-cover rounded-2xl" />
-                                    <h3 className="text-lg font-semibold m-0 mt-3 truncate">{item.purpose}</h3>
-                                    <h3 className="text-md font-semibold truncate mt-1"> 
-                                        <FontAwesomeIcon icon="share" className="mr-1 text-xs" />
-                                        {item.name}
-                                    </h3>
-                                    <p className="p-0 m-0 mt-1 truncate">{item.description}</p>
-                                    <h3 className="p-0 m-0 mt-1 truncate">
+            <div className={`flex justify-between fixed bg-[var(--bg-color)] w-full pt-7 top-[3.5rem] left-0 text-lg z-1 ${hideFilter ? '' : 'hidden'}`}>
+                <button ref={filterIconRef} className="ml-12 max-[768px]:ml-5 cursor-pointer" onClick={() => setShowFilter(!showFilter)}>
+                    <FontAwesomeIcon icon="filter" /> {showFilter ? 'Close' : 'Filters'}
+                </button>
+            </div>
+            
+            <section className="relative flex-1 ml-2 max-[941px]:ml-0 translate-y-[8rem] max-[941px]:translate-y-[7rem] overflow-y-hidden">
+                { loading ? <Loader1 /> :
+                    <motion.div className="relative grid grid-cols-4 max-[1401px]:grid-cols-3 max-[1081px]:grid-cols-2 max-[941px]:grid-cols-3 max-[768px]:grid-cols-2 max-[321px]:grid-cols-1 gap-7 max-[941px]:gap-x-5 p-5 pb-50 max-[561px]:gap-x-3" initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}>
+                        {items.length > 0 ? (
+                            items.map((item) => (
+                                <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" onClick={() => openModal(item)} initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1.5, ease: "easeInOut" }}>
+                                    <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
+                                    <h3 className="font-bold mt-3 truncate">{item.purpose}</h3>
+                                    <h3 className="font-semibold truncate">{item.name}</h3>
+                                    <p className="truncate">{item.description}</p>
+                                    <p className="truncate">
                                         <FontAwesomeIcon icon="location-dot" className="mr-1 text-sm" />
                                         {item.country}, {item.state}
-                                    </h3>
-                                </Link>
-                            </motion.div>
-                        ))
-                    ) : (
-                        <p className="text-center text-gray-500 col-span-3">No items availabla.</p>
-                    )}
-                </div>
-            </motion.section>
+                                    </p>
+                                </motion.div>
+                            ))
+                        ) : (
+                            <div className="flex flex-col justify-center absolute transform top-10 left-[50%] -translate-x-[50%] text-[1rem]">
+                                <p className="text-gray-500">No items available.</p>
+                                <FontAwesomeIcon icon="box-open" className="text-[var(--p-color)]" />
+                            </div>
+                        )}
+                    </motion.div>
+                }
+            </section>
+            <GiveawayItemDetails isOpen={isOpen} item={selectedItem} onCloseModal={closeModal}/>
         </main>
     );
 };

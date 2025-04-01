@@ -117,8 +117,8 @@ const mockItems = [
         name: "School Bag", 
         description: "A spacious and durable backpack designed for students of all ages. It has multiple compartments for books, stationery, and personal items.",
         instruction: "This school bag should be used by students who need it for carrying their school supplies. Do not misuse or sell it.",
-        country: "Kenya",
-        state: "Nairobi",
+        country: "Nigeria",
+        state: "Lagos",
         images: [
             "https://images.pexels.com/photos/5920759/pexels-photo-5920759.jpeg?auto=compress&cs=tinysrgb&w=600"
         ]
@@ -139,6 +139,126 @@ const mockItems = [
             "https://images.pexels.com/photos/5920759/pexels-photo-5920759.jpeg?auto=compress&cs=tinysrgb&w=600"
         ]
     },
+    { 
+        id: 11, 
+        purpose: "Remote Work Support", 
+        name: "Tablet", 
+        description: "A functional tablet with a touch screen, ideal for students, freelancers, and professionals for remote work or study.",
+        instruction: "This device should be used for productive activities such as studying, freelancing, or work-related tasks. Not for resale.",
+        country: "United States",
+        state: "California",
+        images: [
+            "https://images.pexels.com/photos/5082571/pexels-photo-5082571.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 12, 
+        purpose: "Healthcare Assistance", 
+        name: "Wheelchair", 
+        description: "A well-maintained wheelchair to help individuals with mobility challenges.",
+        instruction: "Must be given to a person in need of mobility assistance.",
+        country: "India",
+        state: "Mumbai",
+        images: [
+            "https://images.pexels.com/photos/3376799/pexels-photo-3376799.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 13, 
+        purpose: "Winter Relief", 
+        name: "Blankets", 
+        description: "Warm blankets in good condition to help people in cold weather conditions.",
+        instruction: "Should be donated to homeless individuals or families struggling with winter conditions.",
+        country: "Nigeria",
+        state: "Lagos",
+        images: [
+            "https://images.pexels.com/photos/2718911/pexels-photo-2718911.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 14, 
+        purpose: "Digital Learning", 
+        name: "Headphones", 
+        description: "A pair of noise-canceling headphones, great for online learning or remote work.",
+        instruction: "Intended for students or professionals who need to focus during study or work hours.",
+        country: "United Kingdom",
+        state: "Manchester",
+        images: [
+            "https://images.pexels.com/photos/3394666/pexels-photo-3394666.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 15, 
+        purpose: "Daily Commuting", 
+        name: "Bus Pass", 
+        description: "A preloaded bus pass for public transportation to assist individuals commuting to work or school.",
+        instruction: "Should be given to someone struggling with transportation costs.",
+        country: "Germany",
+        state: "Munich",
+        images: [
+            "https://images.pexels.com/photos/178349/pexels-photo-178349.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 16, 
+        purpose: "Food Assistance", 
+        name: "Grocery Package", 
+        description: "A package containing essential food items such as rice, beans, and canned goods.",
+        instruction: "Must be distributed to families in need, particularly those facing food insecurity.",
+        country: "Nigeria",
+        state: "Abuja",
+        images: [
+            "https://images.pexels.com/photos/5946691/pexels-photo-5946691.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 17, 
+        purpose: "Medical Supplies", 
+        name: "First Aid Kit", 
+        description: "A complete first aid kit with essential supplies like bandages, antiseptics, and pain relievers.",
+        instruction: "Should be placed in a community center or given to an individual who needs medical emergency supplies.",
+        country: "South Africa",
+        state: "Johannesburg",
+        images: [
+            "https://images.pexels.com/photos/4226931/pexels-photo-4226931.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 18, 
+        purpose: "School Support", 
+        name: "Stationery Set", 
+        description: "A complete set of stationery including pens, pencils, erasers, and notebooks for students.",
+        instruction: "Must be given to students who cannot afford school supplies.",
+        country: "Kenya",
+        state: "Mombasa",
+        images: [
+            "https://images.pexels.com/photos/3992949/pexels-photo-3992949.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 19, 
+        purpose: "Safe Drinking Water", 
+        name: "Water Purifier", 
+        description: "A compact water purifier to provide clean drinking water for a household or small community.",
+        instruction: "Should be donated to a family or community that lacks access to clean water.",
+        country: "Bangladesh",
+        state: "Dhaka",
+        images: [
+            "https://images.pexels.com/photos/4031773/pexels-photo-4031773.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    },
+    { 
+        id: 20, 
+        purpose: "Job Search Support", 
+        name: "Resume Printing Voucher", 
+        description: "A voucher that allows free printing of resumes and job application documents.",
+        instruction: "Should be given to job seekers who need printed resumes for job interviews.",
+        country: "Nigeria",
+        state: "Delta",
+        images: [
+            "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=600"
+        ]
+    }
 ];
 
 export default mockItems;
