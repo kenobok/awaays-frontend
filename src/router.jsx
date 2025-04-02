@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import AuthPage from "./pages/account/AuthPage";
 import GiveItem from "./pages/giveaway/GiveItem";
 import GiveawayItems from './pages/giveaway/GiveawayItems';
+import Leaderboard from "./pages/community/Leaderboard";
 import HowItWorks from "./pages/HowItWorks";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
             { path: "auth", element: <AuthPage /> },
             { path: 'give-item', element: <GiveItem />, /*loader: checkAuth*/ },
             { path: 'giveaway-items', element: <GiveawayItems /> },
+            { path: 'community/leaderboard', element: <Leaderboard /> },
             { path: "how-it-works", element: <HowItWorks /> },
             { path: "about-us", element: <AboutUs /> },
             { path: "contact-us", element: <ContactUs /> },

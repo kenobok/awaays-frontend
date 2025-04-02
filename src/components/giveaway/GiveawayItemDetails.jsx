@@ -3,10 +3,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectCards, Mousewheel } from 'swiper/modules';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 const GiveawayItemDetails = ({ isOpen, item, onCloseModal }) => {
     const modalRef = useRef(null);
-    const modalContentRef = useRef(null);
+    const [isEnlarged, setIsEnlarged] = useState(false);
 
 
     useEffect(() => {
@@ -26,8 +28,8 @@ const GiveawayItemDetails = ({ isOpen, item, onCloseModal }) => {
     const images = item.images || [];
 
     return (
-        <div className={`modal-wrp w-full h-[100vh] absolute top-0 left-0 bg-[rgba(0,0,0,.5)] z-5`}>
-            <div ref={modalRef} className="modal flex justify-between bg-[var(--bg-color)] w-[90%] max-[768px]:w-[95%] h-[90vh] p-10 max-[768px]:px-7 max-[768px]:py-0 max-[577px]:px-0 rounded-3xl absolute top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] overflow-hidden">
+        <div className={`modal-wrp w-[100%] h-[100%] fixed top-0 left-0 bg-[rgba(0,0,0,.5)] z-5`}>
+            <div ref={modalRef} className="modal flex justify-between bg-[var(--bg-color)] w-[90%] max-[768px]:w-[95%] h-[90vh] p-10 max-[768px]:px-7 max-[768px]:py-2 max-[577px]:px-0 rounded-3xl absolute top-[50%] left-[50%] transform -translate-x-[50%] -translate-y-[50%] overflow-hidden">
                 <FontAwesomeIcon icon="times" className="absolute top-2 right-3 text-[1.5rem] text-red-500 cursor-pointer" onClick={onCloseModal} />
                 <div className="modal-content flex w-full h-full space-x-5 max-[768px]:block max-[768px]:p-5 overflow-y-auto overflow-x-hidden">
                     <motion.div className="flex-1 modal-img overflow-hidden m-auto max-[768px]:mb-5" initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}>
@@ -39,12 +41,14 @@ const GiveawayItemDetails = ({ isOpen, item, onCloseModal }) => {
                             pagination={{ clickable: true }}
                             autoplay={{ delay: 3000, disableOnInteraction: false }}
                             mousewheel={true}
-                            className="modal-img-slide"
+                            className={`modal-img-slide ${isEnlarged ? 'enlarge-img bg-gray-700 cursor-zoom-out' : '' }`}
                         >
                             {images.length > 0 ? (
                                 images.map((image, index) => (
                                     <SwiperSlide key={index}>
-                                        <img src={image} alt={`slide-${index}`} className="w-full h-[30rem] m-auto rounded-xl object-contain"/>
+                                        <zoom>
+                                        <img src={image} alt={`slide-${index}`} className={`w-full h-[30rem] m-auto rounded-xl object-contain transition-transform duration-300 ${isEnlarged ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} onClick={() => {setIsEnlarged(!isEnlarged)}}/>
+                                        </zoom>
                                     </SwiperSlide>
                                 ))
                             ) : (

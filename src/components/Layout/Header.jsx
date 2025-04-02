@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useSearch } from "../../context/SearchContext";
+import { motion } from 'framer-motion'
 import logo from '../../assets/images/logo1.png';
 import '../../assets/styles/header-footer.css'
 
@@ -13,6 +13,7 @@ const Header = () => {
     const searchInputRef = useRef(null);
     const menuIconRef = useRef(null);
     const menuRef = useRef(null);
+    const dropDownRef = useRef(null);
     const navigate = useNavigate()
     const [isFocused, setIsFocused] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -20,6 +21,7 @@ const Header = () => {
     const [isSticky, setIsSticky] = useState(false);
     const [blurBackground, setBlurBackground] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 
     useEffect(() => {
@@ -78,6 +80,9 @@ const Header = () => {
             setShowMenu(false);
             setBlurBackground(false);
         }
+        if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
+            setIsDropdownOpen(false)
+        }
     };
 
     const handleSearch = (e) => {
@@ -85,6 +90,10 @@ const Header = () => {
         if (searchQuery.trim()) {
             navigate(`/giveaway-items?search=${encodeURIComponent(searchQuery)}`);
         }
+    };
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
     };
 
 
@@ -95,12 +104,22 @@ const Header = () => {
                 <Link to="/" className={`my-auto`}>
                     <img src={logo} loading="lazy" alt="Awaays"/>
                 </Link>
-                <div className="flex-1"></div>
+                <div className={`flex-1 ${isFocused ? 'max-[577px]:hidden' : ''}`}></div>
                 <div className="block min-[941px]:flex gap-x-5 align-center justify-end">
-                    <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[1rem] ${isFocused ? 'min-[941px]:text-[.5rem]' : ''} ${isFocused ? 'min-[992px]:text-[.7rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
+                    <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[.9rem] ${isFocused ? 'min-[941px]:text-[.3rem]' : ''} ${isFocused ? 'min-[993px]:text-[.5rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
                         <Link to="/give-item" className={location.pathname === "/give-item" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>
                         <Link to="/giveaway-items" className={location.pathname === "/giveaway-items" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Giveaways</Link>
-                        <Link to="" className={location.pathname === "/community" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Community</Link>
+                        <div ref={dropDownRef} className="relative">
+                            <button className={`${isDropdownOpen ? "active" : ""}`} onClick={toggleDropdown}>Community<b className={`${isDropdownOpen ? 'arrow-up' : ''}`}>{`>`}</b></button>
+                            {isDropdownOpen && (
+                                <motion.div className="dropdown-links mt-1 p-5 absolute max-[941px]:top-[2.9rem] left-[50%] transform -translate-x-[50%] w-[12rem] max-[941px]:w-full bg-[var(--bg-color)] max-[941px]:bg-gray-200 shadow-lg rounded-2xl z-5" initial={{y: 100, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: .5, ease: "easeInOut"}}>
+                                    <Link to="/community/leaderboard" className="block px-4 py-2 text-sm">Leaderboard</Link>
+                                    <Link to="/community/forum" className="block px-4 py-2 text-sm">Forum</Link>
+                                    <Link to="/community/groups" className="block px-4 py-2 text-sm">Groups</Link>
+                                    <Link to="/community/events" className="block px-4 py-2 text-sm">Events</Link>
+                                </motion.div>
+                            )}
+                        </div>
                         <Link to="/how-it-works" className={location.pathname === "/how-it-works" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
                         <Link to="/FAQs" className={location.pathname === "/FAQs" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
                         <Link to="/auth" className={location.pathname === "/auth" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>

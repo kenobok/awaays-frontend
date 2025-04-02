@@ -126,7 +126,7 @@ const GiveawayItems = () => {
 
 
     return (
-        <main className={`relative overflow-hidden flex ${isOpen ? 'h-[100vh]' : ''}`}>
+        <main className={`relative overflow-hidden flex`}>
             <div className={`filter-wrp w-70 z-2 ${hideFilter ? 'hidden' : ''} ${showFilter ? 'show-filter' : ''}`}>
                 
                 <div  ref={filterRef} className="">
@@ -147,7 +147,7 @@ const GiveawayItems = () => {
                 </button>
             </div>
             
-            <section className="relative flex-1 ml-2 max-[941px]:ml-0 translate-y-[8rem] max-[941px]:translate-y-[7rem] overflow-hidden">
+            <section className="relative flex-1 ml-2 max-[941px]:ml-0 translate-y-[8rem] max-[941px]:translate-y-[7rem]">
                 { loading ? <Loader1 /> :
                     <motion.div className="relative grid grid-cols-4 max-[1401px]:grid-cols-3 max-[1081px]:grid-cols-2 max-[941px]:grid-cols-3 max-[768px]:grid-cols-2 max-[321px]:grid-cols-1 gap-7 max-[941px]:gap-x-5 p-5 pb-50 max-[561px]:gap-x-3" initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}>
                         {items.length > 0 ? (

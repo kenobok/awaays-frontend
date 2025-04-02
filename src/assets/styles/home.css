@@ -1,6 +1,6 @@
 .hero {
     position: relative;
-    padding: 5rem 0 5rem 3rem;
+    padding: 5rem .5rem;
     transform: translateY(5.5rem);
     margin: 0 0 5rem 0;
     height: auto;
@@ -60,7 +60,7 @@
     width: 40rem;
     height: 28rem;
     overflow: hidden;
-    border-radius: 2rem 0 0 2rem;
+    border-radius: 2rem;
 }
 .hero .hero-slide::before {
     content: "";
@@ -176,6 +176,15 @@
     outline: none;
 }
 
+/* ============== HOME TESTIMONIAL ============== */
+.home-testimonial {
+    width: 100%;
+    height: 100%;
+    background: url('../images/awaays3.png') no-repeat center;
+    background-size: cover;
+    border-radius: 50%;
+}
+
 
 /* ============== MEDIA QUERIES ============== */
 @media (max-width: 1300px) {
@@ -235,7 +244,7 @@
 @media (max-width: 992px) {
     .hero {
         border-radius: 15rem;
-        padding: 5rem 3rem 0 3rem;
+        padding: 5rem 3rem 0.5rem 3rem;
     }
     .hero .hero-text {
         padding-left: 0;
@@ -259,8 +268,6 @@
     .hero .hero-slide {
         width: 40rem;
         height: 28rem;
-        border-radius: 2rem 2rem 0 0;
-        margin-bottom: -1px;
     }
 }
 
@@ -274,7 +281,7 @@
 @media (max-width: 767px) {
     .hero {
         border-radius: 10rem;
-        padding: 4rem 1rem 0 1rem;
+        padding: 4rem 1rem .5rem 1rem;
     }
     .hero h1 {
         font-size: 2.5rem;
@@ -330,6 +337,12 @@
     .hiwi-outer:nth-of-type(even) .hiwi::after {
         top: 7rem;
         transform: rotate(315deg);
+    }
+}
+
+@media (max-width: 400px) {
+    .hero {
+        border-radius: 5rem;
     }
 }
 
