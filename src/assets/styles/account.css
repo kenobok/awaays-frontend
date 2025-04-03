@@ -1,0 +1,168 @@
+.auth-img {
+    background-image: url('../images/awaays1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0 15rem 15rem 0
+}
+.auth-form {
+    box-shadow: 0 0 10px rgba(0,0,0,.15);
+    background: var(--bg-color);
+}
+.auth-switch button {
+    padding: .7rem 3rem;
+    background: rgba(0,0,0,.05);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-bottom: 2px solid rgba(0,0,0,.1);
+    transform: translateX(-1px);
+}
+.auth-switch button:hover {
+    color: var(--p-color);
+    border-bottom: 2px solid rgba(0,0,0,.15);
+}
+.auth-switch button.active {
+    color: var(--bg-color);
+    background: var(--p-color);
+    border-bottom: 2px solid rgba(0,0,0,.15);
+}
+.auth-switch button:nth-child(1) {
+    border-radius: 1rem 0 0 1rem;
+    clip-path: polygon(0% 0%, 100% 0%, 90% 100%, 0% 100%);
+}
+.auth-switch button:nth-child(2) {
+    border-radius: 0 1rem 1rem 0;
+    clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+.continue-with-google button {
+    font-size: .75rem;
+    font-family: Arial, sans-serif;
+    padding: 9px 12px;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0,0,0,.7);
+}
+.continue-with-google button:hover {
+    box-shadow: 0 0 4px rgba(0,0,0,.5);
+}
+
+
+/* ========== DASHBOARD ============= */
+.dashboard .fa-upload {
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    font-size: 1.7rem;
+    transform: rotate(90deg)
+}
+.dashboard-links li {
+    list-style-type: none;
+    margin: 25px 0;
+    border-bottom: 2px solid transparent;
+}
+.dashboard-links li a {
+    display: inline-block;
+    color: #ccc;
+    font-size: 1rem;
+    padding: 5px 10px;
+    width: 100%;
+}
+.dashboard-links a svg {
+    margin-right: 6px;
+}
+.dashboard-links li:hover {
+    border-bottom: 2px solid #ddd;
+    border-radius: 10%;
+}
+.dashboard-links li:hover a,
+.dashboard-links li.active a {
+    color: #fff;
+}
+.dashboard-links li.active {
+    border-bottom: 2px solid #fff;
+    border-radius: 15%;
+}
+.profile-data div {
+    text-align: left;
+    margin-bottom: 25.9px;
+    padding-bottom: 25.9px;
+    border-bottom: 1px solid #D1D5DB;
+}
+.profile-data div:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+.profile-data div h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-right: 10px;
+}
+.profile-data div p {
+    word-wrap: break-word;
+    line-height: 1.3rem;
+}
+
+
+/* =========== MEDIA QUERIES ========== */
+@media (max-width: 940px) {
+    .dashboard-menu,
+    .dashboard-menu.hide {
+        visibility: hidden;
+        opacity: 0;
+        width: 0;
+        transition: all .7s ease-in-out;
+    }
+    .dashboard-menu.toggle-dash-nav {
+        visibility: visible;
+        opacity: 1;
+        transition: all .7s ease-in-out;
+    }
+    .dashboard .fa-upload.visible {
+        left: 15.3rem;
+        transform: rotate(270deg);
+        transition: all .7s ease-in-out;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-wrp {
+        display: block;
+        height: 100%;
+        transform: translateY(2rem);
+    }
+    .auth-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        filter: blur(.06rem);
+    }
+    .auth-switch button {
+        color: var(--bg-color);
+        background: rgba(0,0,0,.5);
+    }
+}
+
+@media (max-width: 390px) {
+    .user-profile .profile-data,
+    .user-profile form {
+        width: 18rem;
+    }
+}
+
+@media (min-width: 941px) and (max-width: 980px) {
+    .user-profile .profile-data,
+    .user-profile form {
+        width: 18rem;
+    }
+}
+
+@media (min-width: 671px) and (max-width: 741px) {
+    .user-profile .profile-data,
+    .user-profile form {
+        width: 18rem;
+    }
+}
+

@@ -4,6 +4,7 @@ import Features from '../components/home/Features';
 import HowItWorks from '../components/home/HowItWorks';
 import Testimonial from '../components/home/Testimonial';
 import HomeLeaderboard from '../components/home/HomeLeaderboard';
+import HomeEvents from '../components/home/HomeEvents';
 import '../assets/styles/home.css';
 
 
@@ -18,6 +19,7 @@ const Home = () => {
                 <HomeLeaderboard />
             </div>
             <HowItWorks />
+            <HomeEvents />
         </main>
     );
 };

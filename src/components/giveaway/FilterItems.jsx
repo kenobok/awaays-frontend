@@ -111,7 +111,7 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
     return (
         <div className="relative max-w-[1600px] mx-auto">
             <div className="relative w-full">
-                <motion.aside className="space-y-5 fixed top-[6rem] ml-2 max-[941px]:ml-0 max-[941px]:top-[7rem] left-0 min-[1600px]:left-[calc((100vw-1600px)/2)] h-[90vh] max-[941px]:h-[78vh] w-[17rem] bg-[var(--bg-color)] p-5 min-[941px]:rounded-lg max-[941px]:rounded-r-lg border border-gray-300 overflow-y-auto z-2" initial={{opacity: 0, x: -500}} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: 'easeInOut' }}>
+                <motion.aside className="space-y-5 fixed top-[6rem] ml-2 max-[941px]:ml-0 max-[941px]:top-[7rem] left-0 min-[1600px]:left-[calc((100vw-1600px)/2)] h-[90vh] max-[941px]:h-[78vh] w-[17rem] bg-[var(--bg-color)] p-5 min-[941px]:rounded-lg max-[941px]:rounded-r-lg border border-gray-300 overflow-y-auto z-2" initial={{opacity: 0, x: -200}} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: 'easeInOut' }}>
                     <div className="flex justify-between fixed top-[6.5rem] max-[941px]:top-[7.05rem] pt-3 pb-0 w-[14.7rem] bg-[var(--bg-color)] z-2">
                         <h3 className="text-xl font-semibold">Filters</h3>
                         <button className="text-red-400 px-2 rounded-lg cursor-pointer hover:font-semibold hover:text-red-500" onClick={() => {resetLocation(); onClearFilter()}}>Clear filter</button>

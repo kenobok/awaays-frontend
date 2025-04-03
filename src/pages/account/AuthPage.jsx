@@ -7,7 +7,7 @@ import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import '../../assets/styles/auth.css'
+import '../../assets/styles/account.css'
 
 const AuthPage = () => {
 	const [signUp, setSignUp] = useState(true);

@@ -2,6 +2,8 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home";
 import AuthPage from "./pages/account/AuthPage";
+import Dashboard from "./pages/account/Dashboard";
+import Profile from "./pages/account/Profile";
 import GiveItem from "./pages/giveaway/GiveItem";
 import GiveawayItems from './pages/giveaway/GiveawayItems';
 import Leaderboard from "./pages/community/Leaderboard";
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
             { path: "privacy-policy", element: <PrivacyPolicy /> },
             { path: "fAQs", element: <FAQs /> },
             // { path: "logout", element: <Logout />, loader: checkAuth, },
+
+            { 
+                path: "/dashboard", element: <Dashboard />,
+                children: [
+                    { index: true, element: <Dashboard /> },
+                    { path: "profile", element: <Profile /> },
+                ]
+            }
         ]
     },
     { path: "*", element: <NotFound /> }

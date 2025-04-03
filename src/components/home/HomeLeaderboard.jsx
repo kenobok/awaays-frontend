@@ -23,10 +23,10 @@ const HomeLeaderboard = () => {
         <section className="flex-1">
             <motion.div initial={{ opacity: 0, y: 200 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1 }}>
                 <div className='flex justify-between items-center px-5'>
-                    <h3 className="text-[1.4rem] leading-0">Leaderboard</h3>
-                    <Link to="/community/leaderboard" className='inline-block text-[var(--p-color)] border border-2 border-[var(--p-color)] px-3 py-[2px] mb-3 rounded-lg'>See more</Link>
+                    <h3 className="text-[1.7rem] leading-0">Leaderboard</h3>
+                    <Link to="/community/leaderboard" className='inline-block text-[var(--p-color)] border border-2 border-[var(--p-color)] px-2 pt-[2px] mb-2 rounded-full'>See more</Link>
                 </div>
-                <div className="border-2 border-gray-300 overflow-hidden rounded-2xl">
+                <div className="border-2 border-gray-300 overflow-hidden rounded-2xl shadow-lg">
                     <table className="text-white w-full">
                         <thead className="bg-gray-500">
                             <tr>

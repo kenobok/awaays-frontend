@@ -44,6 +44,7 @@ header {
 .nav-links a,
 .nav-links button {
     display: flex;
+    justify-content: center;
     align-items: center;
     padding: 7px 12px;
     margin: 0 3px;
@@ -53,28 +54,28 @@ header {
     cursor: pointer;
 }
 .nav-links a:last-child {
-    color: var(--p-color);
-    border: 2px solid var(--p-color);
+    color: #fff;
+    background-color: var(--p-color);
+    border: 2px solid rgba(0, 0, 0, 0.05);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-.nav-links .dropdown-links a:last-child {
-    color: #666;
-    border: none;
-    box-shadow: none;
-}
-.nav-links a:hover,
-.dropdown-links a:last-child:hover {
+.nav-links a:hover {
     color: var(--p-color);
-    /* border: 2px solid var(--p-color); */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: all .5s ease-in-out;
 }
 .nav-links a.active,
-.nav-links button.active,
-.dropdown-links a:last-child:hover {
+.nav-links button.active {
     color: var(--p-color);
-    /* border: 2px solid var(--p-color); */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.nav-links a:last-child:hover {
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+.nav-links a:last-child.active {
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 .nav-links button b {
     font-size: 1.3rem;
@@ -92,7 +93,6 @@ header {
 }
 .nav-links .dropdown-links a {
     margin: 7px 0;
-    text-align: center;
 }
 .sticky {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
@@ -222,5 +222,9 @@ footer a:hover {
         transition: all .3s ease-in-out;
     }
 }
-
+@media (min-width: 941px) and (max-width: 980px) {
+    .nav-links a.hide-faq {
+        display: none;
+    }
+}
 

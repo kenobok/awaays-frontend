@@ -130,14 +130,14 @@ const GiveawayItems = () => {
             <div className={`filter-wrp w-70 z-2 ${hideFilter ? 'hidden' : ''} ${showFilter ? 'show-filter' : ''}`}>
                 
                 <div  ref={filterRef} className="">
-                <FilterItem 
-                    onClearFilter={handleClearFilter} 
-                    onLocationChange={handleLocationChange} 
-                    isCloseToMe={isCloseToMe} 
-                    multipleFilter={handleMultipleFilter} 
-                    onRemoveCountry={(updatedCountries) => {setFilteredItems(prev => ({...prev, country: updatedCountries}));}}
-                    onRemoveState={(updatedStates) => {setFilteredItems(prev => ({...prev, state: updatedStates}));}}
-                />
+                    <FilterItem 
+                        onClearFilter={handleClearFilter} 
+                        onLocationChange={handleLocationChange} 
+                        isCloseToMe={isCloseToMe} 
+                        multipleFilter={handleMultipleFilter} 
+                        onRemoveCountry={(updatedCountries) => {setFilteredItems(prev => ({...prev, country: updatedCountries}));}}
+                        onRemoveState={(updatedStates) => {setFilteredItems(prev => ({...prev, state: updatedStates}));}}
+                    />
                 </div>
                 <div className="filter-layer hidden max-[941px]:block"></div>
             </div>

@@ -31,7 +31,7 @@
     width: 100%;
     padding: 13px;
     border-radius: .5rem;
-    border: 1px solid var(--s-color);
+    border: 1px solid #D1D5DB;
 }
 .form-input textarea {
     margin-bottom: -5px;

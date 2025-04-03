@@ -14,7 +14,7 @@ const Header = () => {
     const menuIconRef = useRef(null);
     const menuRef = useRef(null);
     const dropDownRef = useRef(null);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [isFocused, setIsFocused] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +22,7 @@ const Header = () => {
     const [blurBackground, setBlurBackground] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [user, setUser] = useState(false);
 
 
     useEffect(() => {
@@ -113,15 +114,16 @@ const Header = () => {
                             <button className={`${isDropdownOpen ? "active" : ""}`} onClick={toggleDropdown}>Community<b className={`${isDropdownOpen ? 'arrow-up' : ''}`}>{`>`}</b></button>
                             {isDropdownOpen && (
                                 <motion.div className="dropdown-links mt-1 p-5 absolute max-[941px]:top-[2.9rem] left-[50%] transform -translate-x-[50%] w-[12rem] max-[941px]:w-full bg-[var(--bg-color)] max-[941px]:bg-gray-200 shadow-lg rounded-2xl z-5" initial={{y: 100, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: .5, ease: "easeInOut"}}>
-                                    <Link to="/community/leaderboard" className="block px-4 py-2 text-sm">Leaderboard</Link>
-                                    <Link to="/community/forum" className="block px-4 py-2 text-sm">Forum</Link>
-                                    <Link to="/community/groups" className="block px-4 py-2 text-sm">Groups</Link>
-                                    <Link to="/community/events" className="block px-4 py-2 text-sm">Events</Link>
+                                    <Link to="/community/leaderboard" className="inline-block px-4 py-2 text-sm ">Leaderboard</Link>
+                                    <Link to="/community/forum" className="inline-block px-4 py-2 text-sm">Forum</Link>
+                                    <Link to="/community/groups" className="inline-block px-4 py-2 text-sm">Groups</Link>
+                                    <Link to="/community/events" className="inline-block w-full px-4 py-2 text-sm">Events</Link>
+                                    <Link  style={{display:'none'}}></Link>
                                 </motion.div>
                             )}
                         </div>
                         <Link to="/how-it-works" className={location.pathname === "/how-it-works" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
-                        <Link to="/FAQs" className={location.pathname === "/FAQs" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
+                        <Link to="/FAQs" className={`${location.pathname === "/FAQs" ? "active" : ""} ${user ? 'hide-faq' : ''}`} onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
                         <Link to="/auth" className={location.pathname === "/auth" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>
                     </div>
                     <form onSubmit={handleSearch} className="relative flex align-center py-[13px] peer">
