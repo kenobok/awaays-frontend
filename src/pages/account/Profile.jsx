@@ -14,74 +14,74 @@ const Profile = () => {
     const [formData, setFormData] = useState({ name: "", email: "", phone: "", old_password: "", new_password: ""});
     const [userLocation, setUserLocation] = useState('');
     
-        useEffect(() => {
-                const fetchUserLocation = async () => {
-                    try {
-                        const locationData = await GetUserLocationFromAPI();	
-                        setUserLocation(locationData.countryCode);
-                    } catch (error) {
-                        console.error("Failed to fetch location data:", error);
-                    }
-                };
-            
-                fetchUserLocation();
-            }, []);
-
-        const handlePasswordToggle = () => {
-            setPasswordToggle(prevState => !prevState);
-        };
-
-        const handleInputFocus = (field) => {
-            setInputFocus((prev) => ({ ...prev, [field]: true }));
-        };
-        
-        const handleInputBlur = (field) => {
-            if (!formData[field]) {
-                setInputFocus((prev) => ({ ...prev, [field]: false }));
+    useEffect(() => {
+        const fetchUserLocation = async () => {
+            try {
+                const locationData = await GetUserLocationFromAPI();	
+                setUserLocation(locationData.countryCode);
+            } catch (error) {
+                console.error("Failed to fetch location data:", error);
             }
         };
+        fetchUserLocation();
+    }, []);
 
-        const handleChange = (e, field = null) => {
-            if (field == "phone") {
-                const phoneValue = e || '';
-                setFormData((prev) => ({ ...prev, phone: phoneValue }));
-                validateField("phone", phoneValue);
-            } else {
-                const { name, value, type, checked } = e.target;
-                const newValue = type == "checkbox" ? checked : value;
-                setFormData((prev) => ({ ...prev, [name]: newValue }));
-                validateField(name, newValue);
-            }
-        };
 
-        const validateField = (field, value) => {
-            let error = "";
+    const handlePasswordToggle = () => {
+        setPasswordToggle(prevState => !prevState);
+    };
+
+    const handleInputFocus = (field) => {
+        setInputFocus((prev) => ({ ...prev, [field]: true }));
+    };
     
-            switch (field) {
-                case "name":
-                    if (value.trim() && value.length < 3) error = "Must be at least 3 characters";
-                    break;
-                case "email":
-                    if (value.trim() && !isEmail(value)) error = "Enter a valid email";
-                    break;
-                case "phone":
-                    if (!isValidPhoneNumber(value)) error = "Enter a valid phone number";
-                    break;
-                case "old_password":
-                    if (value.trim() && value.length < 6) error = "Enter old password";
-                    break;
-                case "new_password":
-                    if (value.trim() && value.length < 6) error = "Must be at least 6 characters";
-                    break;
-                default:
-                    break;
-            }
-        
-            setErrors((prev) => {
-                if (prev[field] === error) return prev;
-                return { ...prev, [field]: error };
-            });
-        };
+    const handleInputBlur = (field) => {
+        if (!formData[field]) {
+            setInputFocus((prev) => ({ ...prev, [field]: false }));
+        }
+    };
+
+    const handleChange = (e, field = null) => {
+        if (field == "phone") {
+            const phoneValue = e || '';
+            setFormData((prev) => ({ ...prev, phone: phoneValue }));
+            validateField("phone", phoneValue);
+        } else {
+            const { name, value, type, checked } = e.target;
+            const newValue = type == "checkbox" ? checked : value;
+            setFormData((prev) => ({ ...prev, [name]: newValue }));
+            validateField(name, newValue);
+        }
+    };
+
+    const validateField = (field, value) => {
+        let error = "";
+
+        switch (field) {
+            case "name":
+                if (value.trim() && value.length < 3) error = "Must be at least 3 characters";
+                break;
+            case "email":
+                if (value.trim() && !isEmail(value)) error = "Enter a valid email";
+                break;
+            case "phone":
+                if (!isValidPhoneNumber(value)) error = "Enter a valid phone number";
+                break;
+            case "old_password":
+                if (value.trim() && value.length < 6) error = "Enter old password";
+                break;
+            case "new_password":
+                if (value.trim() && value.length < 6) error = "Must be at least 6 characters";
+                break;
+            default:
+                break;
+        }
+    
+        setErrors((prev) => {
+            if (prev[field] === error) return prev;
+            return { ...prev, [field]: error };
+        });
+    };
 
     return (
         <motion.section className='user-profile flex-1 p-7 pb-20 max-[391px]:px-5' initial={{ opacity: 0, x: -300 }}  animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>

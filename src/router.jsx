@@ -2,8 +2,17 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home";
 import AuthPage from "./pages/account/AuthPage";
+import DashboardLayout from "./pages/account/DashboardLayout";
 import Dashboard from "./pages/account/Dashboard";
 import Profile from "./pages/account/Profile";
+import Messages from "./pages/account/Messages";
+import MessageDetails from "./pages/account/MessageDetails";
+import MyRequests from "./pages/account/MyRequests";
+import ItemRequests from "./pages/account/ItemRequests";
+import ViewItemRequests from "./pages/account/viewItemRequests";
+import MyGiveaways from "./pages/account/MyGiveaways";
+import ReceivedItems from "./pages/account/ReceivedItems";
+import ForumGroups from "./pages/account/ForumGroups";
 import GiveItem from "./pages/giveaway/GiveItem";
 import GiveawayItems from './pages/giveaway/GiveawayItems';
 import Leaderboard from "./pages/community/Leaderboard";
@@ -39,10 +48,26 @@ const router = createBrowserRouter([
             // { path: "logout", element: <Logout />, loader: checkAuth, },
 
             { 
-                path: "/dashboard", element: <Dashboard />,
+                path: "/dashboard", element: <DashboardLayout />,
                 children: [
                     { index: true, element: <Dashboard /> },
                     { path: "profile", element: <Profile /> },
+                    { 
+                        path: "messages", element: <Messages />,
+                        children: [
+                            { path: ":messageId", element: <MessageDetails />}
+                        ]
+                    },
+                    { path: "my-requests", element: <MyRequests /> },
+                    { 
+                        path: "item-requests", element: <ItemRequests />,
+                        children: [
+                            { path: ":itemName/:itemId", element: <ViewItemRequests /> }
+                        ]
+                    },
+                    { path: "my-giveaways", element: <MyGiveaways /> },
+                    { path: "received-items", element: <ReceivedItems /> },
+                    { path: "forum-and-groups", element: <ForumGroups /> },
                 ]
             }
         ]
