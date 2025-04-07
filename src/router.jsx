@@ -15,6 +15,7 @@ import ReceivedItems from "./pages/account/ReceivedItems";
 import ForumGroups from "./pages/account/ForumGroups";
 import GiveItem from "./pages/giveaway/GiveItem";
 import GiveawayItems from './pages/giveaway/GiveawayItems';
+import GiveawayItemDetails from './pages/giveaway/GiveawayItemDetails';
 import Leaderboard from "./pages/community/Leaderboard";
 import HowItWorks from "./pages/HowItWorks";
 import AboutUs from "./pages/AboutUs";
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
             { path: "auth", element: <AuthPage /> },
             { path: 'give-item', element: <GiveItem />, /*loader: checkAuth*/ },
             { path: 'giveaway-items', element: <GiveawayItems /> },
+            { path: 'giveaway-item-details/:itemId', element: <GiveawayItemDetails /> },
             { path: 'community/leaderboard', element: <Leaderboard /> },
             { path: "how-it-works", element: <HowItWorks /> },
             { path: "about-us", element: <AboutUs /> },
@@ -67,7 +69,7 @@ const router = createBrowserRouter([
                     },
                     { path: "my-giveaways", element: <MyGiveaways /> },
                     { path: "received-items", element: <ReceivedItems /> },
-                    { path: "forum-and-groups", element: <ForumGroups /> },
+                    { path: "forums-and-groups", element: <ForumGroups /> },
                 ]
             }
         ]

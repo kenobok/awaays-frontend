@@ -107,7 +107,7 @@ const Header = () => {
                 </Link>
                 <div className={`flex-1 ${isFocused ? 'max-[577px]:hidden' : ''}`}></div>
                 <div className="block min-[941px]:flex gap-x-5 align-center justify-end">
-                    <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[.9rem] ${isFocused ? 'min-[941px]:text-[.3rem]' : ''} ${isFocused ? 'min-[993px]:text-[.5rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
+                    <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[.95rem] ${isFocused ? 'min-[941px]:text-[.45rem]' : ''} ${isFocused ? 'min-[993px]:text-[.6rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
                         <Link to="/give-item" className={location.pathname === "/give-item" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>
                         <Link to="/giveaway-items" className={location.pathname === "/giveaway-items" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Giveaways</Link>
                         <div ref={dropDownRef} className="relative">

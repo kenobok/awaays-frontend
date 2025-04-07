@@ -11,7 +11,6 @@ const Messages = () => {
 
     useEffect(() => {
         setIsMessageList(location.pathname === '/dashboard/messages' || location.pathname === '/dashboard/messages/')
-        console.log(isMessageList + ' path');
     }, [location.pathname])
 
     const messages = [

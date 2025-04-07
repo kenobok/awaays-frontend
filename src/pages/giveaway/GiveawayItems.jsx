@@ -5,7 +5,6 @@ import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mockItems from "../../components/giveaway/mockItems";
 import FilterItem from '../../components/giveaway/FilterItems';
-import GiveawayItemDetails from '../../components/giveaway/GiveawayItemDetails';
 import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
 import { Loader1 } from '../../components/utils/Preloader';
 
@@ -22,8 +21,6 @@ const GiveawayItems = () => {
     const [userLocation, setUserLocation] = useState({ country: null, state: null });
     const [loading, setLoading] = useState(true);
     const [isCloseToMe, setIsCloseToMe] = useState(true);
-    const [isOpen, setIsOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
 
 
     useEffect(() => {
@@ -111,18 +108,7 @@ const GiveawayItems = () => {
                 ? [...new Set([...(Array.isArray(prev?.state) ? prev.state : [prev.state]).filter(Boolean), updatedFilters.state])]
                 : prev?.state || [],
         }));
-
     };    
-
-    const openModal = (item) => {
-        setIsOpen(true);
-        setSelectedItem(item);
-    };
-
-    const closeModal = () => {
-        setIsOpen(false);
-        setSelectedItem(null);
-    };
 
 
     return (
@@ -147,20 +133,22 @@ const GiveawayItems = () => {
                 </button>
             </div>
             
-            <section className="relative flex-1 ml-2 max-[941px]:ml-0 translate-y-[8rem] max-[941px]:translate-y-[7rem]">
-                { loading ? <Loader1 /> :
+            <section className="relative flex-1 ml-2 max-[941px]:ml-0 mt-[6rem] max-[941px]:mt-[6.5rem]">
+                { loading ? <div className='h-[75vh]'><Loader1 /></div> :
                     <motion.div className="relative grid grid-cols-4 max-[1401px]:grid-cols-3 max-[1081px]:grid-cols-2 max-[941px]:grid-cols-3 max-[768px]:grid-cols-2 max-[321px]:grid-cols-1 gap-7 max-[941px]:gap-x-5 p-5 pb-50 max-[561px]:gap-x-3" initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}>
                         {items.length > 0 ? (
                             items.map((item) => (
-                                <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" onClick={() => openModal(item)} initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1.5, ease: "easeInOut" }}>
-                                    <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
-                                    <h3 className="font-bold mt-3 truncate">{item.purpose}</h3>
-                                    <h3 className="font-semibold truncate">{item.name}</h3>
-                                    <p className="truncate">{item.description}</p>
-                                    <p className="truncate">
-                                        <FontAwesomeIcon icon="location-dot" className="mr-1 text-sm" />
-                                        {item.country}, {item.state}
-                                    </p>
+                                <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1.5, ease: "easeInOut" }}>
+                                    <Link to={`/giveaway-item-details/${item.id}`} className='block'>
+                                        <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
+                                        <h3 className="font-bold mt-3 truncate">{item.purpose}</h3>
+                                        <h3 className="font-semibold truncate">{item.name}</h3>
+                                        <p className="truncate">{item.description}</p>
+                                        <p className="truncate">
+                                            <FontAwesomeIcon icon="location-dot" className="mr-1 text-sm" />
+                                            {item.country}, {item.state}
+                                        </p>
+                                    </Link>
                                 </motion.div>
                             ))
                         ) : (
@@ -172,7 +160,6 @@ const GiveawayItems = () => {
                     </motion.div>
                 }
             </section>
-            <GiveawayItemDetails isOpen={isOpen} item={selectedItem} onCloseModal={closeModal}/>
         </main>
     );
 };

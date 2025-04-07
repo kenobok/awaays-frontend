@@ -66,8 +66,11 @@ table tbody tr:last-child {
 }
 .dashboard-links li {
     list-style-type: none;
-    margin: 25px 0;
+    margin: 20px 0;
     border-bottom: 2px solid transparent;
+}
+.dashboard-links li:last-child {
+    display: none;
 }
 .dashboard-links li a {
     display: inline-block;
@@ -148,7 +151,7 @@ table tbody tr:last-child {
         z-index: 3;
     }
     .dashboard .fa-upload.visible {
-        top: 4rem;
+        top: 4.4rem;
         left: 15rem;
         color: #fff;
         transform: rotate(270deg);

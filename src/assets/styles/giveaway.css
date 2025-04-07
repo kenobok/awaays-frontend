@@ -58,16 +58,16 @@
     width: 100%;
     object-fit: contain;
 }
-/* .modal-img-slide.enlarge-img::after {
-    content: "✕";
-    position: fixed;
-    top: 10px;
+.modal-img-slide.enlarge-img::after {
+    content: "Click anywhere to exit full screen";
+    position: absolute;
+    top: 15px;
     right: 17px;
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: rgb(250, 88, 88);
+    color: orange;
     z-index: 5;
-} */
+}
 
 
 /* ====== MEDIA QUERIES ======== */

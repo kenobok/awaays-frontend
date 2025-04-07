@@ -38,7 +38,7 @@ const MessageDetails = () => {
             <div className='w-full h-20 mt-2'>
                 <form className='h-full flex'>
                     <textarea className='border border-gray-300 h-full w-full resize-none leading-[1.1rem] p-2 px-3 rounded-lg text-[.93rem] focus:outline-[var(--p-color)]' placeholder='Enter your message'></textarea>
-                    <button className='text-white bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'><FontAwesomeIcon icon='envelope' /> Send</button>
+                    <button className='text-white bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'><FontAwesomeIcon icon='paper-plane' /> Send</button>
                 </form>
             </div>
         </div>
