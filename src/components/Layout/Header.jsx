@@ -113,11 +113,12 @@ const Header = () => {
                         <div ref={dropDownRef} className="relative">
                             <button className={`${isDropdownOpen ? "active" : ""}`} onClick={toggleDropdown}>Community<b className={`${isDropdownOpen ? 'arrow-up' : ''}`}>{`>`}</b></button>
                             {isDropdownOpen && (
-                                <motion.div className="dropdown-links mt-1 p-5 absolute max-[941px]:top-[2.9rem] left-[50%] transform -translate-x-[50%] w-[12rem] max-[941px]:w-full bg-[var(--bg-color)] max-[941px]:bg-gray-200 shadow-lg rounded-2xl z-5" initial={{y: 100, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: .5, ease: "easeInOut"}}>
-                                    <Link to="/community/leaderboard" className="inline-block px-4 py-2 text-sm ">Leaderboard</Link>
-                                    <Link to="/community/forum" className="inline-block px-4 py-2 text-sm">Forum</Link>
-                                    <Link to="/community/groups" className="inline-block px-4 py-2 text-sm">Groups</Link>
-                                    <Link to="/community/events" className="inline-block w-full px-4 py-2 text-sm">Events</Link>
+                                <motion.div className="dropdown-links mt-1 p-5 absolute max-[941px]:top-[2.9rem] left-[50%] transform -translate-x-[50%] w-[12rem] max-[941px]:w-full bg-[var(--bg-color)] max-[941px]:bg-indigo-100 shadow-lg rounded-2xl z-5" initial={{y: 100, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: .5, ease: "easeInOut"}}>
+                                    <Link to="/community/leaderboard" className="inline-block px-4 py-2 text-sm" onClick={isMobile ? handleMenuToggle : undefined}>Leaderboard</Link>
+                                    <Link to="/community/forum" className="inline-block px-4 py-2 text-sm" onClick={isMobile ? handleMenuToggle : undefined}>Forum</Link>
+                                    <Link to="/community/groups" className="inline-block px-4 py-2 text-sm" onClick={isMobile ? handleMenuToggle : undefined}>Groups</Link>
+                                    <Link to="/community/events" className="inline-block w-full px-4 py-2 text-sm" onClick={isMobile ? handleMenuToggle : undefined}>Events</Link>
+                                    <Link to="/community/gallery" className="inline-block w-full px-4 py-2 text-sm" onClick={isMobile ? handleMenuToggle : undefined}>Gallery</Link>
                                     <Link  style={{display:'none'}}></Link>
                                 </motion.div>
                             )}

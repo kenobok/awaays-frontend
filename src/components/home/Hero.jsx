@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, Autoplay, EffectCards, Mousewheel } from 'swiper/modules'
 import { motion } from "framer-motion";
-import img1 from '../../assets/images/awaays1.png'
-import img2 from '../../assets/images/awaays3.png'
+import { heroImages } from '../utils/UtilsData'
+import { Loader1 } from '../utils/Preloader'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -12,7 +12,6 @@ import 'swiper/css/autoplay'
 import 'swiper/css/effect-cards'
 
 const Hero = () => {
-
 
     return (
         <section className={`hero relative block min-[993px]:flex justify-evenly align-center gap-x-5 p-5`}>
@@ -37,8 +36,10 @@ const Hero = () => {
                     mousewheel={true}
                     className="hero-slide"
                     >
-                    <SwiperSlide><img src={img1} alt="slide" /></SwiperSlide>
-                    <SwiperSlide><img src={img2} alt="slide" /></SwiperSlide>
+                    { heroImages ? heroImages.map((image, index) => (
+                        <SwiperSlide key={index}><img src={image.src} alt={`Slide ${index}`} /></SwiperSlide>
+                    )) :
+                    <Loader1 />}
                 </Swiper>
             </motion.div>
         </section>

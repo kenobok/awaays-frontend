@@ -24,7 +24,7 @@ const mockItems = [
         country: "Afghanistan",
         state: "Khost", 
         request: "12",
-        donor: "",
+        donor: "Ikechuckwu Ogbonaya",
         images: [
             "https://images.pexels.com/photos/3965545/pexels-photo-3965545.jpeg?auto=compress&cs=tinysrgb&w=600",
             "https://images.pexels.com/photos/6078127/pexels-photo-6078127.jpeg?auto=compress&cs=tinysrgb&w=600",

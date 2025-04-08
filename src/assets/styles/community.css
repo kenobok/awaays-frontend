@@ -1,0 +1,17 @@
+.com-side-link::after {
+    content: '0';
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--p-color);
+    background-color: var(--bg-color);
+    position: absolute;
+    top: 50%;
+    right: -7px;
+    transform: translateY(-50%)
+}
+.lb-link.active {
+    font-weight: 700;
+    color: var(--p-color);
+    border-color: var(--p-color);
+}
+
