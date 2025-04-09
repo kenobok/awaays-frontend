@@ -48,7 +48,7 @@ const HowItWorks = () => {
                         <div className="hiwi-outer p-1 max-[506px]:flex flex-col">
                             <h4 className="order-2">Community</h4>
                             <p className="order-3">Wanting to learn something new, exchange ideas, or simply have fun, our vibrant and diverse community offers a welcoming space for everyone to interact, grow, and build lasting connections.</p>
-                            <Link className="order-4 mx-auto">Community</Link>
+                            <Link to="/community/forums" className="order-4 mx-auto">Community</Link>
                             <div className="hiwi order-1"><FontAwesomeIcon icon="users"/></div>
                         </div>
                     </div>

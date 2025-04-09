@@ -71,7 +71,7 @@ const Testimonial = () => {
             <motion.div className="home-testimonial relative flex items-end max-[768px]:min-h-[400px]" initial={{ opacity: 0, y: 200 }}  whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1 }}>
                 <div className="absolute text-center p-7 top-5 left-[50%] transform -translate-x-[50%] rounded-full bg-[rgba(255,255,255,.6)]">
                     <h5 className="font-bold text-[1.7rem]" >Testimonials</h5>
-                    <Link to="" className="inline-block px-2 pt-[2px] mt-1 text-[var(--p-color)] border border-2 border-[var(--p-color)] rounded-full">See more</Link>
+                    <Link to="/community/forums/testimonials" className="inline-block px-2 pt-[2px] mt-1 text-[var(--p-color)] border border-2 border-[var(--p-color)] rounded-full">See more</Link>
                 </div>
                 <Swiper
                     modules={[Navigation, Pagination, Autoplay, EffectCards, Mousewheel]}
