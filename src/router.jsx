@@ -31,6 +31,10 @@ import DisabilitySupport from "./pages/community/gallery/DisabilitySupport";
 import GeneralGiveaway from "./pages/community/gallery/GeneralGiveaway";
 import Forums from "./pages/community/forums/Forums";
 import GeneralDiscussion from "./pages/community/forums/GeneralDiscussion";
+import GiveawayQuestions from "./pages/community/forums/GiveawayQuestions";
+import Testimonials from "./pages/community/forums/Testimonials";
+import SuggestionsAndFeedbacks from "./pages/community/forums/SuggestionsAndFeedbacks";
+import CommunityHangout from "./pages/community/forums/CommunityHangout";
 import Events from "./pages/community/Events";
 import HowItWorks from "./pages/HowItWorks";
 import AboutUs from "./pages/AboutUs";
@@ -102,6 +106,10 @@ const router = createBrowserRouter([
                 path: '/community/forums', element: <Forums />,
                 children: [
                     { index: true, element: <GeneralDiscussion /> },
+                    { path: 'giveaway-questions', element: <GiveawayQuestions /> },
+                    { path: 'testimonials', element: <Testimonials /> },
+                    { path: 'suggestions-and-feedbacks', element: <SuggestionsAndFeedbacks /> },
+                    { path: 'community-hangout', element: <CommunityHangout /> },
                 ]
             },
             {

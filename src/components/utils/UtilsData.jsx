@@ -119,20 +119,23 @@ const forumConversations = [
         id: 1,
         title: "How do I start a giveaway?",
         author: "User123",
-        content: "I'm new here. Can someone guide me on how to give away an item?",
+        content: "I'm new here. Can someone guide me on how to give away an item? I'm new here. Can someone guide me on how to give away an item? I'm new here. Can someone guide me on how to give away an item?",
         date: "2025-04-08",
+        likes: 4,
         replies: [
             {
                 id: 1,
                 author: "HelperMike",
                 content: "Click on the 'Give Away' button on the homepage and fill in the item details.",
-                date: "2025-04-08"
+                date: "2025-04-08",
+                likes: 2
             },
             {
                 id: 2,
                 author: "JaneDoe",
                 content: "Also make sure to add a clear image and a short description!",
-                date: "2025-04-09"
+                date: "2025-04-09",
+                likes: 1
             }
         ]
     },
@@ -140,14 +143,16 @@ const forumConversations = [
         id: 2,
         title: "Can I receive items outside my state?",
         author: "LuckyUser",
-        content: "I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed?",
+        content: "I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed? I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed? I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed? I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed? I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed?",
         date: "2025-04-07",
+        likes: 5,
         replies: [
             {
                 id: 1,
                 author: "Admin",
                 content: "It depends on the donor. You can message them directly to ask if they're open to shipping.",
-                date: "2025-04-07"
+                date: "2025-04-07",
+                likes: 2
             }
         ]
     },
@@ -157,48 +162,56 @@ const forumConversations = [
         author: "TechieGirl",
         content: "When I try to upload an image from my phone, it doesn’t work.",
         date: "2025-04-06",
+        likes: 6,
         replies: [
             {
                 id: 1,
                 author: "SupportTeam",
                 content: "Thanks for reporting! We're looking into this and will update shortly.",
-                date: "2025-04-06"
+                date: "2025-04-06",
+                likes: 3
             },
             {
                 id: 2,
                 author: "HelperMike",
-                content: "Click on the 'Give Away' button on the homepage and fill in the item details. Click on the 'Give Away' button on the homepage and fill in the item details. Click on the 'Give Away' button on the homepage and fill in the item details.",
-                date: "2025-04-08"
+                content: "Click on the 'Give Away' button on the homepage and fill in the item details...",
+                date: "2025-04-08",
+                likes: 1
             },
             {
                 id: 3,
                 author: "JaneDoe",
                 content: "Also make sure to add a clear image and a short description!",
-                date: "2025-04-09"
+                date: "2025-04-09",
+                likes: 2
             },
             {
                 id: 4,
                 author: "InspireDaily",
                 content: "Such a beautiful story. Thanks for sharing! ❤️",
-                date: "2025-04-02"
+                date: "2025-04-02",
+                likes: 4
             },
             {
                 id: 5,
                 author: "SupportTeam",
                 content: "You might have violated a rule. Kindly check your inbox or contact support directly.",
-                date: "2025-04-01"
+                date: "2025-04-01",
+                likes: 1
             },
             {
                 id: 6,
                 author: "QuickDonor",
                 content: "Yes! Also, quick response to messages increases your reputation.",
-                date: "2025-03-31"
+                date: "2025-03-31",
+                likes: 1
             },
             {
                 id: 7,
                 author: "Admin",
                 content: "Currently, you can only request deletion through support. Editing will be available soon.",
-                date: "2025-03-30"
+                date: "2025-03-30",
+                likes: 3
             }
         ]
     },
@@ -208,12 +221,14 @@ const forumConversations = [
         author: "HustleKing",
         content: "Any tips on how to rank higher on the donor board?",
         date: "2025-04-05",
+        likes: 7,
         replies: [
             {
                 id: 1,
                 author: "GiveawayQueen",
                 content: "Be consistent and share items people really need. Engage with the community too!",
-                date: "2025-04-05"
+                date: "2025-04-05",
+                likes: 2
             }
         ]
     },
@@ -223,24 +238,28 @@ const forumConversations = [
         author: "SmileyZee",
         content: "Huge thanks to @PeacefulHeart for the school bag. It means a lot.",
         date: "2025-04-04",
+        likes: 9,
         replies: [
             {
                 id: 1,
                 author: "PeacefulHeart",
                 content: "You’re most welcome 😊. So glad it’s useful to you.",
-                date: "2025-04-04"
+                date: "2025-04-04",
+                likes: 5
             },
             {
                 id: 2,
                 author: "HopefulHelper",
                 content: "Same here! It’s so cool to see people helping each other out with things they no longer need.",
-                createdAt: "2025-04-09T10:15:00Z"
+                date: "2025-04-09T10:15:00Z",
+                likes: 2
             },
             {
                 id: 3,
                 author: "NewbieDonor",
                 content: "I joined to declutter my house and it feels great to give items a second life.",
-                createdAt: "2025-04-09T10:30:00Z"
+                date: "2025-04-09T10:30:00Z",
+                likes: 1
             }
         ]
     },
@@ -250,12 +269,14 @@ const forumConversations = [
         author: "CuriousCat",
         content: "Are there any banned or discouraged items on this platform?",
         date: "2025-04-03",
+        likes: 3,
         replies: [
             {
                 id: 1,
                 author: "Admin",
                 content: "Yes! No weapons, expired food, or illegal items. Please check our community guidelines.",
-                date: "2025-04-03"
+                date: "2025-04-03",
+                likes: 2
             }
         ]
     },
@@ -263,14 +284,16 @@ const forumConversations = [
         id: 7,
         title: "Testimonial: This platform changed my life!",
         author: "FaithfulSoul",
-        content: "After weeks of struggle, I got a laptop that helped me resume remote work. Thank you!",
+        content: "After weeks of struggle, I got a laptop that helped me resume remote work. Thank you! After weeks of struggle, I got a laptop that helped me resume remote work. Thank you! After weeks of struggle, I got a laptop that helped me resume remote work. Thank you! After weeks of struggle, I got a laptop that helped me resume remote work. Thank you! After weeks of struggle, I got a laptop that helped me resume remote work. Thank you! After weeks of struggle, I got a laptop that helped me resume remote work. Thank you!",
         date: "2025-04-02",
+        likes: 12,
         replies: [
             {
                 id: 1,
                 author: "InspireDaily",
                 content: "Such a beautiful story. Thanks for sharing! ❤️",
-                date: "2025-04-02"
+                date: "2025-04-02",
+                likes: 4
             }
         ]
     },
@@ -280,12 +303,14 @@ const forumConversations = [
         author: "BlockedUser",
         content: "Every time I click on 'Message Donor', it says I'm restricted.",
         date: "2025-04-01",
+        likes: 1,
         replies: [
             {
                 id: 1,
                 author: "SupportTeam",
-                content: "You might have violated a rule. Kindly check your inbox or contact support directly.",
-                date: "2025-04-01"
+                content: "You might have violated a rule. Kindly check your inbox or contact support directly. You might have violated a rule. Kindly check your inbox or contact support directly. You might have violated a rule. Kindly check your inbox or contact support directly. You might have violated a rule. Kindly check your inbox or contact support directly.",
+                date: "2025-04-01",
+                likes: 2
             }
         ]
     },
@@ -295,12 +320,14 @@ const forumConversations = [
         author: "SavvyGiver",
         content: "From experience, labeling items clearly and using daylight photos helps!",
         date: "2025-03-31",
+        likes: 6,
         replies: [
             {
                 id: 1,
                 author: "QuickDonor",
                 content: "Yes! Also, quick response to messages increases your reputation.",
-                date: "2025-03-31"
+                date: "2025-03-31",
+                likes: 1
             }
         ]
     },
@@ -310,18 +337,18 @@ const forumConversations = [
         author: "NewbiePoster",
         content: "I mistakenly posted the wrong image. Can I edit or delete it?",
         date: "2025-03-30",
+        likes: 2,
         replies: [
             {
                 id: 1,
                 author: "Admin",
                 content: "Currently, you can only request deletion through support. Editing will be available soon.",
-                date: "2025-03-30"
+                date: "2025-03-30",
+                likes: 2
             }
         ]
     }
 ];
-
-
 
 
 export {

@@ -18,7 +18,7 @@ const Hero = () => {
             <div className="absolute inset-0 bg-[rgba(0,0,0,.7)] backdrop-blur-[3px]"></div>
             <motion.div initial={{ opacity: 0, x: -500 }} animate={{ opacity: 1, x: 0 }} transition={{duration: 1.5, ease: "easeInOut"  }} className="hero-text m-auto">
                 <h1>Why Keep It?</h1><h1>Someone Needs it!</h1><h1>Give It Away!</h1>
-                <p>Give away what you don’t need or find something you need <b className="text-cyan-500">FOR FREE.</b> Join our community and share the joy of giving.</p>
+                <p>Give away what you don’t need or find something you need <b className="text-indigo-300">FOR FREE.</b> Join our community and share the joy of giving.</p>
                 <div className="flex justify-evenly mt-5 py-2">
                     <Link to="/give-item" className="inline-block bg-[var(--p-color)] text-white py-2 px-4 rounded-xl">Give Item</Link>
                     <Link to="/giveaway-items" className="inline-block bg-gray-900 text-white py-2 px-4 rounded-xl">Giveaways</Link>

@@ -8,23 +8,28 @@ const Forums = () => {
     const links = [
         {
             link: '/community/forums',
-            name: 'General Discussion'
+            name: 'General Discussion',
+            button: 'Start Discussion'
         },
         {
             link: '/community/forums/giveaway-questions',
-            name: 'Giveaway Questions'
+            name: 'Giveaway Questions',
+            button: 'Ask Question'
         },
         {
             link: '/community/forums/testimonials',
-            name: 'Testimonials'
+            name: 'Testimonials',
+            button: 'Share Testimony'
         },
         {
             link: '/community/forums/suggestions-and-feedbacks',
-            name: 'Suggestions & Feedbacks'
+            name: 'Suggestions & Feedbacks',
+            button: 'Share Your Thoughts'
         },
         {
             link: '/community/forums/community-hangout',
-            name: 'Community Hangout'
+            name: 'Community Hangout',
+            button: 'Join Hangout'
         }
     ]
 
@@ -35,6 +40,9 @@ const Forums = () => {
                     <ul className='com-side-link relative space-y-5 p-7 text-center border-r-2 border-[var(--p-color)]'>
                         { links.map((link, index) => (
                             <li key={index} className={`lb-link border-b border-gray-300 hover:text-[var(--p-color)] hover:border-[var(--p-color)] ${location.pathname === link.link ? 'active show-icon' : ''}`}><Link to={link.link}>{link.name}</Link></li>
+                        ))}
+                        { links.map((link, index) => (
+                            <button key={index} className={`mt-2 border-2 border-[var(--p-color)] p-1 pt-[5px] px-3 rounded-full text-[var(--p-color)] cursor-pointer shadow-md hover:scale-105 ${location.pathname === link.link ? '' : 'hidden'}`}>{link.button}</button>
                         ))}
                     </ul>
                 </div>

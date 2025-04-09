@@ -134,7 +134,7 @@ const Header = () => {
                         </span>
                     </form>
                 </div>
-                <div onClick={handleMenuToggle} ref={menuIconRef} className={`relative w-[30px] h-[25px] my-auto cursor-pointer overflow-hidden transition-all duration-300 min-[941px]:hidden z-[5] ${isFocused ? 'hide-menu-bar' : ''}`}>
+                <div onClick={handleMenuToggle} ref={menuIconRef} className={`relative w-[30px] h-[25px] my-auto cursor-pointer overflow-hidden min-[941px]:hidden z-[5] ${isFocused ? 'hide-menu-bar' : ''}`}>
                     <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 top-[11px] bg-[#777]' : 'top-0 right-0 bg-[#777]'}`}></div>
                     <div className={`h-[3px] w-[85%] absolute transition-all duration-300 ease-in-out ${isOpen ? 'opacity-0 top-0 bg-[#777]': 'opacity-100 top-[11px] bg-[#777]'}`}></div>
                     <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ease-in-out ${isOpen ? '-rotate-45 top-[11px] bg-[#777]' : 'bottom-0 right-0 bg-[#777]'}`}></div>

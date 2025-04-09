@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { forumConversations } from '/src/components/utils/UtilsData'
 import '/src/assets/styles/community.css';
 
-const GeneralDiscussion = () => {
+const Testimonials = () => {
     const[showComments, setShowComments] = useState(null)
     const [expandedPosts, setExpandedPosts] = useState([]);
 
@@ -20,7 +20,7 @@ const GeneralDiscussion = () => {
 
     return (
         <div className='ml-25 max-[768px]:ml-0'>
-            <h3 className='text-center text-[1.3rem] font-semibold mb-5 border-b border-gray-200'>General Discussion</h3>
+            <h3 className='text-center text-[1.3rem] font-semibold mb-5 border-b border-gray-200'>Testimonials</h3>
             <div className='py-10'>
                 <div className='forum-discussions mx-auto space-y-5 max-w-4xl pr-5 max-[768px]:px-5'>
                     {
@@ -81,4 +81,4 @@ const GeneralDiscussion = () => {
     )
 }
 
-export default GeneralDiscussion
+export default Testimonials
