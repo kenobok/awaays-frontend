@@ -15,9 +15,9 @@ const Features = () => {
         },
         { 
             icon: community, 
-            title: "Community Forum", 
+            title: "Community Forums", 
             text: "Connect, discuss, and share ideas in a trusted space. A community built to support and inspire each other.", 
-            link: "/community/forum",
+            link: "/community/forums",
         },
         { 
             icon: chat, 

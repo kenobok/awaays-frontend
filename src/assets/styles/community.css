@@ -1,17 +1,49 @@
-.com-side-link::after {
+.com-side-link .lb-link.show-icon::after {
     content: '0';
     font-size: 1.2rem;
     font-weight: 500;
     color: var(--p-color);
     background-color: var(--bg-color);
     position: absolute;
-    top: 50%;
     right: -7px;
-    transform: translateY(-50%)
 }
 .lb-link.active {
     font-weight: 700;
     color: var(--p-color);
     border-color: var(--p-color);
+}
+
+
+/* ========= GALLERY ======== */
+.gallery-img img.zoom-in {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.6);
+    z-index: 5;
+    object-fit: contain;
+    cursor: zoom-out;
+}
+
+
+/* ========= EVENTS ======== */
+.event-hero {
+    background-image: url('../images/ue.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+/* .event-hero-inner {
+    background: rgba(0,0,0,.2);
+} */
+.event-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--p-color);
 }
 

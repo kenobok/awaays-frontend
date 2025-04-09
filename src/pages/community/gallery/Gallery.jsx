@@ -46,13 +46,13 @@ const Gallery = () => {
                 <div className='px-5 min-[768px]:fixed max-[768px]:mb-10'>
                     <ul className='com-side-link relative space-y-5 p-7 text-center border-r-2 border-[var(--p-color)]'>
                         { links.map((link, index) => (
-                            <li key={index} className={`lb-link border-b border-gray-300 hover:text-[var(--p-color)] hover:border-[var(--p-color)] ${location.pathname === link.link ? 'active' : ''}`}><Link to={link.link}>{link.name}</Link></li>
+                            <li key={index} className={`lb-link border-b border-gray-300 hover:text-[var(--p-color)] hover:border-[var(--p-color)] ${location.pathname === link.link ? 'active show-icon' : ''}`}><Link to={link.link}>{link.name}</Link></li>
                         ))}
                     </ul>
                 </div>
             </section>
 
-            <section className='flex-1'><Outlet /></section>
+            <section className='flex-1 overflow-hidden'><Outlet /></section>
         </main>
     )
 }

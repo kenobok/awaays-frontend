@@ -21,7 +21,7 @@ const HomeLeaderboard = () => {
 
     return (
         <section className="flex-1">
-            <motion.div initial={{ opacity: 0, y: 200 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1 }}>
+            <motion.div initial={{ opacity: 0, y: 200 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1 }}>
                 <div className='flex justify-between items-center px-5'>
                     <h3 className="text-[1.7rem] leading-0">Leaderboard</h3>
                     <Link to="/community/leaderboard" className='inline-block text-[var(--p-color)] border border-2 border-[var(--p-color)] px-2 pt-[2px] mb-2 rounded-full'>See more</Link>

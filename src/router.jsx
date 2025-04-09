@@ -29,6 +29,9 @@ import OrphanageSupport from "./pages/community/gallery/OrphanageSupport";
 import DisasterRelief from "./pages/community/gallery/DisasterRelief";
 import DisabilitySupport from "./pages/community/gallery/DisabilitySupport";
 import GeneralGiveaway from "./pages/community/gallery/GeneralGiveaway";
+import Forums from "./pages/community/forums/Forums";
+import GeneralDiscussion from "./pages/community/forums/GeneralDiscussion";
+import Events from "./pages/community/Events";
 import HowItWorks from "./pages/HowItWorks";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
@@ -60,29 +63,7 @@ const router = createBrowserRouter([
             { path: "fAQs", element: <FAQs /> },
             // { path: "logout", element: <Logout />, loader: checkAuth, },
 
-            {
-                path: 'community/leaderboard', element: <Leaderboard />,
-                children: [
-                    { index: true, element: <RecentLeaderboard /> },
-                    { path: 'last-week', element: <LastWeekLeaderboard /> },
-                    { path: 'all-time', element: <AllTimeLeaderboard /> },
-                ]
-            },
-
-            {
-                path: 'community/gallery', element: <Gallery />,
-                children: [
-                    { index: true, element: <GeneralGiveaway /> },
-                    { path: 'healthcare-support', element: <HealthcareSupport /> },
-                    { path: 'prison-outreach', element: <PrisonOutreach /> },
-                    { path: 'homeless-shelter', element: <HomelessShelter /> },
-                    { path: 'education-support', element: <EducationSupport /> },
-                    { path: 'orphanage-support', element: <OrphanageSupport /> },
-                    { path: 'disaster-relief', element: <DisasterRelief /> },
-                    { path: 'disability-support', element: <DisabilitySupport /> },
-                ]
-            },
-
+            // Dashboard Link
             {
                 path: "/dashboard", element: <DashboardLayout />,
                 children: [
@@ -105,7 +86,38 @@ const router = createBrowserRouter([
                     { path: "received-items", element: <ReceivedItems /> },
                     { path: "forums-and-groups", element: <ForumGroups /> },
                 ]
-            }
+            },
+
+
+            // Community Link
+            { 
+                path: 'community/leaderboard', element: <Leaderboard />,
+                children: [
+                    { index: true, element: <RecentLeaderboard /> },
+                    { path: 'last-week', element: <LastWeekLeaderboard /> },
+                    { path: 'all-time', element: <AllTimeLeaderboard /> },
+                ]
+            },
+            {
+                path: '/community/forums', element: <Forums />,
+                children: [
+                    { index: true, element: <GeneralDiscussion /> },
+                ]
+            },
+            {
+                path: 'community/gallery', element: <Gallery />,
+                children: [
+                    { index: true, element: <GeneralGiveaway /> },
+                    { path: 'healthcare-support', element: <HealthcareSupport /> },
+                    { path: 'prison-outreach', element: <PrisonOutreach /> },
+                    { path: 'homeless-shelter', element: <HomelessShelter /> },
+                    { path: 'education-support', element: <EducationSupport /> },
+                    { path: 'orphanage-support', element: <OrphanageSupport /> },
+                    { path: 'disaster-relief', element: <DisasterRelief /> },
+                    { path: 'disability-support', element: <DisabilitySupport /> },
+                ]
+            },
+            { path: 'community/events', element: <Events /> },
         ]
     },
     { path: "*", element: <NotFound /> }

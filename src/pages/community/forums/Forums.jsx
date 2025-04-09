@@ -2,21 +2,29 @@ import { useState, useEffect } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import '/src/assets/styles/community.css'
 
-const Leaderboard = () => {
+const Forums = () => {
     const location = useLocation();
 
     const links = [
         {
-            link: '/community/leaderboard',
-            name: 'Recent'
+            link: '/community/forums',
+            name: 'General Discussion'
         },
         {
-            link: '/community/leaderboard/last-week',
-            name: 'Last Week'
+            link: '/community/forums/giveaway-questions',
+            name: 'Giveaway Questions'
         },
         {
-            link: '/community/leaderboard/all-time',
-            name: 'All Time'
+            link: '/community/forums/testimonials',
+            name: 'Testimonials'
+        },
+        {
+            link: '/community/forums/suggestions-and-feedbacks',
+            name: 'Suggestions & Feedbacks'
+        },
+        {
+            link: '/community/forums/community-hangout',
+            name: 'Community Hangout'
         }
     ]
 
@@ -32,10 +40,10 @@ const Leaderboard = () => {
                 </div>
             </section>
 
-            <section className='flex-1'><Outlet /></section>
+            <section className='flex-1 overflow-hidden'><Outlet /></section>
         </main>
     )
 }
 
-export default Leaderboard
+export default Forums
 
