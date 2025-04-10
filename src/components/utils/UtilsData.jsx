@@ -142,7 +142,7 @@ const forumConversations = [
     {
         id: 2,
         title: "Can I receive items outside my state?",
-        author: "LuckyUser",
+        author: "Ikechukwu Ogbonnia Chuckwuemeka",
         content: "I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed? I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed? I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed? I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed? I'm in Enugu, but I saw a great item listed in Lagos. Is shipping allowed?",
         date: "2025-04-07",
         likes: 5,

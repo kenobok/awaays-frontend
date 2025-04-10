@@ -29,14 +29,15 @@ const Testimonials = () => {
                             <div key={index} className={`single-discussion relative border-b-2 border-gray-300 pb-4`}>
                                 <h4 className='font-bold text-[1.1rem] leading-[1.2rem]'>{item.title}</h4>
                                 <p className={`leading-[1.3rem] max-[600px]:leading-[1.2rem] ${expandedPosts.includes(index) ? '' : 'line-clamp-3'}`}>{item.content}</p>
-                                {item.content.length > 250 && (
-                                    <button onClick={() => handleReadMoreToggle(index)} className="float-right text-sm pr-3 text-blue-500 hover:underline leading-[1rem] cursor-pointer">
-                                        {expandedPosts.includes(index) ? 'Show Less' : 'Read More'}
-                                    </button>
-                                )}
-                                <div className='flex clear-right'>
-                                    <p className='mr-5 font-semibold text-[var(--p-color)] leading-[1.3rem]'>{item.author}</p>
-                                    <p className='italic leading-[1.3rem] text-[.85rem] font-semibold'>{item.date}</p>
+                                <div className='flex justify-end pr-3'>
+                                    {item.content.length > 250 && (
+                                        <button onClick={() => handleReadMoreToggle(index)} className="text-sm text-blue-500 hover:font-bold leading-[1rem] cursor-pointer border-2 border-blue-500 p-[1px] pt-[3.5px] px-[5px] rounded-full">
+                                            {expandedPosts.includes(index) ? 'Show Less' : 'Read More'}
+                                        </button>
+                                    )}
+                                </div>
+                                <div className='mt-1'>
+                                    <p className='font-semibold text-[var(--p-color)] leading-[1.3rem]'>{item.author} |<span className='text-gray-700'>|</span> <span className='text-gray-700 text-[0.85rem] italic'>{item.date}</span></p>
                                 </div>
                                 <div className='flex'>
                                     <button className='mr-5 text-orange-400 hover:text-orange-500 cursor-pointer'><FontAwesomeIcon icon='thumbs-up' />({item.likes})</button>
