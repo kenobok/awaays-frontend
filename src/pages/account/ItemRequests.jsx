@@ -31,7 +31,7 @@ const ItemsRequest = () => {
                                         <td>{item.name}</td>
                                         <td>{item.state}, {item.country}</td>
                                         <td>{item.request || 0}</td>
-                                        <td className='h-full my-auto'><Link to={`/dashboard/item-requests/${item.name}/${item.id}`} className='inline-block my-auto bg-[var(--p-color)] text-white rounded-lg shadow-lg py-[8px] pt-[9px] px-3 cursor-pointer leading-[.9rem]'>View requests</Link></td>
+                                        <td className='h-full my-auto'><Link to={`/dashboard/item-requests/${item.name}/${item.id}`} className='inline-block my-auto border-2 border-[var(--p-color)] text-[var(--p-color)] rounded-lg shadow-lg py-[8px] pt-[9px] px-3 cursor-pointer leading-[.9rem]'>View requests</Link></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -44,7 +44,7 @@ const ItemsRequest = () => {
                                     <p><strong>Item:</strong> {item.name}</p>
                                     <p><strong>Location:</strong> {item.state}, {item.country}</p>
                                     <p><strong>Requests:</strong> {item.request}</p>
-                                    <Link to={`/dashboard/item-requests/${item.name}/${item.id}`} className='inline-block my-auto bg-[var(--p-color)] text-white rounded-lg shadow-lg py-[8px] pt-[9px] px-3 cursor-pointer leading-[.7rem]'>View requests</Link>
+                                    <Link to={`/dashboard/item-requests/${item.name}/${item.id}`} className='inline-block my-auto border-2 border-[var(--p-color)] text-[var(--p-color)] rounded-lg shadow-lg py-[8px] pt-[9px] px-3 cursor-pointer leading-[.7rem]'>View requests</Link>
                                 </div>
                             ))}
                         </div>

@@ -32,8 +32,8 @@ const MyRequests = () => {
                                         {index % 2 === 0 ? 'Accepted' : index % 3 === 0 ? 'Pending' : 'Rejected'}
                                     </td>
                                     <td className="flex justify-evenly items-center h-full gap-x-2">
-                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-white cursor-pointer bg-green-600 shadow-sm'>Yes</button>
-                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-white cursor-pointer bg-red-400 shadow-sm'>No</button>
+                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-green-600 cursor-pointer border-2 border-green-600 shadow-sm'>Yes</button>
+                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-red-500 cursor-pointer border-2 border-red-400 shadow-sm'>No</button>
                                     </td>
                                 </tr>
                             ))}
@@ -52,8 +52,8 @@ const MyRequests = () => {
                                 <div className='flex items-center'>
                                     <strong>Collected?:</strong>
                                     <div className="ml-3 flex-1 flex justify-start items-center my-auto gap-x-5">
-                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-white cursor-pointer bg-green-600 shadow-sm'>Yes</button>
-                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-white cursor-pointer bg-red-400 shadow-sm'>No</button>
+                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-green-600 cursor-pointer border-2 border-green-600 shadow-sm'>Yes</button>
+                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-red-500 cursor-pointer border-2 border-red-400 shadow-sm'>No</button>
                                     </div>
                                 </div>
                             </div>

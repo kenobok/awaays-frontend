@@ -1,88 +1,10 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { forumLinks } from '../../components/utils/UtilsData'
 import { Loader1 } from '../../components/utils/Preloader'
 
 
 const ForumGroups = () => {
-
-
-    const forums = [
-        {
-            id: 1,
-            title: "General Giveaways",
-            description: "Discuss items you're giving away or looking for. Share tips and connect with others."
-        },
-        {
-            id: 2,
-            title: "Success Stories",
-            description: "Share your positive experiences from the platform. Celebrate giving and receiving!"
-        },
-        {
-            id: 3,
-            title: "Item Requests & Needs",
-            description: "Post specific needs or check if anyone has what you’re looking for."
-        },
-        {
-            id: 4,
-            title: "Community Support",
-            description: "Ask questions, seek help, or support others in the community."
-        },
-        {
-            id: 5,
-            title: "Tips & Safety Advice",
-            description: "Discuss safe interactions, how to spot scams, and best practices on the platform."
-        },
-        {
-            id: 6,
-            title: "DIY & Upcycling Ideas",
-            description: "Share creative ways to reuse or repurpose items. Inspire others with your projects."
-        },
-        {
-            id: 7,
-            title: "Urgent Requests",
-            description: "For time-sensitive requests where immediate support is needed."
-        },
-        {
-            id: 8,
-            title: "Parenting & Kids Corner",
-            description: "Talk about baby and kids’ items, parenting tips, and family-related giveaways."
-        },
-        {
-            id: 9,
-            title: "Job & Skill Exchange",
-            description: "Offer or request skills and services as another way of giving back."
-        },
-        {
-            id: 10,
-            title: "Lost & Found",
-            description: "Report or check for lost and found items within the community."
-        },
-        {
-            id: 11,
-            title: "New Member Introductions",
-            description: "Introduce yourself to the community. Say hello and meet fellow users!"
-        },
-        {
-            id: 12,
-            title: "Giveaway Events & Meetups",
-            description: "Promote local meetups or organize group giveaway events."
-        },
-        {
-            id: 13,
-            title: "Sustainability & Minimalism",
-            description: "Discuss reducing waste, minimalist living, and eco-friendly habits."
-        },
-        {
-            id: 14,
-            title: "Safety & Scam Awareness",
-            description: "Learn how to avoid scams and stay safe during item exchanges."
-        },
-        {
-            id: 15,
-            title: "Open Talk / Chill Zone",
-            description: "For casual conversations, jokes, and community bonding outside giveaways."
-        }
-    ];
 
     const groups = [
         {
@@ -129,11 +51,11 @@ const ForumGroups = () => {
             <div className='space-y-7 flex max-[851px]:flex-col justify-evenly flex-wrap gap-5'>
                 <div className={`w-[16rem] max-[851px]:w-full border border-gray-300 rounded-xl p-2 py-3 shadow-lg`}>
                     <h3 className='text-center font-bold text-[1.25rem] border-b border-gray-300'>Forums</h3>
-                    <div className='relative space-y-3 w-full h-[65vh] mt-4 overflow-y-auto overflow-x-hidden'>
+                    <div className='relative space-y-3 w-full mt-4 pb-2 overflow-y-auto overflow-x-hidden'>
                         {
-                            forums.length > 0 ? forums.map((forum, index) => (
-                                <Link to='' className={`inline-block p-2 py-[7px] rounded-md cursor-pointer hover:text-[var(--p-color)] ${index % 2 == 0 ? 'bg-gray-100' : ''}`} key={index}>
-                                    <h5 key={index} className='font-semibold truncate text-[var(--p-color)]'>{forum.title}</h5>
+                            forumLinks.length > 0 ? forumLinks.map((forum, index) => (
+                                <Link to={forum.link} className={`inline-block p-2 py-[7px] rounded-md cursor-pointer hover:text-[var(--p-color)] w-full ${index % 2 == 0 ? 'bg-gray-100' : ''}`} key={index}>
+                                    <h5 key={index} className='font-semibold truncate text-[var(--p-color)]'>{forum.name}</h5>
                                     <p className='leading-[1.1rem] line-clamp-2'>{forum.description}</p>
                                 </Link>
                             ))
@@ -164,13 +86,13 @@ const ForumGroups = () => {
                                         <td>{group.description}</td>
                                         <td>{group.members}</td>
                                         <td>{group.admin}</td>
-                                        <td className='h-full my-auto'><Link to={``} className='inline-block my-auto bg-[var(--p-color)] text-white rounded-lg shadow-lg py-[8px] pt-[9px] px-3 cursor-pointer leading-[.9rem]'>View group</Link></td>
+                                        <td className='h-full my-auto'><Link to={``} className='inline-block my-auto border-2 border-[var(--p-color)] text-[var(--p-color)] rounded-lg shadow-lg py-[8px] pt-[9px] px-3 cursor-pointer leading-[.9rem]'>View group</Link></td>
                                     </tr>
                                 )) 
                                 :
                                 <div className='absolute top-[50%] left-[50%] tranform -translate-x-[50%] -translate-y-[50%] text-center'>
                                     <p className='mb-3'>Create or Join a group</p>
-                                    <Link className='text-white bg-[var(--p-color)] px-3 py-2 rounded-lg shadow-lg hover:text-[1.1rem]'>Create/Join</Link>
+                                    <Link className='text-[var(--p-color)] border-2 border-[var(--p-color)] px-3 py-2 rounded-lg shadow-lg hover:text-[1.1rem]'>Create/Join</Link>
                                 </div>
                                 }
                             </tbody>
@@ -185,13 +107,13 @@ const ForumGroups = () => {
                                     <p><strong>Description:</strong> {group.description}</p>
                                     <p><strong>Members:</strong> {group.members}</p>
                                     <p><strong>Admin:</strong> {group.admin}</p>
-                                    <Link to={``} className='inline-block my-auto bg-[var(--p-color)] text-white rounded-lg shadow-lg py-[8px] pt-[9px] px-3 cursor-pointer leading-[.7rem]'>View Group</Link>
+                                    <Link to={``} className='inline-block my-auto border-2 border-[var(--p-color)] text-[var(--p-color)] rounded-lg shadow-lg py-[8px] pt-[9px] px-3 cursor-pointer leading-[.7rem]'>View Group</Link>
                                 </div>
                                 ))
                                 :
                                 <div className='absolute top-[50%] left-[50%] tranform -translate-x-[50%] -translate-y-[50%] text-center'>
                                     <p className='mb-3'>Create or Join a group</p>
-                                    <Link className='text-white bg-[var(--p-color)] px-3 py-2 rounded-lg shadow-lg hover:text-[1.1rem]'>Create/Join</Link>
+                                    <Link className='text-[var(--p-color)] border-2 border-[var(--p-color)] px-3 py-2 rounded-lg shadow-lg hover:text-[1.1rem]'>Create/Join</Link>
                                 </div>
                             }
                         </div>

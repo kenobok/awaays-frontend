@@ -21,6 +21,7 @@ import RecentLeaderboard from "./pages/community/leaderboard/RecentLeaderboard";
 import LastWeekLeaderboard from "./pages/community/leaderboard/LastWeekLeaderboard";
 import AllTimeLeaderboard from "./pages/community/leaderboard/AllTimeLeaderboard";
 import Gallery from "./pages/community/gallery/Gallery";
+import GalleryList from "./pages/community/gallery/GalleryList";
 import HealthcareSupport from "./pages/community/gallery/HealthcareSupport";
 import PrisonOutreach from "./pages/community/gallery/PrisonOutreach";
 import HomelessShelter from "./pages/community/gallery/HomelessShelter";
@@ -30,6 +31,7 @@ import DisasterRelief from "./pages/community/gallery/DisasterRelief";
 import DisabilitySupport from "./pages/community/gallery/DisabilitySupport";
 import GeneralGiveaway from "./pages/community/gallery/GeneralGiveaway";
 import Forums from "./pages/community/forums/Forums";
+import ForumsList from "./pages/community/forums/ForumsList";
 import GeneralDiscussion from "./pages/community/forums/GeneralDiscussion";
 import GiveawayQuestions from "./pages/community/forums/GiveawayQuestions";
 import Testimonials from "./pages/community/forums/Testimonials";
@@ -105,7 +107,8 @@ const router = createBrowserRouter([
             {
                 path: '/community/forums', element: <Forums />,
                 children: [
-                    { index: true, element: <GeneralDiscussion /> },
+                    { index: true, element: <ForumsList /> },
+                    { path: 'general-discussion', element: <GeneralDiscussion /> },
                     { path: 'giveaway-questions', element: <GiveawayQuestions /> },
                     { path: 'testimonials', element: <Testimonials /> },
                     { path: 'suggestions-and-feedbacks', element: <SuggestionsAndFeedbacks /> },
@@ -115,7 +118,8 @@ const router = createBrowserRouter([
             {
                 path: 'community/gallery', element: <Gallery />,
                 children: [
-                    { index: true, element: <GeneralGiveaway /> },
+                    { index: true, element: <GalleryList /> },
+                    { path: 'general-giveaway', element: <GeneralGiveaway /> },
                     { path: 'healthcare-support', element: <HealthcareSupport /> },
                     { path: 'prison-outreach', element: <PrisonOutreach /> },
                     { path: 'homeless-shelter', element: <HomelessShelter /> },

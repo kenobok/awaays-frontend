@@ -30,8 +30,8 @@ const HomeLeaderboard = () => {
                     <table className="text-white w-full">
                         <thead className="bg-gray-500">
                             <tr>
-                                <th class="border border-gray-300 p-5">Name</th>
-                                <th class="border border-gray-300 p-5">Giveaway Item</th>
+                                <th className="border border-gray-300 p-5">Name</th>
+                                <th className="border border-gray-300 p-5">Giveaway Item</th>
                             </tr>
                         </thead>
                         <tbody className='text-gray-700'>

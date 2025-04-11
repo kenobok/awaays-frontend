@@ -350,11 +350,94 @@ const forumConversations = [
     }
 ];
 
+const forumLinks = [
+    {
+        link: '/community/forums/general-discussion',
+        name: 'General Discussion',
+        button: 'Start Discussion',
+        image: img1,
+        description: 'Talk about anything with the community.'
+    },
+    {
+        link: '/community/forums/giveaway-questions',
+        name: 'Giveaway Questions',
+        button: 'Ask Question',
+        image: img2,
+        description: 'Ask or answer questions about giveaways.'
+    },
+    {
+        link: '/community/forums/testimonials',
+        name: 'Testimonials',
+        button: 'Share Testimony',
+        image: img3,
+        description: 'Share your experiences and success stories.'
+    },
+    {
+        link: '/community/forums/suggestions-and-feedbacks',
+        name: 'Suggestions & Feedbacks',
+        button: 'Share Your Thoughts',
+        image: img4,
+        description: 'Help improve the platform with your ideas.'
+    },
+    {
+        link: '/community/forums/community-hangout',
+        name: 'Community Hangout',
+        button: 'Join Hangout',
+        image: img5,
+        description: 'Chill, chat, and connect with others.'
+    }
+];
+
+const galleryLinks = [
+    {
+        link: '/community/gallery/general-giveaway',
+        name: 'General Giveaway',
+        image: img1
+    },
+    {
+        link: '/community/gallery/healthcare-support',
+        name: 'Healthcare Support',
+        image: img2
+    },
+    {
+        link: '/community/gallery/prison-outreach',
+        name: 'Prison Outreach',
+        image: img3
+    },
+    {
+        link: '/community/gallery/homeless-shelter',
+        name: 'Homeless Shelter',
+        image: img4
+    },
+    {
+        link: '/community/gallery/education-support',
+        name: 'Education Support',
+        image: img5
+    },
+    {
+        link: '/community/gallery/orphanage-support',
+        name: 'Orphanage Support',
+        image: img6
+    },
+    {
+        link: '/community/gallery/disaster-relief',
+        name: 'Disaster Relief',
+        image: img7
+    },
+    {
+        link: '/community/gallery/disability-support',
+        name: 'Disability Support',
+        image: img8
+    }
+]
+
 
 export {
     heroImages,
     galleryImages,
     events,
-    forumConversations
+    forumConversations,
+    forumLinks,
+    galleryLinks
 }
 

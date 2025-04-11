@@ -36,8 +36,8 @@ const MyGiveaways = () => {
                                     <td>{item.state}, {item.country}</td>
                                     <td>Pending</td>
                                     <td className="flex justify-evenly items-center h-full gap-x-2 max-[1221px]:flex-col max-[1221px]:gap-y-8 max-[1221px]:justify-center">
-                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-white cursor-pointer bg-blue-500 shadow-sm'>Edit</button>
-                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-white cursor-pointer bg-red-400 shadow-sm'>Delete</button>
+                                        <button className='px-3 pt-[3px] rounded-xl text-sm text-blue-500 cursor-pointer border-2 border-blue-500 shadow-sm'>Edit</button>
+                                        <button className='px-3 pt-[3px] rounded-xl text-sm text-red-500 cursor-pointer border-2 border-red-400 shadow-sm'>Delete</button>
                                     </td>
                                 </tr>
                             ))}
@@ -59,8 +59,8 @@ const MyGiveaways = () => {
                                 </p>
                                 <div className='flex mt-2'>
                                     <div className="flex-1 flex justify-center gap-x-5">
-                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-white cursor-pointer bg-blue-500 shadow-sm'>Edit</button>
-                                        <button className='px-3 pt-[4px] rounded-xl text-sm text-white cursor-pointer bg-red-400 shadow-sm'>Delete</button>
+                                        <button className='px-3 pt-[3px] rounded-xl text-sm text-blue-500 cursor-pointer border-2 border-blue-500 shadow-sm'>Edit</button>
+                                        <button className='px-3 pt-[3px] rounded-xl text-sm text-red-500 cursor-pointer border-2 border-red-400 shadow-sm'>Delete</button>
                                     </div>
                                 </div>
                             </div>

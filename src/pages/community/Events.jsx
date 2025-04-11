@@ -26,9 +26,9 @@ const Events = () => {
                 <div className="grid grid-cols-2 pb-10 overflow-hidden max-[577px]:grid-cols-1 gap-7">
                     {
                         events.map((event, index) => (
-                            <div key={index} className="relative shadow-lg rounded-xl h-[25rem] pb-5 max-[768px]:pb-0 cursor-pointer overflow-hidden" onClick={() => handleOverlay(index)}>
-                                <img src={event.image} alt='Event image' className='w-full h-[70%] object-cover rounded-xl'/>
-                                <div className='p-5 max-[768px]:p-3'>
+                            <div key={index} className="relative shadow-lg rounded-xl cursor-pointer overflow-hidden" onClick={() => handleOverlay(index)}>
+                                <img src={event.image} alt='Event image' className='w-full h-[20rem] object-cover rounded-xl'/>
+                                <div className='p-3'>
                                     <h3 className='truncate font-bold text-[1.05rem] leading-[1.2rem]'>{event.title}</h3>
                                     <p className='truncate leading-[1.3rem]'>{event.description}</p>
                                     {event.location && <address className='truncate leading-[1.3rem]'>{event.location}</address>}
