@@ -23,7 +23,7 @@ const Features = () => {
             icon: chat, 
             title: "Community Groups", 
             text: "Create or join groups. Share ideas, discuss interests and collaborate with like-minded individuals.", 
-            link: "community/groups",
+            link: "/community/groups",
         },
     ]
 

@@ -18,6 +18,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
         { path: "/dashboard/my-requests", icon: "hand-holding-heart", label: "My Requests" },
         { path: "/dashboard/received-items", icon: "boxes", label: "Received Items" },
         { path: "/dashboard/forums-and-groups", icon: "users", label: "Forums & Groups" },
+        { path: "/logout", icon: "sign-out", label: "Logout" },
     
         {/* <li><Link>User Management</Link></li>
             <li><Link>Giveaway Management</Link></li>
@@ -52,7 +53,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
                             <img src={userImg} alt="user-image" className="inline-block w-[2.5rem]"/>
                             <h5 className="leading-[1.2rem] pt-1 ml-2"><b>Hi,</b><br/>Temilehin Adekunle</h5>
                         </div>
-                        <ul className="dashboard-links px-2">
+                        <ul className="dashboard-links px-2 overflow-y-auto pb-7">
                             {
                                 menuItems.map((item, index) => (
                                     <li key={index} 

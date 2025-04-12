@@ -1,23 +1,17 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { leaderboard } from '../utils/UtilsData'
 import { motion } from 'framer-motion'
 
 
-const leaderboardData = [
-    { name: "John Doe", giveawayItem: "Laptop" },
-    { name: "Alice Johnson", giveawayItem: "Smartphone" },
-    { name: "Michael Brown", giveawayItem: "Bicycle" },
-    { name: "Emily Davis", giveawayItem: "Backpack" },
-    { name: "James Wilson", giveawayItem: "Gaming Console" },
-    { name: "Sophia Martinez", giveawayItem: "Wristwatch" },
-    { name: "William Anderson", giveawayItem: "Tablet" },
-    { name: "Olivia Thomas", giveawayItem: "Headphones" },
-    { name: "Ethan White", giveawayItem: "Camera" },
-    { name: "Emma Roberts", giveawayItem: "Gift Card" }
-];
-
-
 const HomeLeaderboard = () => {
+    const today = new Date();
+    const oneWeekAgo = new Date(today);
+    oneWeekAgo.setDate(today.getDate() - 7);
+
+    const sortByDate = (data) => data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const recentLeaderboard = sortByDate(leaderboard.filter(item => new Date(item.date) >= oneWeekAgo));
+
 
     return (
         <section className="flex-1">
@@ -35,11 +29,11 @@ const HomeLeaderboard = () => {
                             </tr>
                         </thead>
                         <tbody className='text-gray-700'>
-                            {leaderboardData.length > 0 ? (
-                                leaderboardData.slice(0, 5).map((data, index) => (
+                            {recentLeaderboard.length > 0 ? (
+                                recentLeaderboard.slice(0, 5).map((data, index) => (
                                     <tr key={index} className={`${index % 2 === 0 ? "bg-gray-200" : "bg-gray-100"}`}>
-                                        <td className="border border-gray-300 p-4 text-center leading-[1.2rem]">{data.name}</td>
-                                        <td className="border border-gray-300 p-4 text-center leading-[1.2rem]">{data.giveawayItem}</td>
+                                        <td className="border border-gray-300 p-4 text-center leading-[1.2rem]">{data.donor}</td>
+                                        <td className="border border-gray-300 p-4 text-center leading-[1.2rem]">{data.item}</td>
                                     </tr>
                                 ))
                             ) : (

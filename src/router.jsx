@@ -17,26 +17,16 @@ import GiveItem from "./pages/giveaway/GiveItem";
 import GiveawayItems from './pages/giveaway/GiveawayItems';
 import GiveawayItemDetails from './pages/giveaway/GiveawayItemDetails';
 import Leaderboard from "./pages/community/leaderboard/Leaderboard";
-import RecentLeaderboard from "./pages/community/leaderboard/RecentLeaderboard";
-import LastWeekLeaderboard from "./pages/community/leaderboard/LastWeekLeaderboard";
-import AllTimeLeaderboard from "./pages/community/leaderboard/AllTimeLeaderboard";
-import Gallery from "./pages/community/gallery/Gallery";
-import GalleryList from "./pages/community/gallery/GalleryList";
-import HealthcareSupport from "./pages/community/gallery/HealthcareSupport";
-import PrisonOutreach from "./pages/community/gallery/PrisonOutreach";
-import HomelessShelter from "./pages/community/gallery/HomelessShelter";
-import EducationSupport from "./pages/community/gallery/EducationSupport";
-import OrphanageSupport from "./pages/community/gallery/OrphanageSupport";
-import DisasterRelief from "./pages/community/gallery/DisasterRelief";
-import DisabilitySupport from "./pages/community/gallery/DisabilitySupport";
-import GeneralGiveaway from "./pages/community/gallery/GeneralGiveaway";
+import LeaderboardDetails from "./pages/community/leaderboard/LeaderboardDetails";
 import Forums from "./pages/community/forums/Forums";
 import ForumsList from "./pages/community/forums/ForumsList";
-import GeneralDiscussion from "./pages/community/forums/GeneralDiscussion";
-import GiveawayQuestions from "./pages/community/forums/GiveawayQuestions";
-import Testimonials from "./pages/community/forums/Testimonials";
-import SuggestionsAndFeedbacks from "./pages/community/forums/SuggestionsAndFeedbacks";
-import CommunityHangout from "./pages/community/forums/CommunityHangout";
+import ForumDetails from "./pages/community/forums/ForumDetails";
+import Groups from "./pages/community/groups/Groups";
+import GroupsList from "./pages/community/groups/GroupsList";
+import GroupDetails from "./pages/community/groups/GroupDetails";
+import Gallery from "./pages/community/gallery/Gallery";
+import GalleryList from "./pages/community/gallery/GalleryList";
+import GalleryImages from "./pages/community/gallery/GalleryImages";
 import Events from "./pages/community/Events";
 import HowItWorks from "./pages/HowItWorks";
 import AboutUs from "./pages/AboutUs";
@@ -94,41 +84,44 @@ const router = createBrowserRouter([
                 ]
             },
 
-
-            // Community Link
+            // Leaderboard Link
             { 
                 path: 'community/leaderboard', element: <Leaderboard />,
                 children: [
-                    { index: true, element: <RecentLeaderboard /> },
-                    { path: 'last-week', element: <LastWeekLeaderboard /> },
-                    { path: 'all-time', element: <AllTimeLeaderboard /> },
+                    { index: true, element: <LeaderboardDetails /> },
+                    { path: '/community/leaderboard/last-week', element: <LeaderboardDetails /> },
+                    { path: '/community/leaderboard/all-time', element: <LeaderboardDetails /> },
                 ]
             },
+
+            // Forums Link
             {
                 path: '/community/forums', element: <Forums />,
                 children: [
                     { index: true, element: <ForumsList /> },
-                    { path: 'general-discussion', element: <GeneralDiscussion /> },
-                    { path: 'giveaway-questions', element: <GiveawayQuestions /> },
-                    { path: 'testimonials', element: <Testimonials /> },
-                    { path: 'suggestions-and-feedbacks', element: <SuggestionsAndFeedbacks /> },
-                    { path: 'community-hangout', element: <CommunityHangout /> },
+                    { path: ':forumLink', element: <ForumDetails /> },
                 ]
             },
+
+            // Groups Link
+            {
+                path: '/community/groups', element: <Groups />,
+                children: [
+                    { index: true, element: <GroupsList /> },
+                    { path: ':slug', element: <GroupDetails /> },
+                ]
+            },
+
+            // Gallery Link
             {
                 path: 'community/gallery', element: <Gallery />,
                 children: [
                     { index: true, element: <GalleryList /> },
-                    { path: 'general-giveaway', element: <GeneralGiveaway /> },
-                    { path: 'healthcare-support', element: <HealthcareSupport /> },
-                    { path: 'prison-outreach', element: <PrisonOutreach /> },
-                    { path: 'homeless-shelter', element: <HomelessShelter /> },
-                    { path: 'education-support', element: <EducationSupport /> },
-                    { path: 'orphanage-support', element: <OrphanageSupport /> },
-                    { path: 'disaster-relief', element: <DisasterRelief /> },
-                    { path: 'disability-support', element: <DisabilitySupport /> },
+                    { path: ':slug', element: <GalleryImages /> }
                 ]
             },
+
+            // Events Link
             { path: 'community/events', element: <Events /> },
         ]
     },

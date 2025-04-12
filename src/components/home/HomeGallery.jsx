@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { galleryImages } from '/src/components/utils/UtilsData';
+import { galleries } from '/src/components/utils/UtilsData';
 import { Loader1 } from '/src/components/utils/Preloader'
 
 
@@ -14,9 +14,9 @@ const HomeGallery = () => {
                 </div>
                 <div className='grid grid-cols-3 max-[577px]:grid-cols-2 gap-5 w-full'>
                     {
-                        galleryImages ? galleryImages.slice(0, 6).map((image, index) => (
+                        galleries ? galleries.slice(0, 6).map((gallery, index) => (
                             <div key={index} className='w-full h-40 overflow-hidden rounded-lg shadow-lg'>
-                                <img src={image.src} alt={`Slider ${index}`} className='object-cover w-full h-40'/>
+                                <img src={gallery.image} alt={`Slider ${index}`} className='object-cover w-full h-40'/>
                             </div>
                         )) : <Loader1 />
                     }

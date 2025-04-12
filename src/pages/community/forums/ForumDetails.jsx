@@ -1,13 +1,22 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { forumConversations } from '/src/components/utils/UtilsData'
+import { forums } from '/src/components/utils/UtilsData';
 import '/src/assets/styles/community.css';
 
-const GeneralDiscussion = () => {
+const ForumDetails = () => {
+    const location = useLocation();
     const[showComments, setShowComments] = useState(null)
     const [expandedPosts, setExpandedPosts] = useState([]);
+    
+    const forum = useMemo(() => {
+        return forums.find(f => location.pathname.includes(f.link));
+    }, [location.pathname, forums]);
 
+    useEffect(() => {
+        setShowComments(null);
+        setExpandedPosts([]);
+    }, [location.pathname])
 
     const handleReadMoreToggle = (index) => {
         setExpandedPosts(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);
@@ -20,12 +29,13 @@ const GeneralDiscussion = () => {
 
     return (
         <div className='ml-25 max-[768px]:ml-0'>
-            <h3 className='text-center text-[1.3rem] font-semibold mb-5 border-b border-gray-200'>General Discussion</h3>
+            <h3 className='text-center text-[1.3rem] font-semibold mb-5 border-b border-gray-200'>{ forum.name }</h3>
             <div className='py-10'>
                 <div className='forum mx-auto space-y-5 max-w-4xl pr-5 max-[768px]:px-5'>
                     {
-                        forumConversations.length>0 ? 
-                        forumConversations.map((item, index) => (
+                        forum ? 
+                        forum.conversations.length>0 ? 
+                        forum.conversations.map((item, index) => (
                             <div key={index} className={`single-discussion relative border-b-2 border-gray-300 pb-4`}>
                                 <h4 className='font-bold text-[1.1rem] leading-[1.2rem]'>{item.title}</h4>
                                 <p className={`leading-[1.3rem] max-[600px]:leading-[1.2rem] ${expandedPosts.includes(index) ? '' : 'line-clamp-3'}`}>{item.content}</p>
@@ -72,9 +82,11 @@ const GeneralDiscussion = () => {
                         ))
                         :
                         <div className='text-center'>
-                            <h4 className='text-[1.2rem] font-semibold mt-20'>No discussion available</h4>
-                            <p>Click on <b className='mt-5 text-[var(--p-color)]'>Start Discussion</b> button to create a discussion.</p>
+                            <h4 className='text-[1.2rem] font-semibold mt-20'>No { forum.name } available</h4>
+                            <p>Click on <b className='mt-5 text-[var(--p-color)]'>{ forum.button }</b> button to create a { forum.name }.</p>
                         </div>
+                        :
+                        <Loader1 />
                     }
                 </div>
             </div>
@@ -82,4 +94,4 @@ const GeneralDiscussion = () => {
     )
 }
 
-export default GeneralDiscussion
+export default ForumDetails

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { forumLinks } from '../../components/utils/UtilsData'
+import { forums } from '../../components/utils/UtilsData'
 import { Loader1 } from '../../components/utils/Preloader'
 
 
@@ -53,8 +53,8 @@ const ForumGroups = () => {
                     <h3 className='text-center font-bold text-[1.25rem] border-b border-gray-300'>Forums</h3>
                     <div className='relative space-y-3 w-full mt-4 pb-2 overflow-y-auto overflow-x-hidden'>
                         {
-                            forumLinks.length > 0 ? forumLinks.map((forum, index) => (
-                                <Link to={forum.link} className={`inline-block p-2 py-[7px] rounded-md cursor-pointer hover:text-[var(--p-color)] w-full ${index % 2 == 0 ? 'bg-gray-100' : ''}`} key={index}>
+                            forums.length > 0 ? forums.map((forum, index) => (
+                                <Link to={`/community/forums/${forum.link}`} className={`inline-block p-2 py-[7px] rounded-md cursor-pointer hover:text-[var(--p-color)] w-full ${index % 2 == 0 ? 'bg-gray-100' : ''}`} key={index}>
                                     <h5 key={index} className='font-semibold truncate text-[var(--p-color)]'>{forum.name}</h5>
                                     <p className='leading-[1.1rem] line-clamp-2'>{forum.description}</p>
                                 </Link>
