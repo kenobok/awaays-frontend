@@ -167,11 +167,11 @@ const AuthPage = () => {
 			<motion.section className="auth-img flex-1"
 				initial={{ opacity: 0, x: -500 }} 
 				animate={{ opacity: 1, x: 0 }} 
-				transition={{ duration: 1.5, ease: "easeInOut"  }}
+				transition={{ duration: 1, ease: "easeInOut"  }}
 			>
 			</motion.section>
 
-			<motion.section className="px-30 py-10 max-[1081px]:px-20 max-[993px]:px-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-0 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }}>
+			<motion.section className="px-30 py-10 max-[1081px]:px-20 max-[993px]:px-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-0 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut"  }}>
 				<div className="auth-switch relative flex justify-center mb-4 mx-auto">
 					<button onClick={ handleSignUp } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${signUp && 'active'}`}>SIGN UP</button>
 					<button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${signIn && 'active'}`}>SIGN IN</button>

@@ -9,7 +9,7 @@ import Messages from "./pages/account/Messages";
 import MessageDetails from "./pages/account/MessageDetails";
 import MyRequests from "./pages/account/MyRequests";
 import ItemRequests from "./pages/account/ItemRequests";
-// import ViewItemRequests from "./pages/account/viewItemRequests";
+import ViewItemRequests from "./pages/account/ViewItemRequests";
 import MyGiveaways from "./pages/account/MyGiveaways";
 import ReceivedItems from "./pages/account/ReceivedItems";
 import ForumGroups from "./pages/account/ForumGroups";
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
                     {
                         path: "item-requests", element: <ItemRequests />,
                         children: [
-                            // { path: ":itemName/:itemId", element: <ViewItemRequests /> }
+                            { path: ":itemName/:itemId", element: <ViewItemRequests /> }
                         ]
                     },
                     { path: "my-giveaways", element: <MyGiveaways /> },
