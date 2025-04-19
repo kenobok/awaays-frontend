@@ -46,7 +46,7 @@ const GiveawayItemDetails = () => {
             { loading ? <div className='h-[75vh]'><Loader1 /></div> :
             <>
                 <section className="flex-1 overflow-hidden">
-                    <motion.div className="flex-1 modal-img overflow-hidden m-auto max-[768px]:mb-5" initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }}>
+                    <motion.div className="flex-1 modal-img overflow-hidden m-auto max-[768px]:mb-5" initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
                         <Swiper
                             modules={[Navigation, Pagination, Autoplay, EffectCards, Mousewheel]}
                             spaceBetween={0}
@@ -70,7 +70,7 @@ const GiveawayItemDetails = () => {
                     </motion.div>
                 </section>
                 <section className="flex-1">
-                    <motion.div className="flex-1 modal-text overflow-auto pl-10 py-3 max-[768px]:pl-0 m-auto" initial={{ opacity: 0, x: 300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut" }} >
+                    <motion.div className="flex-1 modal-text overflow-auto pl-10 py-3 max-[768px]:pl-0 m-auto" initial={{ opacity: 0, x: 300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }} >
                         <h3 className="text-[1.5rem] mb-2 font-bold leading-[1.8rem]">{viewItem.purpose}</h3>
                         <h3 className="text-[1.2rem] font-semibold leading-[1.5rem]">{viewItem.name}</h3>
                         <h5 className="my-4 mb-6 inline-block border border-orange-400 px-5 py-2 rounded-md shadow-md" style={{color:'#fd7e14'}}>{viewItem.request > 0 ? viewItem.request : 0} - Request(s)</h5>
