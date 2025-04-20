@@ -780,7 +780,7 @@ const groups = [
         "slug": "furniture-finders",
         "description": "Share used furniture around town",
         "admin": "Daniel Gomez",
-        "members": ["Laura Smith", "Tina Baker", "Clara Brown", "Ben Davis", "Mark Lee"],
+        "members": ["Laura Smith", "Tina Baker", "Clara Brown", "Ben Davis", "Mark Lee", "Laura Smith", "Tina Baker", "Clara Brown", "Ogbonaiya Batholomew", "Mark Lee", "Ifesinachi Sopuruchi Smith", "Tina Baker", "Clara Brown", "Ben Davis", "Mark Lee", "Laura Smith", "Tina Baker Ayomide Ikechukwu", "Clara Brown", "Ben Davis", "Mark Lee",],
         "dateCreated": "2024-06-11",
         "image": img1,
         "conversations": [
