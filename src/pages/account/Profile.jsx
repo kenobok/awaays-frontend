@@ -162,7 +162,7 @@ const Profile = () => {
                             }
                         </div>
                         <div className='form-input'>
-                            <input type='submit' value='Submit' className='bg-[var(--p-color)] text-white' />
+                            <input type='submit' value='Submit' className='bg-[var(--p-color)] text-white cursor-pointer' />
                         </div>
                     </form>
                 </div>

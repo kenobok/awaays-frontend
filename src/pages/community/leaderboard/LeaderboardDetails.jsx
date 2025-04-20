@@ -13,7 +13,7 @@ const LeaderboardDetails = () => {
 
     const sortByDate = (data) => data.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    const recent = sortByDate(leaderboard.filter(item => new Date(item.date) >= oneWeekAgo));
+    const topGivers = sortByDate(leaderboard.filter(item => item.top_giver === true));
     const lastWeek = sortByDate(leaderboard.filter(item => new Date(item.date) < oneWeekAgo && new Date(item.date) >= twoWeeksAgo));
     const allTime = sortByDate([...leaderboard]);
 
@@ -26,8 +26,8 @@ const LeaderboardDetails = () => {
         leaderboardData = allTime;
         title = 'All Time'
     } else {
-        leaderboardData = recent;
-        title = 'Recent'
+        leaderboardData = topGivers;
+        title = 'Top Givers'
     }
 
     return (
