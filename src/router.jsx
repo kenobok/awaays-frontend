@@ -75,7 +75,7 @@ const router = createBrowserRouter([
                     {
                         path: "item-requests", element: <ItemRequests />,
                         children: [
-                            { path: ":itemName/:itemId", element: <ViewItemRequests /> }
+                            { path: ":slug", element: <ViewItemRequests /> }
                         ]
                     },
                     { path: "my-giveaways", element: <MyGiveaways /> },

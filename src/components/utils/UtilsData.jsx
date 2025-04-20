@@ -1129,7 +1129,7 @@ const messages = [
         "id": 3,
         "slug": "sade-ken-chat",
         "participants": ["Sade", "Ken"],
-        "opened": true,
+        "opened": false,
         "conversation": [
             {
                 "id": 5,

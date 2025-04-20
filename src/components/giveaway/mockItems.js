@@ -1,6 +1,7 @@
 const mockItems = [
     { 
         id: 1, 
+        slug: 'support-awaays',
         purpose: "Support Awaays", 
         name: "Laptop", 
         description: "A fully functional laptop suitable for students or professionals. It is in great condition and can handle basic tasks such as browsing, word processing, and online learning.",
@@ -17,6 +18,7 @@ const mockItems = [
     },
     { 
         id: 2,
+        slug: 'prison-outreach',
         purpose: "Prison Outreach",
         name: "Clothes", 
         description: "A variety of gently used clothes, including shirts, trousers, and jackets, suitable for children and adults in need. All items have been cleaned and are in wearable condition.",
@@ -33,6 +35,7 @@ const mockItems = [
     },
     { 
         id: 3,
+        slug: 'educational-aid',
         purpose: "Educational Aid",
         name: "Books", 
         description: "A diverse collection of educational books covering subjects such as science, mathematics, literature, and personal development. Suitable for students, teachers, and anyone eager to learn.",
@@ -49,6 +52,7 @@ const mockItems = [
     },
     { 
         id: 4, 
+        slug: '',
         purpose: "Sustainable Transport",
         name: "Bicycle", 
         description: "A well-maintained bicycle, perfect for daily commuting, exercise, or leisure riding. It has smooth gears and strong brakes, making it reliable and easy to use.",
@@ -65,6 +69,7 @@ const mockItems = [
     },
     { 
         id: 5, 
+        slug: 'connectivity-and-communication',
         purpose: "Connectivity & Communication",
         name: "Mobile Phone", 
         description: "A working smartphone with essential features such as calling, texting, and internet access. Ideal for staying connected, accessing online resources, or emergency communication.",
@@ -83,6 +88,7 @@ const mockItems = [
     },
     { 
         id: 6, 
+        slug: 'home-essentials',
         purpose: "Home Essentials",
         name: "Furniture", 
         description: "A sturdy wooden study table in great condition, ideal for students, freelancers, or anyone in need of a workspace at home.",
@@ -98,6 +104,7 @@ const mockItems = [
     },
     { 
         id: 7, 
+        slug: 'child-development',
         purpose: "Child Development",
         name: "Toys", 
         description: "A set of interactive and educational toys designed to enhance creativity, motor skills, and problem-solving abilities in young children.",
@@ -115,6 +122,7 @@ const mockItems = [
     },
     { 
         id: 8, 
+        slug: 'household-items',
         purpose: "Household Items",
         name: "Kitchen Utensils", 
         description: "A collection of essential kitchen items, including pots, plates, and cutlery. Perfect for families, students, or individuals setting up a new home.",
@@ -129,6 +137,7 @@ const mockItems = [
     },
     { 
         id: 9, 
+        slug: 'school-essentials',
         purpose: "School Essentials",
         name: "School Bag", 
         description: "A spacious and durable backpack designed for students of all ages. It has multiple compartments for books, stationery, and personal items.",
@@ -143,6 +152,7 @@ const mockItems = [
     },
     { 
         id: 10, 
+        slug: 'clothing-assistance',
         purpose: "Clothing Assistance",
         name: "Shoes", 
         description: "A pair of gently worn sneakers in good condition. Suitable for casual wear, sports, or school use.",
@@ -161,6 +171,7 @@ const mockItems = [
     },
     { 
         id: 11, 
+        slug: 'remote-work-support',
         purpose: "Remote Work Support", 
         name: "Tablet", 
         description: "A functional tablet with a touch screen, ideal for students, freelancers, and professionals for remote work or study.",
@@ -175,6 +186,7 @@ const mockItems = [
     },
     { 
         id: 12, 
+        slug: 'healthcare-assistance',
         purpose: "Healthcare Assistance", 
         name: "Wheelchair", 
         description: "A well-maintained wheelchair to help individuals with mobility challenges.",
@@ -189,6 +201,7 @@ const mockItems = [
     },
     { 
         id: 13, 
+        slug: 'winter-relief',
         purpose: "Winter Relief", 
         name: "Blankets", 
         description: "Warm blankets in good condition to help people in cold weather conditions.",
@@ -203,6 +216,7 @@ const mockItems = [
     },
     { 
         id: 14, 
+        slug: 'digital-learning',
         purpose: "Digital Learning", 
         name: "Headphones", 
         description: "A pair of noise-canceling headphones, great for online learning or remote work.",
@@ -217,6 +231,7 @@ const mockItems = [
     },
     { 
         id: 15, 
+        slug: 'daily-commuting',
         purpose: "Daily Commuting", 
         name: "Bus Pass", 
         description: "A preloaded bus pass for public transportation to assist individuals commuting to work or school.",
@@ -231,6 +246,7 @@ const mockItems = [
     },
     { 
         id: 16, 
+        slug: '',
         purpose: "Food Assistance", 
         name: "Grocery Package", 
         description: "A package containing essential food items such as rice, beans, and canned goods.",
@@ -245,6 +261,7 @@ const mockItems = [
     },
     { 
         id: 17, 
+        slug: 'medical-supplies',
         purpose: "Medical Supplies", 
         name: "First Aid Kit", 
         description: "A complete first aid kit with essential supplies like bandages, antiseptics, and pain relievers.",
@@ -259,6 +276,7 @@ const mockItems = [
     },
     { 
         id: 18, 
+        slug: 'school-support',
         purpose: "School Support", 
         name: "Stationery Set", 
         description: "A complete set of stationery including pens, pencils, erasers, and notebooks for students.",
@@ -273,6 +291,7 @@ const mockItems = [
     },
     { 
         id: 19, 
+        slug: 'safe-drinking-water',
         purpose: "Safe Drinking Water", 
         name: "Water Purifier", 
         description: "A compact water purifier to provide clean drinking water for a household or small community.",
@@ -287,6 +306,7 @@ const mockItems = [
     },
     { 
         id: 20, 
+        slug: 'job-search-support',
         purpose: "Job Search Support", 
         name: "Resume Printing Voucher", 
         description: "A voucher that allows free printing of resumes and job application documents.",
