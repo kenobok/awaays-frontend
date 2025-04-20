@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const MessageDetails = () => {
     const location = useLocation();
-    let user;
+    const [user, setUser] = useState(null);
 
     const message = useMemo(() => {
         return messages.find(msg => msg.slug === location.pathname.split('/').pop());
@@ -14,21 +14,18 @@ const MessageDetails = () => {
 
     useEffect(() => {
         if (message) {
-            user = message.participants[1]
+            setUser(message.participants[1]);
         }
-    }, [location.pathname])
+    }, [message]);
 
-    useEffect(() => {
-        console.log(user)
-    }, [location.pathname])
 
     return (
         <div className={`h-full py-0`}>
-            <div className='relative h-[65vh] overflow-x-hidden overflow-y-auto'>
+            <div className='relative h-[60vh] overflow-x-hidden overflow-y-auto'>
                     { 
                         message.conversation.length > 0 ? message.conversation.map((msg, index) => (
-                            <div key={index} className={`flex relative ${msg.receiver == user ? 'justify-start' : 'justify-end'}`}>
-                                <div className='p-[10px] pb-[5px] mt-3 max-w-[70%] max-[1081px]:max-w-[80%] rounded-lg bg-blue-100'>
+                            <div key={index} className={`flex relative ${msg.receiver === user ? 'justify-end' : 'justify-start'}`}>
+                                <div className={`p-[10px] pb-[5px] mt-3 max-w-[70%] max-[1081px]:max-w-[80%] rounded-lg ${msg.receiver === user ? 'bg-blue-200' : 'bg-gray-200'}`}>
                                     <p className='text-[.93rem] leading-[1rem] mb-1'>{msg.message}</p>
                                     <address className='text-black text-[.66rem]'>12:56 PM || 21/04/2025</address>
                                 </div>
@@ -38,7 +35,7 @@ const MessageDetails = () => {
                     
             </div>
 
-            <div className='absolute bottom-3 w-[90%] h-18 mt-2'>
+            <div className='w-full h-18 mt-2 bg-white'>
                 <form className='h-full flex'>
                     <textarea className='border border-gray-300 h-full w-full resize-none leading-[1.1rem] p-2 px-3 rounded-lg text-[.93rem] focus:outline-[var(--p-color)]' placeholder='Enter your message'></textarea>
                     <button className='text-white bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'><FontAwesomeIcon icon='paper-plane' /> Send</button>

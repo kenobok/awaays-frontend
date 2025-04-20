@@ -43,8 +43,8 @@ const Messages = () => {
                         }
                     </ul>
                 </div>
-                <div className={`message-outlet relative flex-1 border border-gray-300 rounded-xl p-4 py-0 shadow-lg ${isMessageList ? '' : 'hide-outlet'}`}></div>
-                <div className={`message-outlet relative flex-1 border border-gray-300 rounded-xl p-4 py-0 shadow-lg ${isMessageList ? 'hide-outlet' : 'small-outlet'}`}>
+                <div className={`message-outlet relative flex-1 border border-gray-300 rounded-xl p-4 py-0 pb-2 shadow-lg ${isMessageList ? '' : 'hide-outlet'}`}></div>
+                <div className={`message-outlet relative flex-1 border border-gray-300 rounded-xl p-4 py-0 pb-2 shadow-lg ${isMessageList ? 'hide-outlet' : 'small-outlet'}`}>
                     <Outlet />
                 </div>
             </div>
