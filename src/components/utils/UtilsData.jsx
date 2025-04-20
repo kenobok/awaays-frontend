@@ -1068,6 +1068,259 @@ const events = [
     }
 ];
 
+const messages = [
+    {
+        "id": 1,
+        "slug": "mary-dan-chat",
+        "participants": ["Mary", "Dan"],
+        "conversation": [
+            {
+                "id": 1,
+                "sender": "Mary",
+                "receiver": "Dan",
+                "message": "Hi Dan! Is that wooden shelf still up for grabs?",
+                "time": "09:05 AM",
+                "date": "2025-04-19",
+                "senderImage": img1,
+            },
+            {
+                "id": 2,
+                "sender": "Dan",
+                "receiver": "Mary",
+                "message": "Hey Mary, yes it is. Do you want to come pick it up today?",
+                "time": "09:08 AM",
+                "date": "2025-04-19",
+                "senderImage": img1,
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "slug": "emeka-ruth-chat",
+        "participants": ["Emeka", "Ruth"],
+        "conversation": [
+            {
+                "id": 3,
+                "sender": "Ruth",
+                "receiver": "Emeka",
+                "message": "Hello! I saw your bicycle post. Is it still working fine?",
+                "time": "07:14 PM",
+                "date": "2025-04-18",
+                "senderImage": "https://randomuser.me/api/portraits/women/18.jpg",
+            },
+            {
+                "id": 4,
+                "sender": "Emeka",
+                "receiver": "Ruth",
+                "message": "Yes, it’s in great condition. Just needs a little cleaning.",
+                "time": "07:16 PM",
+                "date": "2025-04-18",
+                "senderImage": "https://randomuser.me/api/portraits/men/18.jpg",
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "slug": "sade-ken-chat",
+        "participants": ["Sade", "Ken"],
+        "conversation": [
+            {
+                "id": 5,
+                "sender": "Sade",
+                "receiver": "Ken",
+                "message": "Thanks again for the shoes. They fit perfectly!",
+                "time": "11:32 AM",
+                "date": "2025-04-17",
+                "senderImage": "https://randomuser.me/api/portraits/women/25.jpg",
+            },
+            {
+                "id": 6,
+                "sender": "Ken",
+                "receiver": "Sade",
+                "message": "Glad to hear that! Happy to give them away.",
+                "time": "11:34 AM",
+                "date": "2025-04-17",
+                "senderImage": img4,
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "slug": "blessing-ray-chat",
+        "participants": ["Blessing", "Ray"],
+        "conversation": [
+            {
+                "id": 7,
+                "sender": "Ray",
+                "receiver": "Blessing",
+                "message": "Hey, the books are ready for pickup anytime today.",
+                "time": "08:45 AM",
+                "date": "2025-04-17",
+                "senderImage": "https://randomuser.me/api/portraits/men/21.jpg",
+            },
+            {
+                "id": 8,
+                "sender": "Blessing",
+                "receiver": "Ray",
+                "message": "Awesome! I’ll swing by around noon. Thanks!",
+                "time": "08:47 AM",
+                "date": "2025-04-17",
+                "senderImage": "https://randomuser.me/api/portraits/women/21.jpg",
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "slug": "ibrahim-linda-chat",
+        "participants": ["Ibrahim", "Linda"],
+        "conversation": [
+            {
+                "id": 9,
+                "sender": "Linda",
+                "receiver": "Ibrahim",
+                "message": "Are you still giving out the rice cooker?",
+                "time": "06:20 PM",
+                "date": "2025-04-16",
+                "senderImage": "https://randomuser.me/api/portraits/women/34.jpg",
+            },
+            {
+                "id": 10,
+                "sender": "Ibrahim",
+                "receiver": "Linda",
+                "message": "Yes! Want to pick it up this evening?",
+                "time": "06:23 PM",
+                "date": "2025-04-16",
+                "senderImage": "https://randomuser.me/api/portraits/men/34.jpg",
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "slug": "tunde-jane-chat",
+        "participants": ["Tunde", "Jane"],
+        "conversation": [
+            {
+                "id": 11,
+                "sender": "Jane",
+                "receiver": "Tunde",
+                "message": "Thank you for the baby clothes. They’re lovely.",
+                "time": "04:10 PM",
+                "date": "2025-04-15",
+                "senderImage": "https://randomuser.me/api/portraits/women/12.jpg",
+            },
+            {
+                "id": 12,
+                "sender": "Tunde",
+                "receiver": "Jane",
+                "message": "You're welcome! I'm glad they’ll be useful.",
+                "time": "04:13 PM",
+                "date": "2025-04-15",
+                "senderImage": "https://randomuser.me/api/portraits/men/12.jpg",
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "slug": "grace-paul-chat",
+        "participants": ["Grace", "Paul"],
+        "conversation": [
+            {
+                "id": 13,
+                "sender": "Grace",
+                "receiver": "Paul",
+                "message": "Hi Paul, is the matress still up for donation?",
+                "time": "01:22 PM",
+                "date": "2025-04-15",
+                "senderImage": "https://randomuser.me/api/portraits/women/41.jpg",
+            },
+            {
+                "id": 14,
+                "sender": "Paul",
+                "receiver": "Grace",
+                "message": "Yes, and it’s clean. Can you come today?",
+                "time": "01:25 PM",
+                "date": "2025-04-15",
+                "senderImage": "https://randomuser.me/api/portraits/men/41.jpg",
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "slug": "juliet-mike-chat",
+        "participants": ["Juliet", "Mike"],
+        "conversation": [
+            {
+                "id": 15,
+                "sender": "Mike",
+                "receiver": "Juliet",
+                "message": "The curtains are yours if you still want them.",
+                "time": "05:17 PM",
+                "date": "2025-04-14",
+                "senderImage": "https://randomuser.me/api/portraits/men/28.jpg",
+            },
+            {
+                "id": 16,
+                "sender": "Juliet",
+                "receiver": "Mike",
+                "message": "Perfect! I’ll come pick them up tomorrow morning.",
+                "time": "05:20 PM",
+                "date": "2025-04-14",
+                "senderImage": "https://randomuser.me/api/portraits/women/28.jpg",
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "slug": "amaka-frank-chat",
+        "participants": ["Amaka", "Frank"],
+        "conversation": [
+            {
+                "id": 17,
+                "sender": "Frank",
+                "receiver": "Amaka",
+                "message": "I dropped off the office chair at the front desk.",
+                "time": "12:03 PM",
+                "date": "2025-04-13",
+                "senderImage": "https://randomuser.me/api/portraits/men/37.jpg",
+            },
+            {
+                "id": 18,
+                "sender": "Amaka",
+                "receiver": "Frank",
+                "message": "Thanks so much. I’ll get it this afternoon.",
+                "time": "12:05 PM",
+                "date": "2025-04-13",
+                "senderImage": "https://randomuser.me/api/portraits/women/37.jpg",
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "slug": "kelvin-tola-chat",
+        "participants": ["Kelvin", "Tola"],
+        "conversation": [
+            {
+                "id": 19,
+                "sender": "Tola",
+                "receiver": "Kelvin",
+                "message": "Hey, I picked up the blender. Thank you again!",
+                "time": "09:48 AM",
+                "date": "2025-04-12",
+                "senderImage": "https://randomuser.me/api/portraits/women/17.jpg",
+            },
+            {
+                "id": 20,
+                "sender": "Kelvin",
+                "receiver": "Tola",
+                "message": "You’re welcome. Enjoy!",
+                "time": "09:50 AM",
+                "date": "2025-04-12",
+                "senderImage": "https://randomuser.me/api/portraits/men/17.jpg",
+            }
+        ]
+    }
+]
+
 
 export {
     heroImages,
@@ -1077,5 +1330,6 @@ export {
     groups,
     galleries,
     events,
+    messages,
 }
 

@@ -1,41 +1,44 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { messages } from '../../components/utils/UtilsData'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const MessageDetails = () => {
     const location = useLocation();
+    let user;
+
+    const message = useMemo(() => {
+        return messages.find(msg => msg.slug === location.pathname.split('/').pop());
+    }, [messages, location.pathname])
+
+    useEffect(() => {
+        if (message) {
+            user = message.participants[1]
+        }
+    }, [location.pathname])
+
+    useEffect(() => {
+        console.log(user)
+    }, [location.pathname])
 
     return (
-        <div className={``}>
-            <div className='relative space-y-3 mt-4 h-[55.7vh] overflow-x-hidden overflow-y-auto'>
-                <div className='flex justify-start relative w-[70%] max-[1081px]:w-[80%]'>
-                    <p className='text-[.93rem] leading-[1.1rem] p-[10px] bg-blue-100 rounded-lg'>For the best mobile experience, use Option 2 (Card Layout on Mobile) since it removes the need for horizontal scrolling and makes the content easy to read.</p>
-                    <address className='absolute bottom-[-3px] right-2 text-black text-[.7rem]'>12:56 PM</address>
-                </div>
-                <div className='flex justify-end relative w-[100%]'>
-                    <p className='text-[.93rem] leading-[1.1rem] p-[10px] w-[70%] max-[1081px]:w-[80%] text-white bg-blue-400 rounded-lg'>For the best mobile experience</p>
-                    <address className='absolute bottom-[-3px] right-2 text-black text-[.7rem]'>12:56 PM</address>
-                </div>
-                <div className='flex justify-start relative w-[70%] max-[1081px]:w-[80%]'>
-                    <p className='text-[.93rem] leading-[1.1rem] p-[10px] bg-blue-100 rounded-lg'>In my giveaway website is it recommended for user to give reason why they need an item or just a request button is okay? In my giveaway website is it recommended for user to give reason why they need an item or just a request button is okay? For the best mobile experience, since it removes the need for horizontal scrolling and makes the content easy to read.</p>
-                    <address className='absolute bottom-[-3px] right-2 text-black text-[.7rem]'>12:56 PM</address>
-                </div>
-                <div className='flex justify-end relative w-[100%]'>
-                    <p className='text-[.93rem] leading-[1.1rem] p-[10px] w-[70%] max-[1081px]:w-[80%] text-white bg-blue-400 rounded-lg'>For the best mobile experience, since it removes the need for horizontal scrolling and makes the content easy to read.</p>
-                    <address className='absolute bottom-[-3px] right-2 text-black text-[.7rem]'>12:56 PM</address>
-                </div>
-                <div className='flex justify-start relative w-[70%] max-[1081px]:w-[80%]'>
-                    <p className='text-[.93rem] leading-[1.1rem] p-[10px] bg-blue-100 rounded-lg'>since it removes the need for breakup is horizontal scrolling and makes the content easy to read.</p>
-                    <address className='absolute bottom-[-3px] right-2 text-black text-[.7rem]'>12:56 PM</address>
-                </div>
-                <div className='flex justify-end relative w-[100%]'>
-                    <p className='text-[.93rem] leading-[1.1rem] p-[10px] w-[70%] max-[1081px]:w-[80%] text-white bg-blue-400 rounded-lg'>For the best mobile for, use Option 2 (Card Layout on Mobile) since it removes the need for horizontal scrolling and makes the content easy to read.</p>
-                    <address className='absolute bottom-[-3px] right-2 text-black text-[.7rem]'>12:56 PM</address>
-                </div>
+        <div className={`h-full py-0`}>
+            <div className='relative h-[65vh] overflow-x-hidden overflow-y-auto'>
+                    { 
+                        message.conversation.length > 0 ? message.conversation.map((msg, index) => (
+                            <div key={index} className={`flex relative ${msg.receiver == user ? 'justify-start' : 'justify-end'}`}>
+                                <div className='p-[10px] pb-[5px] mt-3 max-w-[70%] max-[1081px]:max-w-[80%] rounded-lg bg-blue-100'>
+                                    <p className='text-[.93rem] leading-[1rem] mb-1'>{msg.message}</p>
+                                    <address className='text-black text-[.66rem]'>12:56 PM || 21/04/2025</address>
+                                </div>
+                            </div>
+                        )) : <p>No Conversation</p>
+                    }
+                    
             </div>
 
-            <div className='w-full h-20 mt-2'>
+            <div className='absolute bottom-3 w-[90%] h-18 mt-2'>
                 <form className='h-full flex'>
                     <textarea className='border border-gray-300 h-full w-full resize-none leading-[1.1rem] p-2 px-3 rounded-lg text-[.93rem] focus:outline-[var(--p-color)]' placeholder='Enter your message'></textarea>
                     <button className='text-white bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'><FontAwesomeIcon icon='paper-plane' /> Send</button>

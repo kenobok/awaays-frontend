@@ -68,7 +68,7 @@ const router = createBrowserRouter([
                     {
                         path: "messages", element: <Messages />,
                         children: [
-                            { path: ":messageId", element: <MessageDetails /> }
+                            { path: ":messageSlug", element: <MessageDetails /> }
                         ]
                     },
                     { path: "my-requests", element: <MyRequests /> },
