@@ -33,7 +33,7 @@ const Messages = () => {
                                                 <h5 className='font-semibold text-[.95rem] pt-[5px] truncate'>{lastMessage.sender}</h5>
                                                 <p className='text-[.85rem] mt-[2px] truncate'>{lastMessage.message}</p>
                                             </div>
-                                            <FontAwesomeIcon icon='circle' className='absolute top-[5px] right-[5px] text-[.5rem] text-orange-400' />
+                                            {message.opened && <FontAwesomeIcon icon='circle' className='absolute top-[5px] right-[5px] text-[.5rem] text-orange-400' />}
                                         </Link>
                                     </li>
                                 );

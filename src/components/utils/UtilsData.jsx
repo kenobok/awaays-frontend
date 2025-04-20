@@ -1073,6 +1073,7 @@ const messages = [
         "id": 1,
         "slug": "mary-dan-chat",
         "participants": ["Mary", "Dan"],
+        "opened": false,
         "conversation": [
             {
                 "id": 1,
@@ -1081,6 +1082,7 @@ const messages = [
                 "message": "Hi Dan! Is that wooden shelf still up for grabs?",
                 "time": "09:05 AM",
                 "date": "2025-04-19",
+                "read": false,
                 "senderImage": img1,
             },
             {
@@ -1090,6 +1092,7 @@ const messages = [
                 "message": "Hey Mary, yes it is. Do you want to come pick it up today?",
                 "time": "09:08 AM",
                 "date": "2025-04-19",
+                "read": false,
                 "senderImage": img1,
             }
         ]
@@ -1098,6 +1101,7 @@ const messages = [
         "id": 2,
         "slug": "emeka-ruth-chat",
         "participants": ["Emeka", "Ruth"],
+        "opened": true,
         "conversation": [
             {
                 "id": 3,
@@ -1106,6 +1110,7 @@ const messages = [
                 "message": "Hello! I saw your bicycle post. Is it still working fine?",
                 "time": "07:14 PM",
                 "date": "2025-04-18",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/women/18.jpg",
             },
             {
@@ -1115,6 +1120,7 @@ const messages = [
                 "message": "Yes, it’s in great condition. Just needs a little cleaning.",
                 "time": "07:16 PM",
                 "date": "2025-04-18",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/men/18.jpg",
             }
         ]
@@ -1123,6 +1129,7 @@ const messages = [
         "id": 3,
         "slug": "sade-ken-chat",
         "participants": ["Sade", "Ken"],
+        "opened": true,
         "conversation": [
             {
                 "id": 5,
@@ -1131,6 +1138,7 @@ const messages = [
                 "message": "Thanks again for the shoes. They fit perfectly!",
                 "time": "11:32 AM",
                 "date": "2025-04-17",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/25.jpg",
             },
             {
@@ -1140,15 +1148,17 @@ const messages = [
                 "message": "Glad to hear that! Happy to give them away.",
                 "time": "11:34 AM",
                 "date": "2025-04-17",
+                "read": false,
                 "senderImage": img4,
             },
             {
                 "id": 5,
                 "sender": "Sade",
                 "receiver": "Ken",
-                "message": "You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details.",
+                "message": "You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details.",
                 "time": "11:32 AM",
                 "date": "2025-04-17",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/25.jpg",
             },
             {
@@ -1158,6 +1168,7 @@ const messages = [
                 "message": "Glad to hear that! Happy to give them away.",
                 "time": "11:34 AM",
                 "date": "2025-04-17",
+                "read": false,
                 "senderImage": img4,
             }
         ]
@@ -1166,6 +1177,7 @@ const messages = [
         "id": 4,
         "slug": "blessing-ray-chat",
         "participants": ["Blessing", "Ray"],
+        "opened": true,
         "conversation": [
             {
                 "id": 7,
@@ -1174,6 +1186,7 @@ const messages = [
                 "message": "Hey, the books are ready for pickup anytime today.",
                 "time": "08:45 AM",
                 "date": "2025-04-17",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/men/21.jpg",
             },
             {
@@ -1183,6 +1196,7 @@ const messages = [
                 "message": "Awesome! I’ll swing by around noon. Thanks!",
                 "time": "08:47 AM",
                 "date": "2025-04-17",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/women/21.jpg",
             }
         ]
@@ -1191,6 +1205,7 @@ const messages = [
         "id": 5,
         "slug": "ibrahim-linda-chat",
         "participants": ["Ibrahim", "Linda"],
+        "opened": true,
         "conversation": [
             {
                 "id": 9,
@@ -1199,24 +1214,27 @@ const messages = [
                 "message": "Are you still giving out the rice cooker?",
                 "time": "06:20 PM",
                 "date": "2025-04-16",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/34.jpg",
             },
             {
                 "id": 10,
                 "sender": "Ibrahim",
                 "receiver": "Linda",
-                "message": "You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details.",
+                "message": "You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details.",
                 "time": "06:23 PM",
                 "date": "2025-04-16",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/men/34.jpg",
             },
             {
                 "id": 9,
                 "sender": "Linda",
                 "receiver": "Ibrahim",
-                "message": "Are you still giving out the rice cooker? You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details.",
+                "message": "Are you still giving out the rice cooker? You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details.",
                 "time": "06:20 PM",
                 "date": "2025-04-16",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/34.jpg",
             },
             {
@@ -1226,6 +1244,7 @@ const messages = [
                 "message": "Okay",
                 "time": "06:23 PM",
                 "date": "2025-04-16",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/men/34.jpg",
             },
             {
@@ -1235,24 +1254,27 @@ const messages = [
                 "message": "Are you still giving out the rice cooker?",
                 "time": "06:20 PM",
                 "date": "2025-04-16",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/34.jpg",
             },
             {
                 "id": 10,
                 "sender": "Ibrahim",
                 "receiver": "Linda",
-                "message": "You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details.",
+                "message": "You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details.",
                 "time": "06:23 PM",
                 "date": "2025-04-16",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/men/34.jpg",
             },
             {
                 "id": 9,
                 "sender": "Linda",
                 "receiver": "Ibrahim",
-                "message": "Are you still giving out the rice cooker? You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details.",
+                "message": "Are you still giving out the rice cooker? You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details.",
                 "time": "06:20 PM",
                 "date": "2025-04-16",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/women/34.jpg",
             },
             {
@@ -1262,6 +1284,7 @@ const messages = [
                 "message": "Okay",
                 "time": "06:23 PM",
                 "date": "2025-04-16",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/men/34.jpg",
             },
             {
@@ -1271,24 +1294,27 @@ const messages = [
                 "message": "Are you still giving out the rice cooker?",
                 "time": "06:20 PM",
                 "date": "2025-04-16",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/women/34.jpg",
             },
             {
                 "id": 10,
                 "sender": "Ibrahim",
                 "receiver": "Linda",
-                "message": "You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details.",
+                "message": "You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or . on it. You need to grab the last message in the conversation array to display the most recent message's details.",
                 "time": "06:23 PM",
                 "date": "2025-04-16",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/men/34.jpg",
             },
             {
                 "id": 9,
                 "sender": "Linda",
                 "receiver": "Ibrahim",
-                "message": "Are you still giving out the rice cooker? You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or .senderImage on it. You need to grab the last message in the conversation array to display the most recent message's details.",
+                "message": "Are you still giving out the rice cooker? You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details. You're very close! The issue is that message.conversation is an array, so you can't directly access .sender or on it. You need to grab the last message in the conversation array to display the most recent message's details.",
                 "time": "06:20 PM",
                 "date": "2025-04-16",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/women/34.jpg",
             },
             {
@@ -1298,6 +1324,7 @@ const messages = [
                 "message": "Okay",
                 "time": "06:23 PM",
                 "date": "2025-04-16",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/men/34.jpg",
             },
         ]
@@ -1306,6 +1333,7 @@ const messages = [
         "id": 6,
         "slug": "tunde-jane-chat",
         "participants": ["Tunde", "Jane"],
+        "opened": false,
         "conversation": [
             {
                 "id": 11,
@@ -1314,6 +1342,7 @@ const messages = [
                 "message": "Thank you for the baby clothes. They’re lovely.",
                 "time": "04:10 PM",
                 "date": "2025-04-15",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/12.jpg",
             },
             {
@@ -1323,6 +1352,7 @@ const messages = [
                 "message": "You're welcome! I'm glad they’ll be useful.",
                 "time": "04:13 PM",
                 "date": "2025-04-15",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/men/12.jpg",
             }
         ]
@@ -1331,6 +1361,7 @@ const messages = [
         "id": 7,
         "slug": "grace-paul-chat",
         "participants": ["Grace", "Paul"],
+        "opened": true,
         "conversation": [
             {
                 "id": 13,
@@ -1339,6 +1370,7 @@ const messages = [
                 "message": "Hi Paul, is the matress still up for donation?",
                 "time": "01:22 PM",
                 "date": "2025-04-15",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/women/41.jpg",
             },
             {
@@ -1348,6 +1380,7 @@ const messages = [
                 "message": "Yes, and it’s clean. Can you come today?",
                 "time": "01:25 PM",
                 "date": "2025-04-15",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/men/41.jpg",
             }
         ]
@@ -1356,6 +1389,7 @@ const messages = [
         "id": 8,
         "slug": "juliet-mike-chat",
         "participants": ["Juliet", "Mike"],
+        "opened": true,
         "conversation": [
             {
                 "id": 15,
@@ -1364,6 +1398,7 @@ const messages = [
                 "message": "The curtains are yours if you still want them.",
                 "time": "05:17 PM",
                 "date": "2025-04-14",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/men/28.jpg",
             },
             {
@@ -1373,6 +1408,7 @@ const messages = [
                 "message": "Perfect! I’ll come pick them up tomorrow morning.",
                 "time": "05:20 PM",
                 "date": "2025-04-14",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/28.jpg",
             }
         ]
@@ -1381,6 +1417,7 @@ const messages = [
         "id": 9,
         "slug": "amaka-frank-chat",
         "participants": ["Amaka", "Frank"],
+        "opened": true,
         "conversation": [
             {
                 "id": 17,
@@ -1389,6 +1426,7 @@ const messages = [
                 "message": "I dropped off the office chair at the front desk.",
                 "time": "12:03 PM",
                 "date": "2025-04-13",
+                "read": true,
                 "senderImage": "https://randomuser.me/api/portraits/men/37.jpg",
             },
             {
@@ -1398,6 +1436,7 @@ const messages = [
                 "message": "Thanks so much. I’ll get it this afternoon.",
                 "time": "12:05 PM",
                 "date": "2025-04-13",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/37.jpg",
             }
         ]
@@ -1406,6 +1445,7 @@ const messages = [
         "id": 10,
         "slug": "kelvin-tola-chat",
         "participants": ["Kelvin", "Tola"],
+        "opened": false,
         "conversation": [
             {
                 "id": 19,
@@ -1414,6 +1454,7 @@ const messages = [
                 "message": "Hey, I picked up the blender. Thank you again!",
                 "time": "09:48 AM",
                 "date": "2025-04-12",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/women/17.jpg",
             },
             {
@@ -1423,6 +1464,7 @@ const messages = [
                 "message": "You’re welcome. Enjoy!",
                 "time": "09:50 AM",
                 "date": "2025-04-12",
+                "read": false,
                 "senderImage": "https://randomuser.me/api/portraits/men/17.jpg",
             }
         ]
