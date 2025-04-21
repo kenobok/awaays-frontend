@@ -1,22 +1,22 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { forums } from '/src/components/utils/UtilsData';
 import '/src/assets/styles/community.css';
 
 const ForumDetails = () => {
-    const location = useLocation();
+    const { slug } = useParams();
     const[showComments, setShowComments] = useState(null)
     const [expandedPosts, setExpandedPosts] = useState([]);
     
     const forum = useMemo(() => {
-        return forums.find(f => location.pathname.includes(f.link));
-    }, [location.pathname, forums]);
+        return forums.find(f => slug === f.slug);
+    }, [slug, forums]);
 
     useEffect(() => {
         setShowComments(null);
         setExpandedPosts([]);
-    }, [location.pathname])
+    }, [slug])
 
     const handleReadMoreToggle = (index) => {
         setExpandedPosts(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]);

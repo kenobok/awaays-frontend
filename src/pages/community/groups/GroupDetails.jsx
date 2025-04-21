@@ -10,8 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const GroupDetails = () => {
     const { slug } = useParams();
     const membersRef = useRef();
+    const membersRefButton = useRef();
     const [showMembers, setShowMembers] = useState(false);
 
+
+    const group = useMemo(() => {
+        return groups.find(g => slug === g.slug);
+    }, [slug, groups])
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -21,15 +26,11 @@ const GroupDetails = () => {
     }, []);
     
     const handleClickOutside = (e) => {
-        if (membersRef.current && !membersRef.current.contains(e.target)) {
+        if (membersRef.current && !membersRef.current.contains(e.target) && membersRefButton.current && !membersRefButton.current.contains(e.target)) {
             setShowMembers(false);
         }
     };
 
-
-    const group = useMemo(() => {
-        return groups.find(g => slug === g.slug);
-    }, [slug, groups])
 
     return (
         <div className='group-details-wrp ml-25 max-[768px]:ml-0 pr-5 max-[768px]:px-4'>
@@ -42,16 +43,25 @@ const GroupDetails = () => {
                     </div>
                 </div>
                 <div className='flex max-[577px]:flex-col items-center space-x-4 max-[577px]:space-x-0 mb-1 min-[768px]:space-x-0'>
-                    <button className={`border-2 border-[var(--p-color)] py-[1px] px-3 rounded-full cursor-pointer hover:bg-[var(--p-color)] hover:text-white min-[768px]:hidden max-[577px]:text-[.9rem] max-[577px]:mb-2 ${showMembers ? 'border-red-400 text-red-500' : ''}`} onClick={() => {setShowMembers(!showMembers)}}>Members</button>
+                    <button ref={membersRefButton} className={`border-2 border-[var(--p-color)] py-[1px] px-3 rounded-full cursor-pointer hover:bg-[var(--p-color)] hover:text-white min-[651px]:hidden max-[577px]:text-[.9rem] max-[577px]:mb-2 ${showMembers ? 'border-red-400 text-red-500' : ''}`} onClick={() => setShowMembers(prev => !prev)}>Members</button>
                     <button className='border-2 border-[var(--p-color)] py-[1px] px-3 rounded-full cursor-pointer hover:bg-[var(--p-color)] hover:text-white max-[577px]:text-[.9rem]'>Join Group</button>
                 </div>
             </div>
             <div className='flex justify-between gap-x-5 h-[75vh] overflow-y-auto'>
                 <div className={`flex-1 border border-gray-300 rounded-xl`}>
-
+                    <div className={`w-full h-full rounded-xl px-3 ${showMembers ? 'hidden' : ''}`}>
+                        <div className='w-full h-[64vh] bg-red-400 overflow-y-scroll'></div>
+                        
+                        <div className='w-full h-18 mt-2 bg-white'>
+                            <form className='h-full flex'>
+                                <textarea className='border border-gray-300 h-full w-full resize-none leading-[1.1rem] p-2 px-3 rounded-lg text-[.93rem] focus:outline-[var(--p-color)]' placeholder='Enter your message'></textarea>
+                                <button className='text-white bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'><FontAwesomeIcon icon='paper-plane' /> Send</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                                                                                                                                                                                                                                                                                                                                                                               
-                <div ref={membersRef} className={`members-wrp w-[18rem] max-[1080px]:w-[17rem] h-full bg-blue-200 pt-2 px-3 rounded-xl ${showMembers ? 'show' : ''}`}>
+
+                <div ref={membersRef} className={`members-wrp w-[18rem] max-[1080px]:w-[17rem] h-full bg-blue-200 pt-2 px-3 rounded-xl ${showMembers ? 'show' : 'hide'}`}>
                     <h4 className='text-center font-semibold'>Members</h4>
                     <div className={`w-full h-[70vh] overflow-y-auto`}>
                         {

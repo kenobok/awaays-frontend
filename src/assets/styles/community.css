@@ -78,12 +78,15 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 650px) {
     .members-wrp {
         display: none;
     }
     .members-wrp.show {
         display: block;
+    }
+    .members-wrp.hide {
+        display: none;
     }
 }
 

@@ -1,13 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom'
+import { Link, Outlet, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { forums } from '/src/components/utils/UtilsData';
 import '/src/assets/styles/community.css'
 
 const Forums = () => {
-    const { forumLink } = useParams();
+    const { slug } = useParams();
     const forumFormRef = useRef();
-    const location = useLocation();
     const[forumForm, setForumForm] = useState(false);
     const [formData, setFormData] = useState({ topic: "", content: "" });
     const [inputFocus, setInputFocus] = useState({topic: false, content: false});
@@ -15,7 +14,10 @@ const Forums = () => {
 
     useEffect(() => {
         setForumForm(false)
-    }, [location.pathname])
+        setFormData({topic: "", content: ""})
+        setInputFocus({topic: false, content: false})
+        setErrors({})
+    }, [slug])
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -90,10 +92,10 @@ const Forums = () => {
                 <div className='px-5 min-[768px]:fixed max-[768px]:mb-10'>
                     <ul className='com-side-link relative space-y-5 p-7 text-center border-r-2 border-[var(--p-color)]'>
                         { forums.map((forum, index) => (
-                            <li key={index} className={`lb-link border-b border-gray-300 hover:text-[var(--p-color)] hover:border-[var(--p-color)] ${location.pathname.includes(forum.link) ? 'active show-icon' : ''}`}><Link to={`/community/forums/${forum.link}`}>{forum.name}</Link></li>
+                            <li key={index} className={`lb-link border-b border-gray-300 hover:text-[var(--p-color)] hover:border-[var(--p-color)] ${forum.slug === slug ? 'active show-icon' : ''}`}><Link to={`/community/forums/${forum.slug}`}>{forum.name}</Link></li>
                         ))}
                         { forums.map((forum, index) => (
-                            <button key={index} className={`mt-2 border-2 border-[var(--p-color)] p-1 pt-[5px] px-3 rounded-full text-[var(--p-color)] cursor-pointer shadow-md hover:scale-105 ${location.pathname.includes(forum.link) ? '' : 'hidden'}`} onClick={() => setForumForm(true)} >{forum.button}</button>
+                            <button key={index} className={`mt-2 border-2 border-[var(--p-color)] p-1 pt-[5px] px-3 rounded-full text-[var(--p-color)] cursor-pointer shadow-md hover:scale-105 ${forum.slug === slug ? '' : 'hidden'}`} onClick={() => setForumForm(true)} >{forum.button}</button>
                         ))}
                     </ul>
                 </div>
@@ -101,9 +103,9 @@ const Forums = () => {
 
             <section className='relative flex-1 overflow-hidden'>
                 <Outlet />
-                <div className={`fixed w-full h-full top-0 left-0 bg-[rgba(0,0,0,.2)] overflow-hidden ${location.pathname === '/community/forums' ? 'hidden' : ''} ${!forumForm ? 'hidden' : ''}`}>
+                <div className={`fixed w-full h-full top-0 left-0 bg-[rgba(0,0,0,.2)] overflow-hidden ${!slug ? 'hidden' : ''} ${!forumForm ? 'hidden' : ''}`}>
                     { forums.map((forum, index) => (
-                        location.pathname.includes(forum.link) &&
+                        forum.slug === slug &&
                         <form ref={forumFormRef} key={index} onSubmit={handleSubmit} className='absolute top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] w-xl max-[577px]:w-[90%] bg-[var(--bg-color)] py-7 px-5 rounded-xl shadow-lg'>
                             <FontAwesomeIcon icon='times' className='absolute top-2 right-2 cursor-pointer ' onClick={() => setForumForm(false)}/>
                             <h4 className='font-semibold text-[1.2rem] mb-5 text-center border-b border-gray-100'>{forum.name}</h4>

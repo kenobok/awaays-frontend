@@ -99,7 +99,7 @@ const router = createBrowserRouter([
                 path: '/community/forums', element: <Forums />,
                 children: [
                     { index: true, element: <ForumsList /> },
-                    { path: ':forumLink', element: <ForumDetails /> },
+                    { path: ':slug', element: <ForumDetails /> },
                 ]
             },
 

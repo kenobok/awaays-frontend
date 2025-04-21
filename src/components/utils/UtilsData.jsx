@@ -141,11 +141,11 @@ const leaderboard = [
 const forums = [
     {
         id: 1,
+        slug: 'general-description',
         name: 'General Discussion',
         button: 'Start Discussion',
         image: img1,
         description: 'Talk about anything with the community.',
-        link: 'general-description',
         conversations: [
             {
                 id: 1,
@@ -384,11 +384,11 @@ const forums = [
     },
     {
         id: 2,
+        slug: 'giveaway-questions',
         name: 'Giveaway Questions',
         button: 'Ask Question',
         image: img2,
         description: 'Ask or answer questions about giveaways.',
-        link: 'giveaway-questions',
         conversations: [
             {
                 id: 1,
@@ -452,11 +452,11 @@ const forums = [
     },
     {
         id: 3,
+        slug: 'testimonials',
         name: 'Testimonials',
         button: 'Share Testimony',
         image: img3,
         description: 'Share your experiences and success stories.',
-        link: 'testimonials',
         conversations: [
             {
                 id: 1,
@@ -486,11 +486,11 @@ const forums = [
     },
     {
         id: 4,
+        slug: 'suggestions-and-feedbacks',
         name: 'Suggestions & Feedbacks',
         button: 'Share Your Thoughts',
         image: img4,
         description: 'Help improve the platform with your ideas.',
-        link: 'suggestions-and-feedbacks',
         conversations: [
             {
                 id: 5,
@@ -595,11 +595,11 @@ const forums = [
     },
     {
         id: 5,
+        slug: 'community-hangout',
         name: 'Community Hangout',
         button: 'Join Hangout',
         image: img5,
         description: 'Chill, chat, and connect with others.',
-        link: 'community-hangout',
         conversations: [
             {
                 id: 1,
