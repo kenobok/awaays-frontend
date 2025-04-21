@@ -12,6 +12,7 @@ const GroupDetails = () => {
     const membersRef = useRef();
     const membersRefButton = useRef();
     const [showMembers, setShowMembers] = useState(false);
+    const user = 'Daniel Smith'
 
 
     const group = useMemo(() => {
@@ -50,7 +51,24 @@ const GroupDetails = () => {
             <div className='flex justify-between gap-x-5 h-[75vh] overflow-y-auto'>
                 <div className={`flex-1 border border-gray-300 rounded-xl`}>
                     <div className={`w-full h-full rounded-xl px-3 ${showMembers ? 'hidden' : ''}`}>
-                        <div className='w-full h-[64vh] bg-red-400 overflow-y-scroll'></div>
+                        <div className='w-full h-[64vh] overflow-y-scroll'>
+                            { 
+                                group.conversations.length > 0 ? group.conversations.map((post, index) => (
+                                    <div key={index} className={`flex relative ${post.user === user ? 'justify-end' : 'justify-start'}`}>
+                                        <div className={`relative p-[10px] pb-[5px] mt-3 max-w-[70%] max-[1081px]:max-w-[80%] rounded-lg ${post.user === user ? 'bg-blue-200' : 'bg-gray-200'}`}>
+                                            <h5 className='text-[1rem] leading-[1rem] mb-1 font-semibold'>{post.user}</h5>
+                                            <p className='text-[.93rem] leading-[1rem] mb-1'>{post.message}</p>
+                                            <address className='text-black text-[.66rem]'>12:56 PM || 21/04/2025</address>
+                                        </div>
+                                    </div>
+                                )) 
+                                :
+                                <div className='text-center'>
+                                    <h4 className='text-[1.2rem] font-semibold mt-20'>No conversations available</h4>
+                                    <p>Enter a message below.</p>
+                                </div>
+                            }
+                        </div>
                         
                         <div className='w-full h-18 mt-2 bg-white'>
                             <form className='h-full flex'>

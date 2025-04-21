@@ -35,7 +35,6 @@ const MessageDetails = () => {
                                 </div>
                             )) : <p>No Conversation</p>
                         }
-                        
                 </div>
 
                 <div className='w-full h-18 mt-2 bg-white'>

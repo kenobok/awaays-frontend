@@ -749,7 +749,7 @@ const groups = [
         "slug": "student-essentials-hub",
         "description": "For students giving and receiving supplies",
         "admin": "Liam Harris",
-        "members": [],
+        "members": ["Liam Harris"],
         "dateCreated": "2024-08-02",
         "image": img2,
         "conversations": [
@@ -840,7 +840,7 @@ const groups = [
                 "time": "16:30"
             },
             {
-                "user": "Paul Dupont",
+                "user": "Daniel Smith",
                 "message": "Donated my college textbooks today! If anyone is in need of textbooks for any subjects, feel free to come by. They’ve been gathering dust for a while now, and I’d love for them to go to good use.",
                 "date": "2024-05-17",
                 "time": "10:00"
@@ -870,7 +870,7 @@ const groups = [
                 "time": "10:30"
             },
             {
-                "user": "Liam Brown",
+                "user": "Daniel Smith",
                 "message": "I’m donating my used monitor.",
                 "date": "2024-07-07",
                 "time": "11:00"
