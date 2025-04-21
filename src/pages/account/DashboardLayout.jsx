@@ -5,7 +5,7 @@ import DashboardNav from '../../components/account/DashboardNav';
 import '../../assets/styles/account.css';
 
 
-const Dashboard = () => {
+const DashboardLayout = () => {
     const [toggleDashMenu, setToggleDashMenu] = useState(false)
 
 
@@ -18,4 +18,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default DashboardLayout

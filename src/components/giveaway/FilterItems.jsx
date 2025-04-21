@@ -140,9 +140,7 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
                             {countryFilter.map((country, index) => (
                                 <div key={index} className="flex justify-between items-center">
                                     <li>{country.label}</li>
-                                    { !isCloseToMe && country.value !== activeCountry.value && (
-                                        <FontAwesomeIcon icon="times" className="text-red-400 cursor-pointer" onClick={() => handleRemoveCountry(country.value)} />
-                                    )}
+                                    <FontAwesomeIcon icon="times" className="text-red-400 cursor-pointer" onClick={() => handleRemoveCountry(country.value)} />
                                 </div>
                             ))}
                         </ul>
@@ -159,9 +157,7 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
                             {selectedStates.map((state, index) => (
                                 <div key={index} className="flex justify-between items-center">
                                     <li>{state.label}</li>
-                                    { state.value !== activeState.value && (
-                                        <FontAwesomeIcon icon="times" className="text-red-400 cursor-pointer" onClick={() => handleRemoveState(state.value)} />
-                                    )}
+                                    <FontAwesomeIcon icon="times" className="text-red-400 cursor-pointer" onClick={() => handleRemoveState(state.value)} />
                                 </div>
                             ))}
                         </ul>

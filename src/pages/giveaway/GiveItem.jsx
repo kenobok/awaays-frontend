@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion";
 import CountryStateSelector from '../../components/utils/CountryStateSelector';
@@ -8,9 +8,10 @@ import '../../assets/styles/giveaway.css'
 
 
 const GiveItem = () => {
-    const [formData, setFormData] = useState({ purpose: "", item: "", description: "", instructions: "", country: "", state: "", images: [] });
+    const [formData, setFormData] = useState({ purpose: "", item: "", description: "", instructions: "", country: "", state: "", showNumber: false, images: [] });
     const [inputFocus, setInputFocus] = useState({ purpose: false, item: false, description: false, instructions: false, images: false });
     const [errors, setErrors] = useState({});
+
 
     const handleInputFocus = (field) => {
         setInputFocus((prev) => ({ ...prev, [field]: true }));
@@ -21,6 +22,7 @@ const GiveItem = () => {
             setInputFocus((prev) => ({ ...prev, [field]: false }));
         }
     };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -86,6 +88,7 @@ const GiveItem = () => {
 
         let newErrors = {};
         Object.keys(formData).forEach((field) => {
+            if (field === "showNumber") return;
             validateField(field, formData[field]);
             if (formData[field] == "" || errors[field]) {
                 newErrors[field] = errors[field] || "This field is required";
@@ -109,11 +112,8 @@ const GiveItem = () => {
 			<motion.section className="give-item-img flex-1" initial={{ opacity: 0, x: -500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }}></motion.section>
 
             <motion.section className="p-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-5 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut"  }}>
-				{/* <div className="relative flex justify-center mb-4 w-[23rem] max-[501px]:w-[90%] mx-auto">
-					<h2 className="text-2xl font-bold">Give Item</h2>
-				</div> */}
                 <div className="relative flex justify-center mb-4 mx-auto">
-					<button className={`border border-2 py-2 px-6 rounded-full shadow-lg text-center text-[var(--p-color)] text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold }`}>GIVE ITEM</button>
+					<button className={`border-b-2 py-2 px-6 rounded-2xl shadow-lg text-center text-[var(--p-color)] text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold }`}>GIVE ITEM</button>
 				</div>
 				<motion.form className="give-item-form p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }} onSubmit={ handleSubmit }>
                     <div className='flex gap-x-7 max-[601px]:flex-col'>
@@ -137,22 +137,33 @@ const GiveItem = () => {
                         </div>
                     </div>
                     <CountryStateSelector value={{ country: formData.country, state: formData.state }} onChange={handleLocationChange} error={{ country: errors.country, state: errors.state }} />
-                    <div className="form-input" style={{ width: '100%' }}>
-                        {/* <label htmlFor="images" className="block text-gray-600 font-medium">Upload Images</label> */}
-                        <input type="file" name="images" id="images" accept="image/*" className={`${errors.images ? 'error' : ''}`} multiple onChange={handleImageChange} />
-                        {errors.images && <small>{errors.images}</small>}
-                    </div>
-                    {formData.images.length > 0 &&
-                        <div className="form-input">
-                            {formData.images.length > 0 && (
-                                <div className="selected-images flex justify-start items-center gap-x-3 overflow-x-auto">
-                                    {formData.images.map((image, index) => (
-                                        <img key={index} src={URL.createObjectURL(image)} alt={`selected-image-${index}`} className="w-20 h-20 object-cover rounded-md" />
-                                    ))}
-                                </div>
-                            )}
+                    <div className='flex gap-x-7 max-[601px]:flex-col'>
+                        <div className="form-input flex items-center gap-x-5">
+                            <input type="checkbox" name="show_number" id='showNumber' className='inline-block' checked={formData.showNumber} onChange={(e) => setFormData((prev) => ({ ...prev, showNumber: e.target.checked }))}/>
+                            <label htmlFor='showNumber' className="block ml-3 text-gray-600 pt-[4px]" style={{cursor:'pointer'}}>Show my phone number</label>
                         </div>
-                    }
+
+                        <div>
+                            <div className="form-input">
+                                {/* <label htmlFor="images" className="block text-gray-600 font-medium">Upload Images</label> */}
+                                <input type="file" name="images" id="images" accept="image/*" className={`${errors.images ? 'error' : ''}`} multiple onChange={handleImageChange} />
+                                {errors.images && <small>{errors.images}</small>}
+                            </div>
+                            {
+                                formData.images.length > 0 &&
+                                <div className="form-input">
+                                    {formData.images.length > 0 && (
+                                        <div className="selected-images flex justify-start items-center gap-x-3 overflow-x-auto">
+                                            {formData.images.map((image, index) => (
+                                                <img key={index} src={URL.createObjectURL(image)} alt={`selected-image-${index}`} className="w-20 h-20 object-cover rounded-md" />
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    
                     <div className="mt-3 mb-4">
 						<button type="submit" className="w-full bg-[var(--p-color)] cursor-pointer text-white py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition">Submit</button>
 					</div>

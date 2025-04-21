@@ -3,6 +3,8 @@ import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import logo from '../../assets/images/logo1.png';
 import '../../assets/styles/header-footer.css'
 
@@ -100,6 +102,7 @@ const Header = () => {
 
     return (
         <header>
+            <ToastContainer position="top-right" autoClose={3000} />
             <div className={`blur-bg ${blurBackground ? 'bluring' : ''}`}></div>
             <nav className={`navbar flex align-center justify-between gap-x-5 p-3 px-[20px] md:px-[50px] ${isSticky ? 'sticky' : ''}`}>
                 <Link to="/" className={`my-auto`}>

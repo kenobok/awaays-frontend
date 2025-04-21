@@ -50,19 +50,19 @@ export default function Footer() {
                 </Link>
 
                 <div className="text-center w-[100%] mb-5">
-                    <Link to="/give-item">Give Item</Link>
-                    <Link to="/how-it-works">How It Works</Link>
-                    <Link to="/community/leaderboard">Leaderboard</Link>
-                    <Link to="/community/forum">Forum</Link>
-                    <Link to="/community/groups">Groups</Link>
+                    <Link to="/give-item/">Give Item</Link>
+                    <Link to="/how-it-works/">How It Works</Link>
+                    <Link to="/community/leaderboard/">Leaderboard</Link>
+                    <Link to="/community/forums/">Forum</Link>
+                    <Link to="/community/groups/">Groups</Link>
                 </div>
 
                 <div className="text-center w-[100%] mb-5">
-                    <Link to="/about-us">About Us</Link>
-                    <Link to="/contact-us">Contact Us</Link>
-                    <Link to="/privacy-policy">Privacy Policy</Link>
-                    <Link to="/terms-and-conditions">Terms & condition</Link>
-                    <Link to="/FAQs">FAQs</Link>
+                    <Link to="/about-us/">About Us</Link>
+                    <Link to="/contact-us/">Contact Us</Link>
+                    <Link to="/privacy-policy/">Privacy Policy</Link>
+                    <Link to="/terms-and-conditions/">Terms & condition</Link>
+                    <Link to="/FAQs/">FAQs</Link>
                 </div>
 
                 <div className="text-center w-[100%] mb-5">

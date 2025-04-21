@@ -2,6 +2,7 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home";
 import AuthPage from "./pages/account/AuthPage";
+import SignUpSignIn from "./pages/account/SignUpSignIn";
 import DashboardLayout from "./pages/account/DashboardLayout";
 import Dashboard from "./pages/account/Dashboard";
 import Profile from "./pages/account/Profile";
@@ -47,7 +48,6 @@ const router = createBrowserRouter([
         path: "/", element: <Layout />,
         children: [
             { index: true, element: <Home /> },
-            { path: "auth", element: <AuthPage /> },
             { path: 'give-item', element: <GiveItem />, /*loader: checkAuth*/ },
             { path: 'giveaway-items', element: <GiveawayItems /> },
             { path: 'giveaway-item-details/:itemId', element: <GiveawayItemDetails /> },
@@ -58,6 +58,15 @@ const router = createBrowserRouter([
             { path: "privacy-policy", element: <PrivacyPolicy /> },
             { path: "fAQs", element: <FAQs /> },
             // { path: "logout", element: <Logout />, loader: checkAuth, },
+
+            // Authentication Link
+            { 
+                path: "auth", element: <AuthPage />,
+                children: [
+                    { index: true, element: <SignUpSignIn /> },
+                    
+                ]
+            },
 
             // Dashboard Link
             {
