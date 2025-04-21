@@ -83,7 +83,7 @@ const Groups = () => {
     return (
         <main className={`group-wrp space-x-10 flex max-[768px]:flex-col mt-[5.5rem] max-[941px]:mt-[4rem] py-10 ${location.pathname.includes(slug) ? 'display-flex-col' : ''}`}>
             <section className={`group-navs-sec w-[10rem] max-[768px]:w-[80%] ${location.pathname.includes(slug) ? 'more-width' : ''}`}>
-                <div className={`group-navs text-center px-5 min-[768px]:fixed max-[768px]:mb-10 h-[90vh] max-[768px]:h-[20rem] overflow-y-auto pb-10 max-[768px]:pb-0 ${location.pathname.includes(slug) ? 'position-rel' : ''}`}>
+                <div className={`group-navs text-center px-5 min-[768px]:fixed max-[768px]:mb-10 h-[90vh] max-[768px]:h-[20rem] overflow-y-auto pb-10 max-[768px]:pb-0 ${slug ? 'position-rel' : ''}`}>
                     <ul className='com-side-link relative space-y-5 p-7 text-center border-r-2 border-[var(--p-color)]'>
                         <button className='border-2 border-[var(--p-color)] p-[7px] px-5 rounded-full text-[var(--p-color)] cursor-pointer' onClick={() => setCreateGroupForm(true)}>Create Group</button>
                         { groups.map((group, index) => (
