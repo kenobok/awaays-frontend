@@ -3,6 +3,7 @@ import Layout from "./components/Layout/Layout";
 import Home from "./pages/Home";
 import AuthPage from "./pages/account/AuthPage";
 import SignUpSignIn from "./pages/account/SignUpSignIn";
+import ResetPassword from "./pages/account/ResetPassword";
 import DashboardLayout from "./pages/account/DashboardLayout";
 import Dashboard from "./pages/account/Dashboard";
 import Profile from "./pages/account/Profile";
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
                 path: "auth", element: <AuthPage />,
                 children: [
                     { index: true, element: <SignUpSignIn /> },
-                    
+                    { path: 'reset-password', element: < ResetPassword/> },
                 ]
             },
 
