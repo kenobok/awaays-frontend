@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import AuthPage from "./pages/account/AuthPage";
 import SignUpSignIn from "./pages/account/SignUpSignIn";
 import ResetPassword from "./pages/account/ResetPassword";
+import VerifyEmail from "./pages/account/VerifyEmail";
 import DashboardLayout from "./pages/account/DashboardLayout";
 import Dashboard from "./pages/account/Dashboard";
 import Profile from "./pages/account/Profile";
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
         path: "/", element: <Layout />,
         children: [
             { index: true, element: <Home /> },
-            { path: 'give-item', element: <GiveItem />, /*loader: checkAuth*/ },
+            { path: 'give-item', element: <GiveItem />, loader: checkAuth },
             { path: 'giveaway-items', element: <GiveawayItems /> },
             { path: 'giveaway-item-details/:itemId', element: <GiveawayItemDetails /> },
             { path: "how-it-works", element: <HowItWorks /> },
@@ -58,7 +59,6 @@ const router = createBrowserRouter([
             { path: "terms-and-conditions", element: <TermsConditions /> },
             { path: "privacy-policy", element: <PrivacyPolicy /> },
             { path: "fAQs", element: <FAQs /> },
-            // { path: "logout", element: <Logout />, loader: checkAuth, },
 
             // Authentication Link
             { 
@@ -66,12 +66,13 @@ const router = createBrowserRouter([
                 children: [
                     { index: true, element: <SignUpSignIn /> },
                     { path: 'reset-password', element: < ResetPassword/> },
+                    { path: 'verify-email', element: <VerifyEmail /> }
                 ]
             },
 
             // Dashboard Link
             {
-                path: "/dashboard", element: <DashboardLayout />,
+                path: "/dashboard", element: <DashboardLayout />, loader: checkAuth,
                 children: [
                     { index: true, element: <Dashboard /> },
                     { path: "profile", element: <Profile /> },

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
 import API from '/src/AxiosInstance';
@@ -14,6 +14,7 @@ import '../../assets/styles/account.css';
 
 
 const SignUpSignIn = () => {
+    const navigate = useNavigate();
     const [signUp, setSignUp] = useState(true);
 	const [signIn, setSignIn] = useState(false);
 	const [formData, setFormData] = useState({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", isp: "", city: "", region: "", country: "", countryCode: ""});
@@ -150,14 +151,29 @@ const SignUpSignIn = () => {
 		if (signUp) {
 			try {
 				const response = await API.post('/account/users/', formData);
-				toast.success("Account created successfully!");
+				toast.success(response.data.message);
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
+                const user = response.data
+                localStorage.setItem("user", JSON.stringify({
+                    id: user.id,
+                    full_name: user.full_name,
+                    email: user.email,
+                    mobile: user.mobile
+                }));
+                navigate('/auth/verify-email')
 			} catch (error) {
-				toast.error(error.response?.data?.email[0] || "An error occured");
-				if(error.response?.data?.email[0]) {
-					setErrors((prev) => ({ ...prev, email: error.response.data.email[0] }));
-				}
+                console.log(error)
+				toast.error(error.response?.data?.email);
+				if(error.response?.data?.email) {
+					setErrors((prev) => ({ ...prev, email: error.response.data.email }));
+				} 
+                if(error.response?.data?.mobile) {
+                    setErrors((prev) => ({ ...prev, mobile: error.response.data.mobile }));
+                }
+                if(error.response?.data?.password) {
+                    setErrors((prev) => ({ ...prev, password: error.response.data.password }));
+                }
 			} finally {
 				setLoading(false)
 			}

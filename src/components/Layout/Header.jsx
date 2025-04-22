@@ -102,7 +102,7 @@ const Header = () => {
 
     return (
         <header>
-            <ToastContainer position="top-right" autoClose={3000} />
+            <ToastContainer position="top-right" autoClose={5000} />
             <div className={`blur-bg ${blurBackground ? 'bluring' : ''}`}></div>
             <nav className={`navbar flex align-center justify-between gap-x-5 p-3 px-[20px] md:px-[50px] ${isSticky ? 'sticky' : ''}`}>
                 <Link to="/" className={`my-auto`}>

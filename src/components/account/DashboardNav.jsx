@@ -1,13 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from "/src/context/AuthContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { toast } from "react-toastify";
+import API from "/src/AxiosInstance";
 import userImg from '../../assets/images/user.png'
 
 
 const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const dashMenuRef = useRef()
+    const { user, logout, isLoggedIn } = useAuth();
 
     const menuItems = [
         { path: "/dashboard", icon: "th-large", label: "Dashboard" },
@@ -18,7 +22,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
         { path: "/dashboard/my-requests", icon: "hand-holding-heart", label: "My Requests" },
         { path: "/dashboard/received-items", icon: "boxes", label: "Received Items" },
         { path: "/dashboard/forums-and-groups", icon: "users", label: "Forums & Groups" },
-        { path: "/logout", icon: "sign-out", label: "Logout" },
+        { path: "", icon: "sign-out", label: "Logout" },
     
         {/* <li><Link>User Management</Link></li>
             <li><Link>Giveaway Management</Link></li>
@@ -42,6 +46,19 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            await API.post("/account/logout/");
+            logout();
+            toast.success("You’ve been logged out.");
+            localStorage.removeItem("user");
+            navigate('/');
+        } catch (error) {
+            console.error("Logout error:", error);
+            toast.error("Error logging out. Try again.");
+        }
+    };
+
 
     return (
         <>
@@ -51,23 +68,34 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
                     <div className="flex flex-col px-3 py-8 w-[15rem] h-screen text-white bg-purple-900 overflow-hidden fixed top-[5.3rem] max-[941px]:top-[4.4rem] left-0 min-[1600px]:left-[calc((100vw-1600px)/2)]">
                         <div className="flex justify-evenly items-center px-2 pb-[9px] mb-5 border-b-2 border-gray-500 rounded-lg shadow-lg">
                             <img src={userImg} alt="user-image" className="inline-block w-[2.5rem]"/>
-                            <h5 className="leading-[1.2rem] pt-1 ml-2"><b>Hi,</b><br/>Temilehin Adekunle</h5>
+                            <h5 className="leading-[1.2rem] pt-1 ml-2"><b>Hi,</b><br/>{ user.full_name || 'Guest' }</h5>
                         </div>
                         <ul className="dashboard-links px-2 overflow-y-auto pb-7">
                             {
-                                menuItems.map((item, index) => (
-                                    <li key={index} 
-                                        className={`single-dash-link text-[1.5rem]
-                                        ${location.pathname === item.path ? "active" : ""} 
-                                        ${location.pathname.startsWith('/dashboard/item-requests') && item.path === "/dashboard/item-requests" ? "active" : ""}
-                                        ${location.pathname.startsWith('/dashboard/messages') && item.path === "/dashboard/messages" ? "active" : ""}`
-                                    }>
-                                        <Link to={item.path} onClick={onLinkClick}>
-                                            <FontAwesomeIcon icon={item.icon} className="mr-2" />
-                                            {item.label}
-                                        </Link>
-                                    </li>
-                                ))
+                                menuItems.map((item, index) => {
+                                    if (item.label === "Logout") {
+                                        return (
+                                            <li key={index} className="single-dash-link text-[1.5rem] cursor-pointer text-red-200 hover:text-white" onClick={handleLogout}>
+                                                <FontAwesomeIcon icon={item.icon} className="mr-2" />
+                                                {item.label}
+                                            </li>
+                                        );
+                                    }
+                        
+                                    return (
+                                        <li key={index} 
+                                            className={`single-dash-link text-[1.5rem]
+                                            ${location.pathname === item.path ? "active" : ""} 
+                                            ${location.pathname.startsWith('/dashboard/item-requests') && item.path === "/dashboard/item-requests" ? "active" : ""}
+                                            ${location.pathname.startsWith('/dashboard/messages') && item.path === "/dashboard/messages" ? "active" : ""}`}
+                                        >
+                                            <Link to={item.path} onClick={onLinkClick}>
+                                                <FontAwesomeIcon icon={item.icon} className="mr-2" />
+                                                {item.label}
+                                            </Link>
+                                        </li>
+                                    );
+                                })
                             }
                         </ul>
                     </div>
