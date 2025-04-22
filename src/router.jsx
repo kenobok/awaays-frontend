@@ -43,7 +43,9 @@ import NotFound from "./pages/NotFound";
 const checkAuth = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) throw redirect("/auth");
-};
+
+    if ('is_verified' in user) throw redirect("/auth/verify-email");
+}
 
 const router = createBrowserRouter([
     {
@@ -52,13 +54,13 @@ const router = createBrowserRouter([
             { index: true, element: <Home /> },
             { path: 'give-item', element: <GiveItem />, loader: checkAuth },
             { path: 'giveaway-items', element: <GiveawayItems /> },
-            { path: 'giveaway-item-details/:itemId', element: <GiveawayItemDetails /> },
+            { path: 'giveaway-item-details/:slug', element: <GiveawayItemDetails /> },
             { path: "how-it-works", element: <HowItWorks /> },
             { path: "about-us", element: <AboutUs /> },
             { path: "contact-us", element: <ContactUs /> },
             { path: "terms-and-conditions", element: <TermsConditions /> },
             { path: "privacy-policy", element: <PrivacyPolicy /> },
-            { path: "fAQs", element: <FAQs /> },
+            { path: "faqs", element: <FAQs /> },
 
             // Authentication Link
             { 

@@ -113,7 +113,6 @@ const ResetPassword = () => {
         if (requestCode) {
             try {
                 const response = await API.post('/account/reset-password/', { email: email });
-                console.log(response)
                 toast.success(response.data.message);
                 setRequestCode(false)
                 setResetPassword(true)
@@ -126,7 +125,6 @@ const ResetPassword = () => {
         } else {
             try {
                 const response = await API.post('/account/reset-password/confirm/', formData);
-                console.log(response)
                 toast.success(response.data.message);
                 setFormData({ email: "", code: "", new_password: "" });
                 setInputFocus({ email: false, code: false, new_password: false });

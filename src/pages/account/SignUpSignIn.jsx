@@ -159,7 +159,8 @@ const SignUpSignIn = () => {
                     id: user.id,
                     full_name: user.full_name,
                     email: user.email,
-                    mobile: user.mobile
+                    mobile: user.mobile,
+                    is_verified: user.is_verified
                 }));
                 navigate('/auth/verify-email')
 			} catch (error) {
@@ -173,6 +174,9 @@ const SignUpSignIn = () => {
                 }
                 if(error.response?.data?.password) {
                     setErrors((prev) => ({ ...prev, password: error.response.data.password }));
+                }
+                if(!error.response?.data?.email || !error.response?.data?.mobile || !error.response?.data?.password) {
+                    toast.error("An error occurred, try again");
                 }
 			} finally {
 				setLoading(false)

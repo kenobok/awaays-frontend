@@ -75,7 +75,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
                                 menuItems.map((item, index) => {
                                     if (item.label === "Logout") {
                                         return (
-                                            <li key={index} className="single-dash-link text-[1.5rem] cursor-pointer text-red-200 hover:text-white" onClick={handleLogout}>
+                                            <li key={index} className="single-dash-link text-[1.2rem] pl-[10px] cursor-pointer text-red-400 hover:text-red-500" onClick={handleLogout}>
                                                 <FontAwesomeIcon icon={item.icon} className="mr-2" />
                                                 {item.label}
                                             </li>

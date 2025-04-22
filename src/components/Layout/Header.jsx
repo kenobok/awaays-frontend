@@ -1,9 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion'
 import { ToastContainer } from 'react-toastify';
+import { HeaderLinks } from '../utils/UtilsData';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../../assets/images/logo1.png';
 import '../../assets/styles/header-footer.css'
@@ -11,12 +13,12 @@ import '../../assets/styles/header-footer.css'
 
 const Header = () => {
     const isMobile = useMediaQuery({ query: "(max-width: 940px)" });
+    const navigate = useNavigate();
     const location = useLocation();
     const searchInputRef = useRef(null);
     const menuIconRef = useRef(null);
     const menuRef = useRef(null);
     const dropDownRef = useRef(null);
-    const navigate = useNavigate();
     const [isFocused, setIsFocused] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
@@ -24,8 +26,14 @@ const Header = () => {
     const [blurBackground, setBlurBackground] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [user, setUser] = useState(false);
+    const { user, logout, isLoggedIn } = useAuth();
 
+
+    // useEffect(() => {
+    //     user = user,
+    //     logout = logout,
+    //     isLoggedIn = isLoggedIn
+    // }, [location.pathname])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -111,24 +119,32 @@ const Header = () => {
                 <div className={`flex-1 ${isFocused ? 'max-[577px]:hidden' : ''}`}></div>
                 <div className="block min-[941px]:flex gap-x-5 align-center justify-end">
                     <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[.95rem] ${isFocused ? 'min-[941px]:text-[.45rem]' : ''} ${isFocused ? 'min-[993px]:text-[.6rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
-                        <Link to="/give-item" className={location.pathname === "/give-item" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Give Item</Link>
-                        <Link to="/giveaway-items" className={location.pathname === "/giveaway-items" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Giveaways</Link>
-                        <div ref={dropDownRef} className="relative">
-                            <button className={`${isDropdownOpen ? "active" : ""}`} onClick={toggleDropdown}>Community<b className={`${isDropdownOpen ? 'arrow-up' : ''}`}>{`>`}</b></button>
-                            {isDropdownOpen && (
-                                <motion.div className="dropdown-links mt-1 p-5 absolute max-[941px]:top-[2.9rem] left-[50%] transform -translate-x-[50%] w-[12rem] max-[941px]:w-full bg-[var(--bg-color)] max-[941px]:bg-indigo-100 shadow-xl rounded-2xl z-5" initial={{y: 100, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: .5, ease: "easeInOut"}}>
-                                    <Link to="/community/leaderboard" className="inline-block px-4 py-2" onClick={() => {if (isMobile) handleMenuToggle(); toggleDropdown();}}>Leaderboard</Link>
-                                    <Link to="/community/forums" className="inline-block px-4 py-2" onClick={() => {if (isMobile) handleMenuToggle(); toggleDropdown();}}>Forums</Link>
-                                    <Link to="/community/groups" className="inline-block px-4 py-2" onClick={() => {if (isMobile) handleMenuToggle(); toggleDropdown();}}>Groups</Link>
-                                    <Link to="/community/events" className="inline-block w-full px-4 py-2" onClick={() => {if (isMobile) handleMenuToggle(); toggleDropdown();}}>Events</Link>
-                                    <Link to="/community/gallery" className="inline-block w-full px-4 py-2" onClick={() => {if (isMobile) handleMenuToggle(); toggleDropdown();}}>Gallery</Link>
-                                    <Link  style={{display:'none'}}></Link>
-                                </motion.div>
-                            )}
-                        </div>
-                        <Link to="/how-it-works" className={location.pathname === "/how-it-works" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>How It Works</Link>
-                        <Link to="/FAQs" className={`${location.pathname === "/FAQs" ? "active" : ""} ${user ? 'hide-faq' : ''}`} onClick={isMobile ? handleMenuToggle : undefined}>FAQs</Link>
-                        <Link to="/auth" className={location.pathname === "/auth" ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>Join</Link>
+                        {
+                            HeaderLinks.map((link, index) => {
+                                if(link.name === "Community") {
+                                    return (
+                                        <div key={index} ref={dropDownRef} className="relative">
+                                            <button className={`${isDropdownOpen ? "active" : ""}`} onClick={toggleDropdown}>{ link.name }<b className={`${isDropdownOpen ? 'arrow-up' : ''}`}>{`>`}</b></button>
+                                            {isDropdownOpen && (
+                                                <motion.div className="dropdown-links mt-1 p-5 absolute max-[941px]:top-[2.9rem] left-[50%] transform -translate-x-[50%] w-[12rem] max-[941px]:w-full bg-[var(--bg-color)] max-[941px]:bg-indigo-100 shadow-xl rounded-2xl z-5" initial={{y: 100, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: .5, ease: "easeInOut"}}>
+                                                    { link.dropdown.map((item, index) => (
+                                                        <Link key={index} to={ item.goto } className="inline-block px-4 py-2" onClick={() => {if (isMobile) handleMenuToggle(); toggleDropdown();}}>{ item.name }</Link>
+                                                    ))}
+                                                </motion.div>
+                                            )}
+                                        </div>
+                                    )
+                                }
+                                if(link.name === "Join") {
+                                    return (
+                                        <Link key={index} to={user ? "/dashboard" : link.goto} className={location.pathname === (user ? "/dashboard" : link.goto) ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>{ user ? 'Account' : link.name }</Link>
+                                    )
+                                }
+                                return (
+                                    <Link key={index} to={link.goto} className={location.pathname === link.goto ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>{ link.name }</Link>
+                                )
+                            })
+                        }
                     </div>
                     <form onSubmit={handleSearch} className="relative flex align-center py-[13px] peer">
                         <input name="search" type="search" placeholder="Search..." className={`${searchQuery ? 'search-active' : ''}`} value={searchQuery} onFocus={handleFocus} onBlur={handleBlur} ref={searchInputRef} onChange={(e) => setSearchQuery(e.target.value)} />

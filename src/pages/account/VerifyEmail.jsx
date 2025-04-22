@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../../context/AuthContext'
 import { motion } from "framer-motion";
 import API from '/src/AxiosInstance';
 import { toast } from 'react-toastify';
@@ -16,6 +17,7 @@ const VerifyEmail = () => {
     const [cooldown, setCooldown] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
+    let { user, logout, isLoggedIn } = useAuth();
 
 
     useEffect(() => {
@@ -77,7 +79,14 @@ const VerifyEmail = () => {
         try {
             const response = await API.post('/account/verify-email/', formData);
             toast.success(response.data.message);
+            setFormData({ code: '' });
             navigate('/');
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            if (storedUser) {
+                delete storedUser.is_verified;
+                localStorage.setItem('user', JSON.stringify(storedUser));
+            }
+            user = JSON.parse(localStorage.getItem('user'))
         } catch (error) {
             toast.error(error.response?.data?.error || "An error occurred");
             if(error.response?.data?.error) setError(error.response?.data?.error)
@@ -100,12 +109,6 @@ const VerifyEmail = () => {
                             const onlyNums = e.target.value.replace(/\D/g, '');
                             setFormData({ code: onlyNums });
                             validateCode(onlyNums);
-                        }}
-                        onKeyDown={(e) => {
-                            const allowedKeys = ["Backspace", "Tab", "ArrowLeft", "ArrowRight"];
-                            if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) {
-                                e.preventDefault();
-                            }
                         }}
                         maxLength={6}
                         onFocus={() => handleInputFocus("code")}
