@@ -164,18 +164,16 @@ const SignUpSignIn = () => {
                 }));
                 navigate('/auth/verify-email')
 			} catch (error) {
-                console.log(error)
-				toast.error(error.response?.data?.email);
 				if(error.response?.data?.email) {
+                    toast.error(error.response?.data?.email[0]);
 					setErrors((prev) => ({ ...prev, email: error.response.data.email }));
-				} 
-                if(error.response?.data?.mobile) {
+				} else if(error.response?.data?.mobile) {
+                    toast.error(error.response?.data?.mobile[0]);
                     setErrors((prev) => ({ ...prev, mobile: error.response.data.mobile }));
-                }
-                if(error.response?.data?.password) {
+                } else if(error.response?.data?.password) {
+                    toast.error(error.response?.data?.password[0]);
                     setErrors((prev) => ({ ...prev, password: error.response.data.password }));
-                }
-                if(!error.response?.data?.email || !error.response?.data?.mobile || !error.response?.data?.password) {
+                } else {
                     toast.error("An error occurred, try again");
                 }
 			} finally {

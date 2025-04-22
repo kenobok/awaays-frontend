@@ -103,7 +103,6 @@ const ResetPassword = () => {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length > 0) {
-            console.log("Form has errors:", newErrors);
             return;
         }
 
@@ -117,7 +116,6 @@ const ResetPassword = () => {
                 setRequestCode(false)
                 setResetPassword(true)
             } catch (error) {
-                console.log(error)
                 toast.error("An error occured");
             } finally {
                 setLoading(false)

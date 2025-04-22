@@ -43,8 +43,12 @@ import NotFound from "./pages/NotFound";
 const checkAuth = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) throw redirect("/auth");
-
     if ('is_verified' in user) throw redirect("/auth/verify-email");
+}
+
+const checkUser = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) throw redirect("/");
 }
 
 const router = createBrowserRouter([
@@ -66,9 +70,9 @@ const router = createBrowserRouter([
             { 
                 path: "auth", element: <AuthPage />,
                 children: [
-                    { index: true, element: <SignUpSignIn /> },
-                    { path: 'reset-password', element: < ResetPassword/> },
-                    { path: 'verify-email', element: <VerifyEmail /> }
+                    { index: true, element: <SignUpSignIn />, loader: checkUser  },
+                    { path: 'reset-password', element: < ResetPassword/>, loader: checkUser },
+                    { path: 'verify-email', element: <VerifyEmail />, loader: checkUser }
                 ]
             },
 

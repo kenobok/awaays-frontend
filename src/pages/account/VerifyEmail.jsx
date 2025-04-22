@@ -17,7 +17,7 @@ const VerifyEmail = () => {
     const [cooldown, setCooldown] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
-    let { user, logout, isLoggedIn } = useAuth();
+    const { user, logout, isLoggedIn } = useAuth();
 
 
     useEffect(() => {
@@ -81,12 +81,11 @@ const VerifyEmail = () => {
             toast.success(response.data.message);
             setFormData({ code: '' });
             navigate('/');
-            const storedUser = JSON.parse(localStorage.getItem('user'));
-            if (storedUser) {
-                delete storedUser.is_verified;
-                localStorage.setItem('user', JSON.stringify(storedUser));
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                delete user.is_verified;
+                localStorage.setItem('user', JSON.stringify(user));
             }
-            user = JSON.parse(localStorage.getItem('user'))
         } catch (error) {
             toast.error(error.response?.data?.error || "An error occurred");
             if(error.response?.data?.error) setError(error.response?.data?.error)
