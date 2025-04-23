@@ -60,6 +60,11 @@
     left: 0;
     color: #ee2727;
 }
+form input[type="submit"],
+button {
+    border: none;
+    outline: none;
+}
 
 /* ==============CUSTOM SELECT============= */
 .give-item-wrp {

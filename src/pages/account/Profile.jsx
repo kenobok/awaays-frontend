@@ -1,18 +1,26 @@
 import { useState, useEffect } from 'react'
+import { useAuth } from "../../context/AuthContext";
+import API from '/src/AxiosInstance';
 import { motion } from 'framer-motion'
+import { toast } from 'react-toastify';
 import isEmail from 'validator/lib/isEmail';
 import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import { GetUserLocationFromAPI } from '../../components/utils/GetUserLocationFromAPI';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { SubmitButton } from '../../components/utils/SubmitButton'
+
 
 const Profile = () => {
-    const [inputFocus, setInputFocus] = useState({name: false, email: false, phone: false, old_password: false, new_password: false});
+    const {user} = useAuth();
+    const [formData, setFormData] = useState({ name: "", phone: "", old_password: "", new_password: ""});
+    const [profileImage, setProfileImage] = useState(null);
+    const [inputFocus, setInputFocus] = useState({name: false, phone: false, old_password: false, new_password: false});
     const [passwordToggle, setPasswordToggle] = useState(false);
     const [errors, setErrors] = useState({});
-    const [formData, setFormData] = useState({ name: "", email: "", phone: "", old_password: "", new_password: ""});
     const [userLocation, setUserLocation] = useState('');
+    const [loading, setLoading] = useState(false);
     
     useEffect(() => {
         const fetchUserLocation = async () => {
@@ -26,7 +34,6 @@ const Profile = () => {
         fetchUserLocation();
     }, []);
 
-
     const handlePasswordToggle = () => {
         setPasswordToggle(prevState => !prevState);
     };
@@ -36,21 +43,27 @@ const Profile = () => {
     };
     
     const handleInputBlur = (field) => {
-        if (!formData[field]) {
+        if(!formData[field]) {
             setInputFocus((prev) => ({ ...prev, [field]: false }));
         }
     };
 
     const handleChange = (e, field = null) => {
-        if (field == "phone") {
+        if(field == "phone") {
             const phoneValue = e || '';
             setFormData((prev) => ({ ...prev, phone: phoneValue }));
             validateField("phone", phoneValue);
         } else {
-            const { name, value, type, checked } = e.target;
-            const newValue = type == "checkbox" ? checked : value;
-            setFormData((prev) => ({ ...prev, [name]: newValue }));
-            validateField(name, newValue);
+            const { name, value } = e.target;
+            setFormData((prev) => ({ ...prev, [name]: value }));
+            validateField(name, value);
+        }
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setProfileImage(file);
         }
     };
 
@@ -59,29 +72,93 @@ const Profile = () => {
 
         switch (field) {
             case "name":
-                if (value.trim() && value.length < 3) error = "Must be at least 3 characters";
+                if(value.trim() && value.length < 3) error = "Must be at least 3 characters";
                 break;
-            case "email":
-                if (value.trim() && !isEmail(value)) error = "Enter a valid email";
-                break;
+            // case "email":
+            //     if(value.trim() && !isEmail(value)) error = "Enter a valid email";
+            //     break;
             case "phone":
-                if (!isValidPhoneNumber(value)) error = "Enter a valid phone number";
+                if(!isValidPhoneNumber(value)) error = "Enter a valid phone number";
                 break;
             case "old_password":
-                if (value.trim() && value.length < 6) error = "Enter old password";
+                if(value.trim() && value.length < 6) error = "Enter old password";
                 break;
             case "new_password":
-                if (value.trim() && value.length < 6) error = "Must be at least 6 characters";
+                if(value.length>0 && !formData.old_password) {
+                    setErrors((prev) => ({ ...prev, old_password: 'Enter old password' }));
+                } else {setErrors((prev) => ({ ...prev, old_password: '' }))}
+                if(value.trim() && value.length < 6) {
+                    error = "Must be at least 6 characters";
+                }
                 break;
             default:
                 break;
         }
     
         setErrors((prev) => {
-            if (prev[field] === error) return prev;
+            if(prev[field] === error) return prev;
             return { ...prev, [field]: error };
         });
     };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const allFieldsEmpty = Object.values(formData).every(value => !value?.toString().trim());
+        const isImageEmpty = !profileImage;
+
+        if (allFieldsEmpty && isImageEmpty) {
+            setErrors({ form: "At least one field is required" });
+            return;
+        }
+
+        let newErrors = {};
+        let hasErrors = false;
+
+        Object.entries(formData).forEach(([field, value]) => {
+            if(value) {
+                const error = validateField(field, value);
+                if(error) {
+                    newErrors[field] = error;
+                    hasErrors = true;
+                }
+            }
+        });
+	
+		const { old_password, new_password } = formData;
+        if((old_password && !new_password) || (!old_password && new_password)) {
+            if(!old_password) newErrors.old_password = "Enter old password";
+            if(!new_password) newErrors.new_password = "Enter new password";
+            hasErrors = true;
+        }
+    
+        setErrors(newErrors);
+
+        if(hasErrors) return;
+
+        setLoading(true);
+        try {
+            const data = new FormData();
+            Object.entries(formData).forEach(([key, value]) => {
+                if (value) data.append(key, value);
+            });
+
+            if (profileImage) {
+                data.append("profile_image", profileImage);
+            }
+
+            const response = await API.patch(`/account/users/${user.id}/`, data, {headers: {"Content-Type": "multipart/form-data"}});
+            console.log(response.data);
+            toast.success("Profile update successful");
+            setFormData({ name: "", phone: "", old_password: "", new_password: "" });
+            setProfileImage(null);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     return (
         <motion.section className='user-profile flex-1 p-7 pb-20 max-[391px]:px-5' initial={{ opacity: 0, x: -300 }}  animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
@@ -113,7 +190,7 @@ const Profile = () => {
                 </div>
 
                 <div>
-                    <form className='w-[20rem] mb-10 border border-gray-300 rounded-2xl p-5'>
+                    <form onSubmit={handleSubmit} className='w-[20rem] mb-10 border border-gray-300 rounded-2xl p-5'>
                         <h4 className='text-center font-bold'>Edit Profile</h4>
                         <small className='text-center text-sm block text-orange-600'>All fields are optional</small>
                         <div className='form-input'>
@@ -121,11 +198,11 @@ const Profile = () => {
                             <input type='text' name="name" id="editFullName" className={`${errors.name ? 'error' : ''}`} value={formData.name} onChange={handleChange} onFocus={() => handleInputFocus("name")} onBlur={() => handleInputBlur("name")} />
                             {errors.name && <small>{errors.name}</small>}
                         </div>
-                        <div className='form-input'>
+                        {/* <div className='form-input'>
                             <label htmlFor="editEmail" className={`block ${inputFocus.email ? 'is-focus' : ''}`}>Email</label>
                             <input type='email' name="email" id="editEmail" className={`${errors.email ? 'error' : ''}`} value={formData.email} onChange={handleChange} onFocus={() => handleInputFocus("email")} onBlur={() => handleInputBlur("email")} />
                             {errors.email && <small>{errors.email}</small>}
-                        </div>
+                        </div> */}
                         <div className="form-input">
                             <PhoneInput
                                 international
@@ -139,8 +216,16 @@ const Profile = () => {
                             />
                             {errors.phone && <small>{errors.phone}</small>}
                         </div>
+                        <div className="form-input">
+                            <input
+                                type="file"
+                                id="profileImage"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                            />
+                        </div>
 
-                        <h4 className='text-center font-bold mt-5'>Change Password</h4>
+                        <h4 className='text-center font-bold mt-4'>Change Password</h4>
                         <div className="form-input">
                             <label htmlFor="oldPassword" className={`${inputFocus.old_password ? 'is-focus' : ''}`}>Old Password</label>
                             <input type={passwordToggle ? "text" : "password"} name="old_password" id="oldPassword" className={`${errors.old_password ? 'error' : ''}`} value={formData.old_password} onChange={handleChange} onFocus={() => handleInputFocus("old_password")} onBlur={() => handleInputBlur("old_password")} />
@@ -161,9 +246,7 @@ const Profile = () => {
                                 <FontAwesomeIcon icon="eye" onClick={ handlePasswordToggle } className="absolute top-[1.9rem] right-5 cursor-pointer bg-[var(--bg-color)]" />
                             }
                         </div>
-                        <div className='form-input'>
-                            <input type='submit' value='Submit' className='bg-[var(--p-color)] text-white cursor-pointer' />
-                        </div>
+                        <SubmitButton loading={loading} />
                     </form>
                 </div>
             </div>

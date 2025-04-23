@@ -25,7 +25,7 @@ const SignUpSignIn = () => {
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
     const {login} = useAuth();
-    const from = searchParams.get("from") || "/";
+    const from = searchParams.get("from") || "/give-item";
 
 
 	useEffect(() => {
