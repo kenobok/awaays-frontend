@@ -224,8 +224,8 @@ const SignUpSignIn = () => {
     return (
         <>
             <div className="auth-switch relative flex justify-center mb-4 mx-auto">
-                <button onClick={ handleSignUp } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold cursor-pointer ${authMode === 'signup' && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN UP</button>
-                <button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold cursor-pointer ${authMode === 'signin' && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN IN</button>
+                <button onClick={ handleSignUp } className={`text-center text-gray-500 text-xl py-[.7rem] px-[3rem] max-[501px]:px-9 max-[501px]:py-[.5rem] font-bold cursor-pointer ${authMode === 'signup' && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN UP</button>
+                <button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl py-[.7rem] px-[3rem] max-[501px]:px-9 max-[501px]:py-[.5rem] font-bold cursor-pointer ${authMode === 'signin' && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN IN</button>
             </div>
             <motion.form onSubmit={handleSubmit} className="auth-form w-[23rem] max-[501px]:w-[90%] p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }}>
                 

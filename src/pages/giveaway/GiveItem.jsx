@@ -113,7 +113,7 @@ const GiveItem = () => {
 
             <motion.section className="p-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-5 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut"  }}>
                 <div className="relative flex justify-center mb-4 mx-auto">
-					<button className={`border-b-2 py-2 px-6 rounded-2xl shadow-lg text-center text-[var(--p-color)] text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold }`}>GIVE ITEM</button>
+					<button className={`border-b-2 py-2 px-6 rounded-2xl shadow-lg text-center text-[var(--p-color)] text-xl font-bold }`}>GIVE ITEM</button>
 				</div>
 				<motion.form className="give-item-form p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }} onSubmit={ handleSubmit }>
                     <div className='flex gap-x-7 max-[601px]:flex-col'>

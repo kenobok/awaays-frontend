@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from "../../context/AuthContext";
 import API from '/src/AxiosInstance';
+import { getCookie } from '../../components/utils/csrf';
 import { motion } from 'framer-motion'
 import { toast } from 'react-toastify';
 import isEmail from 'validator/lib/isEmail';
@@ -21,7 +22,9 @@ const Profile = () => {
     const [errors, setErrors] = useState({});
     const [userLocation, setUserLocation] = useState('');
     const [loading, setLoading] = useState(false);
-    
+    const csrfToken = getCookie('csrftoken');
+
+
     useEffect(() => {
         const fetchUserLocation = async () => {
             try {
@@ -104,6 +107,12 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const csrfToken = getCookie('csrftoken');
+        if (!csrfToken) {
+            console.error("No CSRF token found in cookies");
+            return;
+        }
+
         const allFieldsEmpty = Object.values(formData).every(value => !value?.toString().trim());
         const isImageEmpty = !profileImage;
 
@@ -147,7 +156,7 @@ const Profile = () => {
                 data.append("profile_image", profileImage);
             }
 
-            const response = await API.patch(`/account/users/${user.id}/`, data, {headers: {"Content-Type": "multipart/form-data"}});
+            const response = await API.patch(`/account/users/${user.id}/`, data, {headers: {"Content-Type": "multipart/form-data", "X-CSRFToken": csrfToken},withCredentials: true,});
             console.log(response.data);
             toast.success("Profile update successful");
             setFormData({ name: "", phone: "", old_password: "", new_password: "" });

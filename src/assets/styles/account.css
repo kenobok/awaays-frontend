@@ -10,7 +10,6 @@
     background: var(--bg-color);
 }
 .auth-switch button {
-    padding: .7rem 3rem;
     background: rgba(0,0,0,.05);
     border: none;
     outline: none;
