@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from "/src/context/AuthContext";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useAuth } from '../../context/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from "react-toastify";
 import API from "/src/AxiosInstance";
 import userImg from '../../assets/images/user.png'
@@ -11,7 +11,8 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const dashMenuRef = useRef()
-    const { user, logout, isLoggedIn } = useAuth();
+    const {user, isLoggedIn, login, logout} = useAuth();
+
 
     const menuItems = [
         { path: "/dashboard", icon: "th-large", label: "Dashboard" },
@@ -49,12 +50,10 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     const handleLogout = async () => {
         try {
             await API.post("/account/logout/");
-            logout();
             toast.success("You’ve been logged out.");
-            localStorage.removeItem("user");
+            logout();
             navigate('/');
         } catch (error) {
-            console.error("Logout error:", error);
             toast.error("Error logging out. Try again.");
         }
     };
@@ -66,9 +65,9 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
             <section ref={dashMenuRef} className={`dashboard-menu relative max-w-[1600px] mx-auto w-[15rem] z-5 ${toggleDashMenu ? 'toggle-dash-nav' : ''}`}>
                 <div className="relative">
                     <div className="flex flex-col px-3 py-8 w-[15rem] h-screen text-white bg-purple-900 overflow-hidden fixed top-[5.3rem] max-[941px]:top-[4.4rem] left-0 min-[1600px]:left-[calc((100vw-1600px)/2)]">
-                        <div className="flex justify-evenly items-center px-2 pb-[9px] mb-5 border-b-2 border-gray-500 rounded-lg shadow-lg">
+                        <div className="flex gap-x-5 items-center px-2 pb-[9px] mb-5 border-b-2 border-gray-500 rounded-lg shadow-lg">
                             <img src={userImg} alt="user-image" className="inline-block w-[2.5rem]"/>
-                            <h5 className="leading-[1.2rem] pt-1 ml-2"><b>Hi,</b><br/>{ user.full_name || 'Guest' }</h5>
+                            <h5 className="leading-[1.2rem] pt-1 ml-2"><b>Hi,</b><br/>{ user ? user.full_name : 'Guest' }</h5>
                         </div>
                         <ul className="dashboard-links px-2 overflow-y-auto pb-7">
                             {

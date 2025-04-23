@@ -158,12 +158,6 @@ const ResetPassword = () => {
                                     setFormData({ ...formData, code: onlyNums });
                                     validateField("code", onlyNums);
                                 }}
-                                onKeyDown={(e) => {
-                                    const allowedKeys = ["Backspace", "Tab", "ArrowLeft", "ArrowRight"];
-                                    if (!/[0-9]/.test(e.key) && !allowedKeys.includes(e.key)) {
-                                        e.preventDefault();
-                                    }
-                                }}
                                 maxLength={6}
                                 onFocus={() => handleInputFocus("code")}
                                 onBlur={() => handleInputBlur("code")}

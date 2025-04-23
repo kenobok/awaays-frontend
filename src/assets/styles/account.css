@@ -14,7 +14,6 @@
     background: rgba(0,0,0,.05);
     border: none;
     outline: none;
-    cursor: pointer;
     border-bottom: 2px solid rgba(0,0,0,.1);
     transform: translateX(-1px);
 }

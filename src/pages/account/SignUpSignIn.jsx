@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
 import API from '/src/AxiosInstance';
@@ -21,8 +22,9 @@ const SignUpSignIn = () => {
     const [inputFocus, setInputFocus] = useState({full_name: false, email: false, mobile: false, password: false, agree: false});
     const [passwordToggle, setPasswordToggle] = useState(false);
 	const [errors, setErrors] = useState({});
+	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
-
+    const {user, isLoggedIn, login} = useAuth();
 
 	useEffect(() => {
 		const fetchUserLocation = async () => {
@@ -52,6 +54,7 @@ const SignUpSignIn = () => {
         setSignIn(false);
         setPasswordToggle(false);
 		setErrors({});
+        setLoading(false);
     };
 
 	const handleSignIn = () => {
@@ -65,6 +68,7 @@ const SignUpSignIn = () => {
         setSignUp(false);
         setPasswordToggle(false);
 		setErrors({});
+        setLoading(false);
     };
 
 	const handlePasswordToggle = () => {
@@ -92,6 +96,7 @@ const SignUpSignIn = () => {
 			setFormData((prev) => ({ ...prev, [name]: newValue }));
 			validateField(name, newValue);
 		}
+        setErrorMsg(false)
 	};
 
 	const validateField = (field, value) => {
@@ -151,17 +156,10 @@ const SignUpSignIn = () => {
 		if (signUp) {
 			try {
 				const response = await API.post('/account/users/', formData);
-				toast.success(response.data.message);
+				toast.success("Account created successfully");
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
-                const user = response.data
-                localStorage.setItem("user", JSON.stringify({
-                    id: user.id,
-                    full_name: user.full_name,
-                    email: user.email,
-                    mobile: user.mobile,
-                    is_verified: user.is_verified
-                }));
+                login(response.data)
                 navigate('/auth/verify-email')
 			} catch (error) {
 				if(error.response?.data?.email) {
@@ -180,25 +178,43 @@ const SignUpSignIn = () => {
 				setLoading(false)
 			}
 		} else {
-			// Handle login or other flow
+			try {
+                const response = await API.post('/account/login/', { 'email': email, 'password': password });
+                toast.success(response.data.message);
+                const userData = response.data
+                const user = {
+                    id: userData.id,
+                    full_name: userData.full_name,
+                    email: userData.email,
+                };
+                if ('is_verified' in userData && userData.is_verified === false) {
+                    user.is_verified = false;
+                }
+                login(user)
+                navigate('/');
+            } catch (error) {
+                if(error.response?.data?.detail) {
+                    toast.error(error.response?.data?.detail);
+                    setErrorMsg(true)
+                } else {
+                    toast.error("An error occurred, try again");
+                }
+            } finally {
+                setLoading(false)
+            }
 		}
 	};
-	
-	// console.log(
-	// 	signUp && "Sign Up form data:",
-	// 	signIn  && "Sign In form data:",
-	// 	signUp && formData,
-	// 	signIn && { email, password },
-	// );
 
 
     return (
         <>
             <div className="auth-switch relative flex justify-center mb-4 mx-auto">
-                <button onClick={ handleSignUp } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${signUp && 'active'}`}>SIGN UP</button>
-                <button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold ${signIn && 'active'}`}>SIGN IN</button>
+                <button onClick={ handleSignUp } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold cursor-pointer ${signUp && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN UP</button>
+                <button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold cursor-pointer ${signIn && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN IN</button>
             </div>
             <motion.form onSubmit={handleSubmit} className="auth-form w-[23rem] max-[501px]:w-[90%] p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }}>
+                
+                { signIn && errorMsg && <p className={`text-center text-red-500`}>Wrong email or password</p>}
                 { signUp &&
                     <div className="form-input">
                         <label htmlFor="joinUsName" className={`block text-gray-600 font-medium ${inputFocus.full_name ? 'is-focus' : ''}`}>Full Name</label>

@@ -26,13 +26,8 @@ const Header = () => {
     const [blurBackground, setBlurBackground] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [user, setUser] = useState(null);
+    const {user, isLoggedIn} = useAuth();
 
-
-    useEffect(() => {
-        const storedU = JSON.parse(localStorage.getItem('user'))
-        setUser(storedU)
-    }, [location.pathname])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -136,7 +131,7 @@ const Header = () => {
                                 }
                                 if(link.name === "Join") {
                                     return (
-                                        <Link key={index} to={user ? "/dashboard" : link.goto} className={location.pathname === (user ? "/dashboard" : link.goto) ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>{ user ? 'Account' : link.name }</Link>
+                                        <Link key={index} to={user ? "/dashboard" : link.goto} className={location.pathname === (isLoggedIn ? "/dashboard" : link.goto) ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>{ isLoggedIn ? 'Account' : link.name }</Link>
                                     )
                                 }
                                 return (
