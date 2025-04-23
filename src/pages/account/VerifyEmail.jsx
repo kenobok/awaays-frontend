@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext'
 import { motion } from "framer-motion";
 import API from '/src/AxiosInstance';
 import { toast } from 'react-toastify';
-import { Loader2 } from "../../components/utils/Preloader";
+import { SubmitButton } from '../../components/utils/SubmitButton'
 import '../../assets/styles/account.css';
 
 
@@ -124,9 +124,7 @@ const VerifyEmail = () => {
                         <span to="" className={`text-[var(--p-color)] cursor-pointer ${cooldown > 0 ? 'cursor-not-allowed' : ''}`} onClick={() => handleRequestNewCode()}>{cooldown > 0 ? `OTP Sent - (${cooldown}s)` : 'Request new code'}</span>
                     }
                 </p>
-                <div className="mt-3 mb-4">
-                    <button type="submit" className={`w-full bg-[var(--p-color)] cursor-pointer text-white text-[1.2em] h-12 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition disabled:cursor-not-allowed`} disabled={loading}>{loading ? <Loader2 /> : 'Submit'}</button>
-                </div>
+                <SubmitButton loading={loading} />
             </motion.form>
         </>
     )

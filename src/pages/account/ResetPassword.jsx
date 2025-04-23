@@ -5,7 +5,7 @@ import API from '/src/AxiosInstance';
 import isEmail from 'validator/lib/isEmail';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from 'react-toastify';
-import { Loader2 } from "../../components/utils/Preloader";
+import { SubmitButton } from '../../components/utils/SubmitButton'
 import '../../assets/styles/account.css';
 
 
@@ -189,9 +189,7 @@ const ResetPassword = () => {
                     :
                     <p className="inline-block text-[.95rem] leading-[1.2rem]">Don't have a code? <span to="" className="text-[var(--p-color)] cursor-pointer" onClick={() => handleRequestCode()}>Request a code</span></p>
                 }
-                <div className="mt-3 mb-4">
-                    <button type="submit" className="w-full bg-[var(--p-color)] cursor-pointer text-white text-[1.2em] h-12 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition disabled:cursor-not-allowed" disabled={loading}>{loading ? <Loader2 /> : 'Submit'}</button>
-                </div>
+                <SubmitButton loading={loading} />
             </motion.form>
         </>
     )

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from "framer-motion";
 import CountryStateSelector from '../../components/utils/CountryStateSelector';
 import GiveawayPurpose from '../../components/giveaway/GiveawayPurpose';
-import Select from 'react-select';
 import '../../assets/styles/giveaway.css'
 
 
@@ -11,6 +9,7 @@ const GiveItem = () => {
     const [formData, setFormData] = useState({ purpose: "", item: "", description: "", instructions: "", country: "", state: "", showNumber: false, images: [] });
     const [inputFocus, setInputFocus] = useState({ purpose: false, item: false, description: false, instructions: false, images: false });
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
 
 
     const handleInputFocus = (field) => {
@@ -22,7 +21,6 @@ const GiveItem = () => {
             setInputFocus((prev) => ({ ...prev, [field]: false }));
         }
     };
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -164,9 +162,7 @@ const GiveItem = () => {
                         </div>
                     </div>
                     
-                    <div className="mt-3 mb-4">
-						<button type="submit" className="w-full bg-[var(--p-color)] cursor-pointer text-white py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition">Submit</button>
-					</div>
+                    <SubmitButton loading={loading} />
 				</motion.form>
 			</motion.section>
 		</main>

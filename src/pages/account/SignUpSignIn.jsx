@@ -9,7 +9,7 @@ import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from 'react-toastify';
-import { Loader2 } from "../../components/utils/Preloader";
+import { SubmitButton } from '../../components/utils/SubmitButton'
 import 'react-phone-number-input/style.css';
 import '../../assets/styles/account.css';
 
@@ -278,9 +278,7 @@ const SignUpSignIn = () => {
                 { authMode === "signin" &&
                     <p className="inline-block text-[.95rem] leading-[1.2rem]">Forgot Password? <Link to="/auth/reset-password/" className="text-[var(--p-color)] cursor-pointer">Reset Password</Link></p>
                 }
-                <div className="mt-3 mb-4">
-                    <button type="submit" className="w-full bg-[var(--p-color)] cursor-pointer text-white text-[1.2em] h-12 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition disabled:cursor-not-allowed" disabled={loading}>{ loading ? <Loader2 /> : 'Submit'}</button>
-                </div>
+                <SubmitButton loading={loading} />
                 <div className="flex justify-between gap-x-5 my-3 p-1 continue-with-google">
                     <button className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center">
                         <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" className="w-5 h-5 mr-1"/>

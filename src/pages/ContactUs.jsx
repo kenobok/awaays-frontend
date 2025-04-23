@@ -1,11 +1,13 @@
 import { useState } from "react";
 import isEmail from 'validator/lib/isEmail';
+import { SubmitButton } from "../components/utils/SubmitButton";
 
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
     const [inputFocus, setInputFocus] = useState({name: false, email: false, message: false});
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
     
     const handleInputFocus = (field) => {
         setInputFocus((prev) => ({ ...prev, [field]: true }));
@@ -88,9 +90,7 @@ const ContactUs = () => {
                     <textarea name="message" id="contactUsMessage" className={`h-32 ${errors.message ? 'error' : ''}`} value={formData.message} onChange={handleChange} onFocus={() => handleInputFocus("message")} onBlur={() => handleInputBlur("message")} />
                     {errors.message && <small>{errors.message}</small>}
                 </div>
-                <div className="pb-2 mt-2">
-                    <button type="submit" className="w-full bg-[var(--p-color)] cursor-pointer text-white py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition">Send Message</button>
-                </div>
+                <SubmitButton loading={loading} />
             </form>
 
             <div className="text-center mt-3">

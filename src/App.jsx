@@ -10,7 +10,7 @@ import './App.css';
 const App = () => {
     
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/account/csrf/', { withCredentials: true })
+        axios.get('https://127.0.0.1:8000/api/account/csrf/', { withCredentials: true })
             .then(() => console.log("CSRF cookie set"))
             .catch(err => console.error("Failed to fetch CSRF", err));
 
