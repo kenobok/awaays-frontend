@@ -128,8 +128,16 @@ const ResetPassword = () => {
                 setInputFocus({ email: false, code: false, new_password: false });
                 navigate('/auth')
             } catch (error) {
-                if(error.response?.data?.non_field_errors) setErrors({ ...errors, code: error.response.data.non_field_errors });
-                toast.error(error.response?.data?.non_field_errors || "An error occured");
+                console.log(error.response.data)
+                if(error.response?.data?.non_field_errors[0] == 'Invalid email') {
+                    toast.error(error.response?.data?.non_field_errors[0]);
+                    setErrors({ ...errors, email: error.response.data.non_field_errors });
+                } else if(error.response?.data?.non_field_errors[0] == 'Invalid or expired code') {
+                    toast.error(error.response?.data?.non_field_errors[0]);
+                    setErrors({ ...errors, code: error.response.data.non_field_errors });
+                } else {
+                    toast.error("An error occured");    
+                }
             } finally {
                 setLoading(false)
             }

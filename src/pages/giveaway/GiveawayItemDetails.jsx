@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectCards, Mousewheel } from 'swiper/modules';
 import { motion } from 'framer-motion';
@@ -9,7 +9,7 @@ import { Loader1 } from '../../components/utils/Preloader';
 
 
 const GiveawayItemDetails = () => {
-    const { itemId } = useParams()
+    const { slug } = useParams()
     const [ viewItem, setViewItem ] = useState({})
     const [isEnlarged, setIsEnlarged] = useState(false);
     const [loading, setLoading] = useState(true)
@@ -19,12 +19,12 @@ const GiveawayItemDetails = () => {
 
 
     useEffect(() => {
-        const fetcher = mockItems.find(item => item.id == itemId);
+        const fetcher = mockItems.find(item => item.slug == slug);
         if (fetcher) {
             setViewItem(fetcher);
             setLoading(false)
         }
-    }, [itemId]);
+    }, [slug]);
 
     const countWords = (str) => str.trim().split(/\s+/).filter(Boolean).length;
 

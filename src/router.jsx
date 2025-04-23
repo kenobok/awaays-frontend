@@ -51,6 +51,11 @@ const checkUser = () => {
     if (user && !('is_verified' in user)) throw redirect("/");
 }
 
+const checkVer = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) throw redirect("/auth");
+}
+
 
 const router = createBrowserRouter([
     {
@@ -69,11 +74,11 @@ const router = createBrowserRouter([
 
             // Authentication Link
             { 
-                path: "auth", element: <AuthPage />, loader: checkUser ,
+                path: "auth", element: <AuthPage />, loader: checkUser,
                 children: [
                     { index: true, element: <SignUpSignIn /> },
                     { path: 'reset-password', element: < ResetPassword/> },
-                    { path: 'verify-email', element: <VerifyEmail /> }
+                    { path: 'verify-email', element: <VerifyEmail />, loader: checkVer }
                 ]
             },
 

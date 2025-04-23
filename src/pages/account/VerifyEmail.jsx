@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext'
 import { motion } from "framer-motion";
 import API from '/src/AxiosInstance';
 import { toast } from 'react-toastify';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Loader2 } from "../../components/utils/Preloader";
 import '../../assets/styles/account.css';
 
@@ -17,7 +16,7 @@ const VerifyEmail = () => {
     const [cooldown, setCooldown] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
-    const { user, logout, isLoggedIn } = useAuth();
+    const { login } = useAuth();
 
 
     useEffect(() => {
@@ -84,7 +83,7 @@ const VerifyEmail = () => {
             const user = JSON.parse(localStorage.getItem('user'));
             if (user) {
                 delete user.is_verified;
-                localStorage.setItem('user', JSON.stringify(user));
+                login(user)
             }
         } catch (error) {
             toast.error(error.response?.data?.error || "An error occurred");
@@ -119,7 +118,7 @@ const VerifyEmail = () => {
                     { loading2 ?
                         <span>Sending OTP...</span>
                         :
-                        <span to="" className={`text-[var(--p-color)] cursor-pointer ${cooldown > 0 ? 'cursor-not-allowed' : ''}`} onClick={() => handleRequestNewCode()}>{cooldown > 0 ? `Wait ${cooldown}s` : 'Request new code'}</span>
+                        <span to="" className={`text-[var(--p-color)] cursor-pointer ${cooldown > 0 ? 'cursor-not-allowed' : ''}`} onClick={() => handleRequestNewCode()}>{cooldown > 0 ? `OTP Sent - (${cooldown}s)` : 'Request new code'}</span>
                     }
                 </p>
                 <div className="mt-3 mb-4">

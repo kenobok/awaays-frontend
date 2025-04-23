@@ -139,7 +139,7 @@ const GiveawayItems = () => {
                         {items.length > 0 ? (
                             items.map((item) => (
                                 <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1, ease: "easeInOut" }}>
-                                    <Link to={`/giveaway-item-details/${item.id}`} className='block'>
+                                    <Link to={`/giveaway-item-details/${item.slug}`} className='block'>
                                         <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
                                         <h3 className="font-bold mt-3 truncate">{item.purpose}</h3>
                                         <h3 className="font-semibold truncate">{item.name}</h3>
