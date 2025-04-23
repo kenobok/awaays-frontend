@@ -11,7 +11,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const dashMenuRef = useRef()
-    const {user, isLoggedIn, login, logout} = useAuth();
+    const {user, isLoggedIn, logout} = useAuth();
 
 
     const menuItems = [

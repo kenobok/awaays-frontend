@@ -40,11 +40,14 @@ import FAQs from "./pages/FAQs";
 import NotFound from "./pages/NotFound";
 
 
-const checkAuth = () => {
+const checkAuth = ({ request }) => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) throw redirect("/auth");
-    if ('is_verified' in user) throw redirect("/auth/verify-email");
-}
+    const url = new URL(request.url);
+    const from = url.pathname + url.search;
+
+    if (!user) throw redirect(`/auth?from=${encodeURIComponent(from)}`);
+    if ('is_verified' in user) throw redirect(`/auth/verify-email?from=${encodeURIComponent(from)}`);
+};
 
 const checkUser = () => {
     const user = JSON.parse(localStorage.getItem("user"));

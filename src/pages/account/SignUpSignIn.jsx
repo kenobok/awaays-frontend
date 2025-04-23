@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
@@ -16,15 +16,17 @@ import '../../assets/styles/account.css';
 
 const SignUpSignIn = () => {
     const navigate = useNavigate();
-    const [signUp, setSignUp] = useState(true);
-	const [signIn, setSignIn] = useState(false);
+    const [searchParams] = useSearchParams();
+    const [authMode, setAuthMode] = useState("signup");
 	const [formData, setFormData] = useState({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", isp: "", city: "", region: "", country: "", countryCode: ""});
     const [inputFocus, setInputFocus] = useState({full_name: false, email: false, mobile: false, password: false, agree: false});
     const [passwordToggle, setPasswordToggle] = useState(false);
 	const [errors, setErrors] = useState({});
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
-    const {user, isLoggedIn, login} = useAuth();
+    const {login} = useAuth();
+    const from = searchParams.get("from") || "/";
+
 
 	useEffect(() => {
 		const fetchUserLocation = async () => {
@@ -47,13 +49,21 @@ const SignUpSignIn = () => {
 		fetchUserLocation();
 	}, []);
 
+    useEffect(() => {
+        const is_user = JSON.parse(localStorage.getItem("is_user"));
+        if (is_user) {
+            handleSignIn()
+        }
+    }, []);
+
+    
 	const handleSignUp = () => {
 		setFormData((prevData) => ({ ...prevData, full_name: "", email: "", mobile: "", password: "", agree: false }));		
 		setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false});
-        setSignUp(true);
-        setSignIn(false);
+        setAuthMode("signup");
         setPasswordToggle(false);
 		setErrors({});
+        setErrorMsg(false);
         setLoading(false);
     };
 
@@ -64,8 +74,7 @@ const SignUpSignIn = () => {
 			password: "",
 		}));
 		setInputFocus({ email: false, password: false });
-        setSignIn(true);
-        setSignUp(false);
+        setAuthMode("signin");
         setPasswordToggle(false);
 		setErrors({});
         setLoading(false);
@@ -130,7 +139,7 @@ const SignUpSignIn = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-	
+
 		let newErrors = {};
 		
 		Object.keys(formData).forEach((field) => {
@@ -153,24 +162,26 @@ const SignUpSignIn = () => {
 		const { email, password } = formData;
 		
 		setLoading(true)
-		if (signUp) {
+		if (authMode === "signup") {
 			try {
 				const response = await API.post('/account/users/', formData);
 				toast.success("Account created successfully");
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
                 login(response.data)
-                navigate('/auth/verify-email')
+                localStorage.setItem("is_user", true)
+                navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
 			} catch (error) {
-				if(error.response?.data?.email) {
-                    toast.error(error.response?.data?.email[0]);
-					setErrors((prev) => ({ ...prev, email: error.response.data.email }));
-				} else if(error.response?.data?.mobile) {
-                    toast.error(error.response?.data?.mobile[0]);
-                    setErrors((prev) => ({ ...prev, mobile: error.response.data.mobile }));
-                } else if(error.response?.data?.password) {
-                    toast.error(error.response?.data?.password[0]);
-                    setErrors((prev) => ({ ...prev, password: error.response.data.password }));
+				const err = error.response?.data;
+                if (err?.email) {
+                    toast.error(err.email[0]);
+                    setErrors((prev) => ({ ...prev, email: err.email }));
+                } else if (err?.mobile) {
+                    toast.error(err.mobile[0]);
+                    setErrors((prev) => ({ ...prev, mobile: err.mobile }));
+                } else if (err?.password) {
+                    toast.error(err.password[0]);
+                    setErrors((prev) => ({ ...prev, password: err.password }));
                 } else {
                     toast.error("An error occurred, try again");
                 }
@@ -180,22 +191,26 @@ const SignUpSignIn = () => {
 		} else {
 			try {
                 const response = await API.post('/account/login/', { 'email': email, 'password': password });
-                toast.success(response.data.message);
+                toast.success("Login successful");
                 const userData = response.data
                 const user = {
                     id: userData.id,
                     full_name: userData.full_name,
                     email: userData.email,
+                    ...(userData.is_verified === false && { is_verified: false })
                 };
-                if ('is_verified' in userData && userData.is_verified === false) {
-                    user.is_verified = false;
-                }
                 login(user)
-                navigate('/');
+                localStorage.setItem("is_user", true)
+                const is_ver = JSON.parse(localStorage.getItem("user"));
+                if ('is_verified' in is_ver && is_ver.is_verified === false) {
+                    navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
+                } else {
+                    navigate(from, { replace: true });
+                }
             } catch (error) {
-                if(error.response?.data?.detail) {
-                    toast.error(error.response?.data?.detail);
-                    setErrorMsg(true)
+                if (error.response?.data?.detail) {
+                    toast.error(error.response.data.detail);
+                    setErrorMsg(true);
                 } else {
                     toast.error("An error occurred, try again");
                 }
@@ -209,13 +224,13 @@ const SignUpSignIn = () => {
     return (
         <>
             <div className="auth-switch relative flex justify-center mb-4 mx-auto">
-                <button onClick={ handleSignUp } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold cursor-pointer ${signUp && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN UP</button>
-                <button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold cursor-pointer ${signIn && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN IN</button>
+                <button onClick={ handleSignUp } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold cursor-pointer ${authMode === 'signup' && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN UP</button>
+                <button onClick={ handleSignIn } className={`text-center text-gray-500 text-xl max-[501px]:text-sm max-[351px]:text-xs font-bold cursor-pointer ${authMode === 'signin' && 'active'} ${loading ? 'cursor-progress' : ''}`} disabled={loading}>SIGN IN</button>
             </div>
             <motion.form onSubmit={handleSubmit} className="auth-form w-[23rem] max-[501px]:w-[90%] p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }}>
                 
-                { signIn && errorMsg && <p className={`text-center text-red-500`}>Wrong email or password</p>}
-                { signUp &&
+                { authMode === "signin" && errorMsg && <p className={`text-center text-red-500`}>Wrong email or password</p>}
+                { authMode === "signup" &&
                     <div className="form-input">
                         <label htmlFor="joinUsName" className={`block text-gray-600 font-medium ${inputFocus.full_name ? 'is-focus' : ''}`}>Full Name</label>
                         <input type="text" name="full_name" id="joinUsName" className={`${errors.full_name ? 'error' : ''}`} value={formData.full_name} onChange={handleChange} onFocus={() => handleInputFocus("full_name")} onBlur={() => handleInputBlur("full_name")} />
@@ -228,7 +243,7 @@ const SignUpSignIn = () => {
                     <input type="email" name="email" id="joinUsEmail" className={`${errors.email ? 'error' : ''}`} value={formData.email} onChange={handleChange} onFocus={() => handleInputFocus("email")} onBlur={() => handleInputBlur("email")} />
                     {errors.email && <small>{errors.email}</small>}
                 </div>
-                { signUp &&
+                { authMode === "signup" &&
                     <div className="form-input">
                         {/* <label className={`block text-gray-600 ${inputFocus.mobile ? "is-focus" : ""}`}>Phone Number</label> */}
                         <PhoneInput
@@ -254,13 +269,13 @@ const SignUpSignIn = () => {
                         <FontAwesomeIcon icon="eye" onClick={ handlePasswordToggle } className="absolute top-[1.9rem] right-5 cursor-pointer bg-[var(--bg-color)]" />
                     }
                 </div>
-                { signUp &&
+                { authMode === "signup" &&
                     <div className="form-input flex space-[0rem]" style={{ padding:"2px 0 5px 0" }}>
                         <input type="checkbox" name="agree" className="error" checked={formData.agree || false} onChange={handleChange} />
                         <p className="inline-block pl-3 text-[.95rem] leading-[1.2rem]">I agree to the <Link to="/terms-and-conditions/" className="text-[var(--p-color)]">Terms</Link> and <Link to="/privacy-policy/" className="text-[var(--p-color)]">Privacy Policy</Link> <cite className="text-red-500 text-sm">{errors.agree && "(check the box)"}</cite></p>
                     </div>
                 }
-                { signIn &&
+                { authMode === "signin" &&
                     <p className="inline-block text-[.95rem] leading-[1.2rem]">Forgot Password? <Link to="/auth/reset-password/" className="text-[var(--p-color)] cursor-pointer">Reset Password</Link></p>
                 }
                 <div className="mt-3 mb-4">

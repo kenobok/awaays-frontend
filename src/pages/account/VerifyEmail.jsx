@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext'
 import { motion } from "framer-motion";
 import API from '/src/AxiosInstance';
@@ -10,6 +10,7 @@ import '../../assets/styles/account.css';
 
 const VerifyEmail = () => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [formData, setFormData] = useState({ code: "" });
     const [inputFocus, setInputFocus] = useState({ code: false });
     const [error, setError] = useState('');
@@ -17,6 +18,7 @@ const VerifyEmail = () => {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const { login } = useAuth();
+    const from = searchParams.get("from") || "/";
 
 
     useEffect(() => {
@@ -79,15 +81,16 @@ const VerifyEmail = () => {
             const response = await API.post('/account/verify-email/', formData);
             toast.success(response.data.message);
             setFormData({ code: '' });
-            navigate('/');
+            navigate(from, { replace: true });
             const user = JSON.parse(localStorage.getItem('user'));
             if (user) {
                 delete user.is_verified;
                 login(user)
             }
+            navigate(from, { replace: true });
         } catch (error) {
             toast.error(error.response?.data?.error || "An error occurred");
-            if(error.response?.data?.error) setError(error.response?.data?.error)
+            if(error.response?.data?.error) setError(error.response.data.error)
         } finally {
             setLoading(false);
         }
