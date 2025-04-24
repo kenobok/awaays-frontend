@@ -92,15 +92,16 @@ table tbody tr:last-child {
     border-bottom: 2px solid #fff;
     border-radius: 15%;
 }
+.dashboard-links li.logging-out {
+    margin: 2.5rem 0 4rem -5rem;
+    border: none;
+    cursor: not-allowed;
+}
 .profile-data div {
     text-align: left;
     margin-bottom: 25.9px;
     padding-bottom: 25.9px;
     border-bottom: 1px solid #D1D5DB;
-}
-.profile-data div:last-child {
-    padding-bottom: 0;
-    border-bottom: 0;
 }
 .profile-data div h4 {
     font-size: 1.1rem;

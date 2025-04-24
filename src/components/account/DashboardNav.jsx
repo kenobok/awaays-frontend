@@ -12,7 +12,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     const navigate = useNavigate();
     const dashMenuRef = useRef()
     const [loading, setLoading] = useState(false);
-    const {user, setUser} = useAuth();
+    const { user, logout } = useAuth();
 
 
     const menuItems = [
@@ -53,7 +53,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
         try {
             await API.post("/account/logout/");
             toast.success("You’ve been logged out.");
-            setUser(null);
+            logout();
             navigate('/');
         } catch (error) {
             toast.error("Error logging out. Try again.");
@@ -70,7 +70,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
                 <div className="relative">
                     <div className="flex flex-col px-3 py-8 w-[15rem] h-screen text-white bg-purple-900 overflow-hidden fixed top-[5.3rem] max-[941px]:top-[4.4rem] left-0 min-[1600px]:left-[calc((100vw-1600px)/2)]">
                         <div className="flex gap-x-5 items-center px-2 pb-[9px] mb-5 border-b-2 border-gray-500 rounded-lg shadow-lg">
-                            <img src={user.profile_image} alt="user-image" className="inline-block w-[2.5rem]"/>
+                            <img src={ user && user.profile_image } alt="user-image" className="inline-block w-[2.5rem]"/>
                             <h5 className="leading-[1.2rem] pt-1 ml-2"><b>Hi,</b><br/>{ user ? user.full_name : 'Guest' }</h5>
                         </div>
                         <ul className="dashboard-links px-2 overflow-y-auto pb-7">
@@ -78,7 +78,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
                                 menuItems.map((item, index) => {
                                     if (item.label === "Logout") {
                                         return (
-                                            <li key={index} className={`single-dash-link text-[1.2rem] pt-[8px] pl-[12px] cursor-pointer text-red-400 hover:text-red-500 ${loading ? '-translate-x-1 py-7' : ''}`} onClick={handleLogout}>
+                                            <li key={index} className={`single-dash-link text-[1.2rem] pt-[8px] pl-[12px] cursor-pointer text-red-400 hover:text-red-500 ${loading ? 'logging-out' : ''}`} onClick={handleLogout}>
                                                 {
                                                     loading ? <LogoutLoader /> :
                                                     <>

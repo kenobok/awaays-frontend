@@ -55,7 +55,6 @@ const SignUpSignIn = () => {
         }
     }, []);
 
-    
 	const handleSignUp = () => {
 		setFormData((prevData) => ({ ...prevData, full_name: "", email: "", mobile: "", password: "", agree: false }));		
 		setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false});
@@ -140,7 +139,6 @@ const SignUpSignIn = () => {
 		e.preventDefault();
 
 		let newErrors = {};
-		
 		Object.keys(formData).forEach((field) => {
 			if (!formData[field]) {
 				newErrors[field] = "This field is required";
@@ -151,7 +149,6 @@ const SignUpSignIn = () => {
 				}
 			}
 		});
-	
 		setErrors(newErrors);
 	
 		if (Object.keys(newErrors).length > 0) {
@@ -167,6 +164,7 @@ const SignUpSignIn = () => {
 				toast.success("Hurray! Sign up successful");
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
+                login(res);
                 navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
 			} catch (error) {
 				const err = error.response?.data;
@@ -189,7 +187,7 @@ const SignUpSignIn = () => {
 			try {
                 const res = await API.post('/account/login/', { 'email': email, 'password': password });
                 toast.success("Login successful");
-                console.log(res.data)
+                login(res);
                 if (!res.data.is_verified) {
                     navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
                 } else {

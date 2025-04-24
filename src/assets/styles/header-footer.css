@@ -53,12 +53,6 @@ header {
     overflow: hidden;
     cursor: pointer;
 }
-.nav-links a:last-child {
-    color: #fff;
-    background-color: var(--p-color);
-    border: 2px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
 .nav-links a:hover {
     color: var(--p-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -69,11 +63,18 @@ header {
     color: var(--p-color);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-.nav-links a:last-child:hover {
+.nav-links #joinBtn {
+    font-size: 1rem;
+    color: #fff;
+    background-color: var(--p-color);
+    border: 2px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.nav-links #joinBtn:hover {
     color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
-.nav-links a:last-child.active {
+.nav-links #joinBtn-child.active {
     color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
@@ -225,6 +226,13 @@ footer a:hover {
 @media (min-width: 941px) and (max-width: 980px) {
     .nav-links a.hide-faq {
         display: none;
+    }
+}
+
+@media (min-width: 941px) and (max-width: 944px) {
+    .nav-links a {
+        padding: 7px 10px;
+        margin: 0 3px;
     }
 }
 

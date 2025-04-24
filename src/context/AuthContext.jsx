@@ -45,12 +45,19 @@ export const AuthProvider = ({ children }) => {
     const login = (res) => {
         if (!res.data.is_verified) {
             localStorage.setItem('is_verified', JSON.stringify(false));
+        } else {
+            localStorage.setItem('is_verified', JSON.stringify(true));
         }
         localStorage.setItem('is_active', JSON.stringify(true));
         localStorage.setItem('is_user', JSON.stringify(true));
         revalidateUser();
         setIsActive(true);
     };
+
+    const verifyEmail = () => {
+        localStorage.setItem('is_verified', JSON.stringify(true));
+        revalidateUser();
+    }
 
     const logout = () => {
         localStorage.removeItem('is_verified');
@@ -64,7 +71,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, revalidateUser, isValidating, error }}>
+        <AuthContext.Provider value={{ user, login, verifyEmail, logout, isActive, revalidateUser, isValidating, error }}>
             {children}
         </AuthContext.Provider>
     );

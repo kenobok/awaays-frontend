@@ -52,6 +52,8 @@ const checkAuth = ({ request }) => {
 
 const checkUser = () => {
     const is_active = JSON.parse(localStorage.getItem("is_active"));
+    const is_verified = JSON.parse(localStorage.getItem("is_verified"));
+
     if (is_active && is_verified) throw redirect("/give-item");
 }
 

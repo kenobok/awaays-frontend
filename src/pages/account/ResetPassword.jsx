@@ -128,7 +128,6 @@ const ResetPassword = () => {
                 setInputFocus({ email: false, code: false, new_password: false });
                 navigate('/auth')
             } catch (error) {
-                console.log(error.response.data)
                 if(error.response?.data?.non_field_errors[0] == 'Invalid email') {
                     toast.error(error.response?.data?.non_field_errors[0]);
                     setErrors({ ...errors, email: error.response.data.non_field_errors });
