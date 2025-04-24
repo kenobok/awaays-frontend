@@ -25,8 +25,7 @@ const SignUpSignIn = () => {
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
     const {user, fetchUser} = useAuth();
-    const from = new URLSearchParams(location.search).get('from') || '/give-item';
-
+    const from = location.state?.from?.pathname || "/";
 
 	useEffect(() => {
 		const fetchUserLocation = async () => {
@@ -164,13 +163,15 @@ const SignUpSignIn = () => {
 		setLoading(true)
 		if (authMode === "signup") {
 			try {
-				await API.post('/account/users/', formData);
+				const res = await API.post('/account/users/', formData);
 				toast.success("Hurray! Sign up successful");
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
                 fetchUser();
+                console.log(res.data)
+                console.log(user)
                 localStorage.setItem("is_user", true);
-                navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });
+                navigate("/auth/verify-email", { state: { from }, replace: true });
 			} catch (error) {
 				const err = error.response?.data;
                 if (err?.email) {
@@ -190,12 +191,13 @@ const SignUpSignIn = () => {
 			}
 		} else {
 			try {
-                await API.post('/account/login/', { 'email': email, 'password': password });
+                const res = await API.post('/account/login/', { 'email': email, 'password': password });
                 toast.success("Login successful");
                 fetchUser();
+                console.log(user.is_verified)
                 localStorage.setItem("is_user", true)
-                if (user && !user.is_verified) {
-                    navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });
+                if (!res.data.is_verified) {
+                    navigate("/auth/verify-email", { state: { from }, replace: true });
                 } else {
                     navigate(from, { replace: true });
                 }

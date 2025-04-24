@@ -41,3 +41,8 @@
     to{width:25px;aspect-ratio: 1}
 }
 
+.logout-loader {
+    --c:rgb(236, 25, 25) 90%,#0000;
+    background-size: 90% 90%;
+}
+

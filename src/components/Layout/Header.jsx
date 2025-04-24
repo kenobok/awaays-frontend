@@ -33,9 +33,9 @@ const Header = () => {
         fetchUser()
     }, [location.pathname])
 
-    useEffect(() => {
-        console.log(user)
-    }, [location.pathname])
+    // useEffect(() => {
+    //     console.log(user)
+    // }, [location.pathname])
 
     useEffect(() => {
         const handleScroll = () => {

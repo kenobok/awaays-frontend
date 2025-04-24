@@ -17,8 +17,8 @@ const VerifyEmail = () => {
     const [cooldown, setCooldown] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
-    const { fetchUser } = useAuth();
-    const from = new URLSearchParams(location.search).get('from') || '/give-item';
+    const { user, fetchUser } = useAuth();
+    const from = location.state?.from?.pathname || "/";
 
 
     useEffect(() => {
@@ -45,7 +45,6 @@ const VerifyEmail = () => {
     
         setLoading2(true)
         try {
-            const user = JSON.parse(localStorage.getItem("user"));
             const response = await API.post('/account/resend-otp/', { email: user.email });
             toast.success(response.data.detail);
             setCooldown(60);
@@ -116,7 +115,7 @@ const VerifyEmail = () => {
                     { loading2 ?
                         <span>Sending OTP...</span>
                         :
-                        <span to="" className={`text-[var(--p-color)] cursor-pointer ${cooldown > 0 ? 'cursor-not-allowed' : ''}`} onClick={() => handleRequestNewCode()}>{cooldown > 0 ? `OTP Sent - (${cooldown}s)` : 'Request new code'}</span>
+                        <span to="" className={`text-[var(--p-color)] cursor-pointer ${cooldown > 0 ? 'cursor-progress' : ''}`} onClick={() => handleRequestNewCode()}>{cooldown > 0 ? `OTP Sent - (${cooldown}s)` : 'Request new code'}</span>
                     }
                 </p>
                 <SubmitButton loading={loading} />

@@ -20,7 +20,7 @@ const ButtonLoader = () => {
 const LogoutLoader = () => {
     return (
         <div className="preloader1">
-            <div className="loader3"></div>
+            <div className="loader2 logout-loader"></div>
         </div>
     );
 };

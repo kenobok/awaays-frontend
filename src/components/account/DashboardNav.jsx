@@ -12,7 +12,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     const navigate = useNavigate();
     const dashMenuRef = useRef()
     const [loading, setLoading] = useState(false);
-    const {user, fetchUser} = useAuth();
+    const {user, setUser} = useAuth();
 
 
     const menuItems = [
@@ -78,15 +78,15 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
                                 menuItems.map((item, index) => {
                                     if (item.label === "Logout") {
                                         return (
-                                            <>
+                                            <li key={index} className={`single-dash-link text-[1.2rem] pt-[8px] pl-[12px] cursor-pointer text-red-400 hover:text-red-500 ${loading ? '-translate-x-1 py-7' : ''}`} onClick={handleLogout}>
                                                 {
                                                     loading ? <LogoutLoader /> :
-                                                    <li key={index} className="single-dash-link text-[1.2rem] pl-[10px] cursor-pointer text-red-400 hover:text-red-500" onClick={handleLogout}>
+                                                    <>
                                                         <FontAwesomeIcon icon={item.icon} className="mr-2" />
                                                         {item.label}
-                                                    </li>
+                                                    </>
                                                 }
-                                            </>
+                                            </li>
                                         );
                                     }
                         

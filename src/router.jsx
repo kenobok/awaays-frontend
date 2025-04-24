@@ -39,7 +39,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import FAQs from "./pages/FAQs";
 import NotFound from "./pages/NotFound";
 
-import {RequireAuth} from "./context/RequireAuth";
+import { RequireAuth, CheckUser, CheckVer} from "./context/RequireAuth";
 
 
 const router = createBrowserRouter([
@@ -61,9 +61,9 @@ const router = createBrowserRouter([
             { 
                 path: "auth", element: <AuthPage/>,
                 children: [
-                    { index: true, element: <SignUpSignIn /> },
-                    { path: 'reset-password', element: < ResetPassword/> },
-                    { path: 'verify-email', element: (<RequireAuth><VerifyEmail/></RequireAuth>) }
+                    { index: true, element: <CheckUser><SignUpSignIn /></CheckUser>},
+                    { path: 'reset-password', element: <CheckUser><ResetPassword/></CheckUser> },
+                    { path: 'verify-email', element: (<CheckVer><VerifyEmail/></CheckVer>) }
                 ]
             },
 
