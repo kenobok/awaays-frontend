@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext'
 import { motion } from "framer-motion";
-import API from '/src/AxiosInstance';
+import API from '/src/api/axiosInstance';
 import { toast } from 'react-toastify';
 import { SubmitButton } from '../../components/utils/SubmitButton'
 import '../../assets/styles/account.css';
@@ -17,7 +17,7 @@ const VerifyEmail = () => {
     const [cooldown, setCooldown] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
-    const { login } = useAuth();
+    const { fetchUser } = useAuth();
     const from = searchParams.get("from") || "/give-item";
 
 
@@ -82,12 +82,7 @@ const VerifyEmail = () => {
             toast.success(response.data.message);
             setFormData({ code: '' });
             navigate(from, { replace: true });
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (user) {
-                delete user.is_verified;
-                login(user)
-            }
-            navigate(from, { replace: true });
+            fetchUser();
         } catch (error) {
             toast.error(error.response?.data?.error || "An error occurred");
             if(error.response?.data?.error) setError(error.response.data.error)

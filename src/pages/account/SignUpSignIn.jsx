@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
-import API from '/src/AxiosInstance';
+import API from '/src/api/axiosInstance';
 import isEmail from 'validator/lib/isEmail';
 import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
@@ -24,7 +24,7 @@ const SignUpSignIn = () => {
 	const [errors, setErrors] = useState({});
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
-    const {login} = useAuth();
+    const {fetchUser} = useAuth();
     const from = searchParams.get("from") || "/give-item";
 
 
@@ -165,11 +165,11 @@ const SignUpSignIn = () => {
 		if (authMode === "signup") {
 			try {
 				const response = await API.post('/account/users/', formData);
-				toast.success("Account created successfully");
+				toast.success("Hurray! Sign up successful");
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
-                login(response.data)
-                localStorage.setItem("is_user", true)
+                fetchUser();
+                localStorage.setItem("is_user", true);
                 navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
 			} catch (error) {
 				const err = error.response?.data;
@@ -192,14 +192,7 @@ const SignUpSignIn = () => {
 			try {
                 const response = await API.post('/account/login/', { 'email': email, 'password': password });
                 toast.success("Login successful");
-                const userData = response.data
-                const user = {
-                    id: userData.id,
-                    full_name: userData.full_name,
-                    email: userData.email,
-                    ...(userData.is_verified === false && { is_verified: false })
-                };
-                login(user)
+                fetchUser();
                 localStorage.setItem("is_user", true)
                 const is_ver = JSON.parse(localStorage.getItem("user"));
                 if ('is_verified' in is_ver && is_ver.is_verified === false) {

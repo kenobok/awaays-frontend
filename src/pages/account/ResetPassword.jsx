@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import API from '/src/AxiosInstance';
+import API from '/src/api/axiosInstance';
 import isEmail from 'validator/lib/isEmail';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from 'react-toastify';

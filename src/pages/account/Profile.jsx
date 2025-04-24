@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from "../../context/AuthContext";
-import API from '/src/AxiosInstance';
+import API from '/src/api/axiosInstance';
 import { getCookie } from '../../components/utils/csrf';
 import { motion } from 'framer-motion'
 import { toast } from 'react-toastify';

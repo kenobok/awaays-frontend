@@ -1,4 +1,7 @@
-export const getCookie = (name) => {
+import axios from 'axios';
+
+
+const getCookie = (name) => {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
@@ -12,3 +15,11 @@ export const getCookie = (name) => {
     }
     return cookieValue;
 };
+
+
+const getCSRFToken = async () => {
+    await axios.get('/api/account/csrf/', { withCredentials: true });
+};
+
+
+export { getCookie, getCSRFToken }

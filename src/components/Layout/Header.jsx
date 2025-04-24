@@ -26,7 +26,7 @@ const Header = () => {
     const [blurBackground, setBlurBackground] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const {user, isLoggedIn} = useAuth();
+    const {user, fetchUser} = useAuth();
 
 
     useEffect(() => {
@@ -131,7 +131,7 @@ const Header = () => {
                                 }
                                 if(link.name === "Join") {
                                     return (
-                                        <Link key={index} to={user ? "/dashboard" : link.goto} className={location.pathname === (isLoggedIn ? "/dashboard" : link.goto) ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>{ isLoggedIn ? 'Account' : link.name }</Link>
+                                        <Link key={index} to={user ? "/dashboard" : link.goto} className={location.pathname === (user ? "/dashboard" : link.goto) ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>{ user ? 'Account' : link.name }</Link>
                                     )
                                 }
                                 return (

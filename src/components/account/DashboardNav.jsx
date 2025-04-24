@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from "react-toastify";
-import API from "/src/AxiosInstance";
+import API from "/src/api/axiosInstance";
 import userImg from '../../assets/images/user.png'
 
 
@@ -11,7 +11,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const dashMenuRef = useRef()
-    const {user, isLoggedIn, logout} = useAuth();
+    const {user, setUser} = useAuth();
 
 
     const menuItems = [
@@ -51,7 +51,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
         try {
             await API.post("/account/logout/");
             toast.success("You’ve been logged out.");
-            logout();
+            setUser(null);
             navigate('/');
         } catch (error) {
             toast.error("Error logging out. Try again.");
