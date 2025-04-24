@@ -26,16 +26,12 @@ const Header = () => {
     const [blurBackground, setBlurBackground] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const {user, fetchUser} = useAuth();
+    const { user, fetchUser} = useAuth();
 
 
     useEffect(() => {
-        fetchUser()
+        console.log(user)
     }, [location.pathname])
-
-    // useEffect(() => {
-    //     console.log(user)
-    // }, [location.pathname])
 
     useEffect(() => {
         const handleScroll = () => {

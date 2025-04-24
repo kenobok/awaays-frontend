@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext'
 import { motion } from "framer-motion";
 import API from '/src/api/axiosInstance';
@@ -10,7 +10,7 @@ import '../../assets/styles/account.css';
 
 const VerifyEmail = () => {
     const navigate = useNavigate();
-    const location = useLocation();
+    const [searchParams] = useSearchParams();
     const [formData, setFormData] = useState({ code: "" });
     const [inputFocus, setInputFocus] = useState({ code: false });
     const [error, setError] = useState('');
@@ -18,7 +18,7 @@ const VerifyEmail = () => {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const { user, fetchUser } = useAuth();
-    const from = location.state?.from?.pathname || "/";
+    const from = searchParams.get("from") || "/give-item";
 
 
     useEffect(() => {
@@ -57,7 +57,6 @@ const VerifyEmail = () => {
             setLoading2(false)
         }
     };
-    
 
     const validateCode = (value) => {
         if (!/^\d{6}$/.test(value)) {
@@ -81,7 +80,6 @@ const VerifyEmail = () => {
             toast.success(response.data.message);
             setFormData({ code: '' });
             navigate(from, { replace: true });
-            fetchUser();
         } catch (error) {
             toast.error(error.response?.data?.error || "An error occurred");
             if(error.response?.data?.error) setError(error.response.data.error)

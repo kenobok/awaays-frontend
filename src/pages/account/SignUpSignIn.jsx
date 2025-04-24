@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
 import { GetUserLocationFromAPI } from "../../components/utils/getUserLocationFromAPI";
@@ -15,8 +15,8 @@ import '../../assets/styles/account.css';
 
 
 const SignUpSignIn = () => {
-    const location = useLocation()
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [authMode, setAuthMode] = useState("signup");
 	const [formData, setFormData] = useState({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", isp: "", city: "", region: "", country: "", countryCode: ""});
     const [inputFocus, setInputFocus] = useState({full_name: false, email: false, mobile: false, password: false, agree: false});
@@ -24,8 +24,8 @@ const SignUpSignIn = () => {
 	const [errors, setErrors] = useState({});
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
-    const {user, fetchUser} = useAuth();
-    const from = location.state?.from?.pathname || "/";
+    const { login } = useAuth();
+    const from = searchParams.get("from") || "/give-item";
 
 	useEffect(() => {
 		const fetchUserLocation = async () => {
@@ -167,11 +167,7 @@ const SignUpSignIn = () => {
 				toast.success("Hurray! Sign up successful");
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
-                fetchUser();
-                console.log(res.data)
-                console.log(user)
-                localStorage.setItem("is_user", true);
-                navigate("/auth/verify-email", { state: { from }, replace: true });
+                navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
 			} catch (error) {
 				const err = error.response?.data;
                 if (err?.email) {
@@ -193,11 +189,9 @@ const SignUpSignIn = () => {
 			try {
                 const res = await API.post('/account/login/', { 'email': email, 'password': password });
                 toast.success("Login successful");
-                fetchUser();
-                console.log(user.is_verified)
-                localStorage.setItem("is_user", true)
+                console.log(res.data)
                 if (!res.data.is_verified) {
-                    navigate("/auth/verify-email", { state: { from }, replace: true });
+                    navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
                 } else {
                     navigate(from, { replace: true });
                 }

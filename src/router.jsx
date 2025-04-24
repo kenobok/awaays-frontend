@@ -39,7 +39,26 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import FAQs from "./pages/FAQs";
 import NotFound from "./pages/NotFound";
 
-import { RequireAuth, CheckUser, CheckVer} from "./context/RequireAuth";
+
+const checkAuth = ({ request }) => {
+    const is_active = JSON.parse(localStorage.getItem("is_active"));
+    const is_verified = JSON.parse(localStorage.getItem("is_verified"));
+    const url = new URL(request.url);
+    const from = url.pathname + url.search;
+
+    if (!is_active) throw redirect(`/auth?from=${encodeURIComponent(from)}`);
+    if (!is_verified) throw redirect(`/auth/verify-email?from=${encodeURIComponent(from)}`);
+};
+
+const checkUser = () => {
+    const is_active = JSON.parse(localStorage.getItem("is_active"));
+    if (is_active && is_verified) throw redirect("/give-item");
+}
+
+const checkVer = () => {
+    const is_active = JSON.parse(localStorage.getItem("is_active"));
+    if (!is_active) throw redirect("/auth");
+}
 
 
 const router = createBrowserRouter([
@@ -47,7 +66,7 @@ const router = createBrowserRouter([
         path: "/", element: <Layout />,
         children: [
             { index: true, element: <Home /> },
-            { path: 'give-item', element: (<RequireAuth><GiveItem/></RequireAuth>) },
+            { path: 'give-item', element: <GiveItem />, loader: checkAuth },
             { path: 'giveaway-items', element: <GiveawayItems /> },
             { path: 'giveaway-item-details/:slug', element: <GiveawayItemDetails /> },
             { path: "how-it-works", element: <HowItWorks /> },
@@ -58,18 +77,18 @@ const router = createBrowserRouter([
             { path: "faqs", element: <FAQs /> },
 
             // Authentication Link
-            { 
-                path: "auth", element: <AuthPage/>,
+            {
+                path: "auth", element: <AuthPage />, loader: checkUser,
                 children: [
-                    { index: true, element: <CheckUser><SignUpSignIn /></CheckUser>},
-                    { path: 'reset-password', element: <CheckUser><ResetPassword/></CheckUser> },
-                    { path: 'verify-email', element: (<CheckVer><VerifyEmail/></CheckVer>) }
+                    { index: true, element: <SignUpSignIn /> },
+                    { path: 'reset-password', element: < ResetPassword /> },
+                    { path: 'verify-email', element: <VerifyEmail />, loader: checkVer },
                 ]
             },
 
             // Dashboard Link
             {
-                path: "/dashboard", element: (<RequireAuth><DashboardLayout/></RequireAuth>), 
+                path: "/dashboard", element: <DashboardLayout />, loader: checkAuth,
                 children: [
                     { index: true, element: <Dashboard /> },
                     { path: "profile", element: <Profile /> },
@@ -93,7 +112,7 @@ const router = createBrowserRouter([
             },
 
             // Leaderboard Link
-            { 
+            {
                 path: 'community/leaderboard', element: <Leaderboard />,
                 children: [
                     { index: true, element: <LeaderboardDetails /> },
