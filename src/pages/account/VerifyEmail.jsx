@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext'
 import { motion } from "framer-motion";
 import API from '/src/api/axiosInstance';
@@ -10,7 +10,7 @@ import '../../assets/styles/account.css';
 
 const VerifyEmail = () => {
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
+    const location = useLocation();
     const [formData, setFormData] = useState({ code: "" });
     const [inputFocus, setInputFocus] = useState({ code: false });
     const [error, setError] = useState('');
@@ -18,7 +18,7 @@ const VerifyEmail = () => {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const { fetchUser } = useAuth();
-    const from = searchParams.get("from") || "/give-item";
+    const from = new URLSearchParams(location.search).get('from') || '/give-item';
 
 
     useEffect(() => {

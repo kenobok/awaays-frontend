@@ -30,6 +30,14 @@ const Header = () => {
 
 
     useEffect(() => {
+        fetchUser()
+    }, [location.pathname])
+
+    useEffect(() => {
+        console.log(user)
+    }, [location.pathname])
+
+    useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 200) {
                 if (!isSticky) {

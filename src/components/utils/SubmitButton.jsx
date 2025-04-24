@@ -1,4 +1,4 @@
-import { Loader2 } from "./Preloader";
+import { ButtonLoader } from "./Preloader";
 
 const SubmitButton = ({ loading = false, disabled = false }) => {
 

@@ -39,25 +39,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import FAQs from "./pages/FAQs";
 import NotFound from "./pages/NotFound";
 
-
-const checkAuth = ({ request }) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const url = new URL(request.url);
-    const from = url.pathname + url.search;
-
-    if (!user) throw redirect(`/auth?from=${encodeURIComponent(from)}`);
-    if ('is_verified' in user) throw redirect(`/auth/verify-email?from=${encodeURIComponent(from)}`);
-};
-
-const checkUser = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && !('is_verified' in user)) throw redirect("/");
-}
-
-const checkVer = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) throw redirect("/auth");
-}
+import {RequireAuth} from "./context/RequireAuth";
 
 
 const router = createBrowserRouter([
@@ -65,7 +47,7 @@ const router = createBrowserRouter([
         path: "/", element: <Layout />,
         children: [
             { index: true, element: <Home /> },
-            { path: 'give-item', element: <GiveItem />, loader: checkAuth },
+            { path: 'give-item', element: (<RequireAuth><GiveItem/></RequireAuth>) },
             { path: 'giveaway-items', element: <GiveawayItems /> },
             { path: 'giveaway-item-details/:slug', element: <GiveawayItemDetails /> },
             { path: "how-it-works", element: <HowItWorks /> },
@@ -77,17 +59,17 @@ const router = createBrowserRouter([
 
             // Authentication Link
             { 
-                path: "auth", element: <AuthPage />, loader: checkUser,
+                path: "auth", element: <AuthPage/>,
                 children: [
                     { index: true, element: <SignUpSignIn /> },
                     { path: 'reset-password', element: < ResetPassword/> },
-                    { path: 'verify-email', element: <VerifyEmail />, loader: checkVer }
+                    { path: 'verify-email', element: (<RequireAuth><VerifyEmail/></RequireAuth>) }
                 ]
             },
 
             // Dashboard Link
             {
-                path: "/dashboard", element: <DashboardLayout />, loader: checkAuth,
+                path: "/dashboard", element: (<RequireAuth><DashboardLayout/></RequireAuth>), 
                 children: [
                     { index: true, element: <Dashboard /> },
                     { path: "profile", element: <Profile /> },

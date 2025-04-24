@@ -8,7 +8,7 @@ import isEmail from 'validator/lib/isEmail';
 import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import { GetUserLocationFromAPI } from '../../components/utils/GetUserLocationFromAPI';
+import { GetUserLocationFromAPI } from '../../components/utils/getUserLocationFromAPI';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SubmitButton } from '../../components/utils/SubmitButton'
 
@@ -107,11 +107,11 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const csrfToken = getCookie('csrftoken');
-        if (!csrfToken) {
-            console.error("No CSRF token found in cookies");
-            return;
-        }
+        // const csrfToken = getCookie('csrftoken');
+        // if (!csrfToken) {
+        //     console.error("No CSRF token found in cookies");
+        //     return;
+        // }
 
         const allFieldsEmpty = Object.values(formData).every(value => !value?.toString().trim());
         const isImageEmpty = !profileImage;

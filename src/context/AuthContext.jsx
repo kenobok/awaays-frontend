@@ -1,31 +1,23 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from '../api/axiosInstance'
+import API from '../api/axiosInstance'
 
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [authChecked, setAuthChecked] = useState(false);
 
-    // useEffect(() => {
-    //     const handleStorageChange = () => {
-    //         const storedUser = JSON.parse(localStorage.getItem('user'));
-    //         setUser(storedUser);
-    //     };
-
-    //     window.addEventListener('storage', handleStorageChange);
-
-    //     return () => {
-    //         window.removeEventListener('storage', handleStorageChange);
-    //     };
-    // }, []);
-
-    const fetchUser = async () => {
+    const fetchUser = async (retry = 1) => {
         try {
-            const res = await axios.get('/account/users/me/');
+            const res = await API.get('/account/users/me/');
             setUser(res.data);
         } catch (err) {
-            setUser(null);
+            if (retry > 0) return fetchUser(retry - 1);
+            if (!user) setUser(null);
+            console.error('Fetch user failed after retry:', err.message);
+        } finally {
+            setAuthChecked(true);
         }
     };
 
@@ -33,20 +25,8 @@ export const AuthProvider = ({ children }) => {
         fetchUser();
     }, []);
 
-    // const login = (userData) => {
-    //     setUser(userData);
-    //     localStorage.setItem('user', JSON.stringify(userData));
-    // };
-
-    // const logout = () => {
-    //     setUser(null);
-    //     localStorage.removeItem('user');
-    // };
-
-    // const isLoggedIn = !!user;
-
     return (
-        <AuthContext.Provider value={{ user, setUser, fetchUser }}>
+        <AuthContext.Provider value={{ user, setUser, fetchUser, authChecked }}>
             {children}
         </AuthContext.Provider>
     );

@@ -4,14 +4,15 @@ import { useAuth } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from "react-toastify";
 import API from "/src/api/axiosInstance";
-import userImg from '../../assets/images/user.png'
+import { LogoutLoader } from '../utils/Preloader';
 
 
 const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const dashMenuRef = useRef()
-    const {user, setUser} = useAuth();
+    const [loading, setLoading] = useState(false);
+    const {user, fetchUser} = useAuth();
 
 
     const menuItems = [
@@ -48,6 +49,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
     };
 
     const handleLogout = async () => {
+        setLoading(true)
         try {
             await API.post("/account/logout/");
             toast.success("You’ve been logged out.");
@@ -55,6 +57,8 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
             navigate('/');
         } catch (error) {
             toast.error("Error logging out. Try again.");
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -66,7 +70,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
                 <div className="relative">
                     <div className="flex flex-col px-3 py-8 w-[15rem] h-screen text-white bg-purple-900 overflow-hidden fixed top-[5.3rem] max-[941px]:top-[4.4rem] left-0 min-[1600px]:left-[calc((100vw-1600px)/2)]">
                         <div className="flex gap-x-5 items-center px-2 pb-[9px] mb-5 border-b-2 border-gray-500 rounded-lg shadow-lg">
-                            <img src={userImg} alt="user-image" className="inline-block w-[2.5rem]"/>
+                            <img src={user.profile_image} alt="user-image" className="inline-block w-[2.5rem]"/>
                             <h5 className="leading-[1.2rem] pt-1 ml-2"><b>Hi,</b><br/>{ user ? user.full_name : 'Guest' }</h5>
                         </div>
                         <ul className="dashboard-links px-2 overflow-y-auto pb-7">
@@ -74,10 +78,15 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
                                 menuItems.map((item, index) => {
                                     if (item.label === "Logout") {
                                         return (
-                                            <li key={index} className="single-dash-link text-[1.2rem] pl-[10px] cursor-pointer text-red-400 hover:text-red-500" onClick={handleLogout}>
-                                                <FontAwesomeIcon icon={item.icon} className="mr-2" />
-                                                {item.label}
-                                            </li>
+                                            <>
+                                                {
+                                                    loading ? <LogoutLoader /> :
+                                                    <li key={index} className="single-dash-link text-[1.2rem] pl-[10px] cursor-pointer text-red-400 hover:text-red-500" onClick={handleLogout}>
+                                                        <FontAwesomeIcon icon={item.icon} className="mr-2" />
+                                                        {item.label}
+                                                    </li>
+                                                }
+                                            </>
                                         );
                                     }
                         

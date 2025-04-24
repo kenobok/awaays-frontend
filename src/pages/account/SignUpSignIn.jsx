@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
-import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
+import { GetUserLocationFromAPI } from "../../components/utils/getUserLocationFromAPI";
 import API from '/src/api/axiosInstance';
 import isEmail from 'validator/lib/isEmail';
 import PhoneInput from 'react-phone-number-input'
@@ -15,8 +15,8 @@ import '../../assets/styles/account.css';
 
 
 const SignUpSignIn = () => {
+    const location = useLocation()
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
     const [authMode, setAuthMode] = useState("signup");
 	const [formData, setFormData] = useState({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", isp: "", city: "", region: "", country: "", countryCode: ""});
     const [inputFocus, setInputFocus] = useState({full_name: false, email: false, mobile: false, password: false, agree: false});
@@ -24,8 +24,8 @@ const SignUpSignIn = () => {
 	const [errors, setErrors] = useState({});
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
-    const {fetchUser} = useAuth();
-    const from = searchParams.get("from") || "/give-item";
+    const {user, fetchUser} = useAuth();
+    const from = new URLSearchParams(location.search).get('from') || '/give-item';
 
 
 	useEffect(() => {
@@ -164,13 +164,13 @@ const SignUpSignIn = () => {
 		setLoading(true)
 		if (authMode === "signup") {
 			try {
-				const response = await API.post('/account/users/', formData);
+				await API.post('/account/users/', formData);
 				toast.success("Hurray! Sign up successful");
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
                 fetchUser();
                 localStorage.setItem("is_user", true);
-                navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
+                navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });
 			} catch (error) {
 				const err = error.response?.data;
                 if (err?.email) {
@@ -190,13 +190,12 @@ const SignUpSignIn = () => {
 			}
 		} else {
 			try {
-                const response = await API.post('/account/login/', { 'email': email, 'password': password });
+                await API.post('/account/login/', { 'email': email, 'password': password });
                 toast.success("Login successful");
                 fetchUser();
                 localStorage.setItem("is_user", true)
-                const is_ver = JSON.parse(localStorage.getItem("user"));
-                if ('is_verified' in is_ver && is_ver.is_verified === false) {
-                    navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
+                if (user && !user.is_verified) {
+                    navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });
                 } else {
                     navigate(from, { replace: true });
                 }

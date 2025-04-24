@@ -5,7 +5,7 @@ import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import mockItems from "../../components/giveaway/mockItems";
 import FilterItem from '../../components/giveaway/FilterItems';
-import { GetUserLocationFromAPI } from "../../components/utils/GetUserLocationFromAPI";
+import { GetUserLocationFromAPI } from "../../components/utils/getUserLocationFromAPI";
 import { Loader1 } from '../../components/utils/Preloader';
 
 const GiveawayItems = () => {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GetUserLocationFromAPI } from '../utils/GetUserLocationFromAPI';
+import { GetUserLocationFromAPI } from '../utils/getUserLocationFromAPI';
 import countriesData from '../utils/countriesFile';
 import CustomSelect from '../utils/CustomSelect';
 

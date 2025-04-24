@@ -9,7 +9,7 @@ const Loader1 = () => {
     );
 };
 
-const Loader2 = () => {
+const ButtonLoader = () => {
     return (
         <div className="preloader1">
             <div className="loader2"></div>
@@ -17,4 +17,12 @@ const Loader2 = () => {
     );
 };
 
-export { Loader1, Loader2 }
+const LogoutLoader = () => {
+    return (
+        <div className="preloader1">
+            <div className="loader3"></div>
+        </div>
+    );
+};
+
+export { Loader1, ButtonLoader, LogoutLoader }

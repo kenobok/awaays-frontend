@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { GetUserLocationFromAPI } from './GetUserLocationFromAPI';
+import { GetUserLocationFromAPI } from './getUserLocationFromAPI';
 import countriesData from './countriesFile';
 
 const CountryStateSelector = ({ value, onChange, error = {} }) => {
