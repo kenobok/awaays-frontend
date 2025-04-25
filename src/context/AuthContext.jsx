@@ -11,11 +11,13 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [isActive, setIsActive] = useState(false);
+    const [authChecked, setAuthChecked] = useState(false);
 
-    const { data: userData, error, isValidating } = useSWR( isActive ? '/account/users/me/' : null, fetcher, {
+    const { data: userData, error, isValidating } = useSWR('/account/users/me/', fetcher, {
         revalidateOnFocus: false,
         errorRetryCount: 3,
+        onSuccess: () => setAuthChecked(true),
+        onError: () => setAuthChecked(true),
     });
 
     useEffect(() => {
@@ -24,54 +26,24 @@ export const AuthProvider = ({ children }) => {
         }
     }, [userData]);
 
-    useEffect(() => {
-        const syncAuthState = () => {
-            const userStat = JSON.parse(localStorage.getItem('is_active'));
-            setIsActive(!!userStat);
-        };
-    
-        syncAuthState();
-    
-        const handleStorageChange = () => {
-            const stored = JSON.parse(localStorage.getItem('is_active'));
-            setIsActive(!!stored);
-            if (!stored) setUser(null);
-        };
-    
-        window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
-    }, []);
-
-    const login = (res) => {
-        if (!res.data.is_verified) {
-            localStorage.setItem('is_verified', JSON.stringify(false));
-        } else {
-            localStorage.setItem('is_verified', JSON.stringify(true));
-        }
-        localStorage.setItem('is_active', JSON.stringify(true));
-        localStorage.setItem('is_user', JSON.stringify(true));
+    const login = () => {
+        localStorage.setItem('Random', JSON.stringify(true));
         revalidateUser();
-        setIsActive(true);
     };
 
-    const verifyEmail = () => {
-        localStorage.setItem('is_verified', JSON.stringify(true));
-        revalidateUser();
-    }
-
     const logout = () => {
-        localStorage.removeItem('is_verified');
-        localStorage.removeItem('is_active');
         setUser(null);
+        setAuthChecked(false);
         mutate('/account/users/me/', null, false);
     };
 
     const revalidateUser = useCallback(() => {
+        setAuthChecked(false);
         mutate('/account/users/me/');
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, login, verifyEmail, logout, isActive, revalidateUser, isValidating, error }}>
+        <AuthContext.Provider value={{ user, authChecked, login, logout, revalidateUser, isValidating, error }}>
             {children}
         </AuthContext.Provider>
     );

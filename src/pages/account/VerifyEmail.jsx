@@ -17,7 +17,7 @@ const VerifyEmail = () => {
     const [cooldown, setCooldown] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
-    const { user, verifyEmail } = useAuth();
+    const { user, revalidateUser } = useAuth();
     const from = searchParams.get("from") || "/give-item";
 
 
@@ -79,7 +79,10 @@ const VerifyEmail = () => {
             const response = await API.post('/account/verify-email/', formData);
             toast.success(response.data.message);
             setFormData({ code: '' });
-            verifyEmail();
+            setInputFocus({ code: false });
+            setError('');
+            setCooldown(0);
+            revalidateUser();
             navigate(from, { replace: true });
         } catch (error) {
             toast.error(error.response?.data?.error || "An error occurred");

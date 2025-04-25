@@ -49,7 +49,7 @@ const SignUpSignIn = () => {
 	}, []);
 
     useEffect(() => {
-        const is_user = JSON.parse(localStorage.getItem("is_user"));
+        const is_user = JSON.parse(localStorage.getItem("Random"));
         if (is_user) {
             handleSignIn()
         }
@@ -160,13 +160,14 @@ const SignUpSignIn = () => {
 		setLoading(true)
 		if (authMode === "signup") {
 			try {
-				const res = await API.post('/account/users/', formData);
+				await API.post('/account/users/', formData);
 				toast.success("Hurray! Sign up successful");
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
-                login(res);
+                login();
                 navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
 			} catch (error) {
+                console.log(error)
 				const err = error.response?.data;
                 if (err?.email) {
                     toast.error(err.email[0]);
@@ -185,9 +186,9 @@ const SignUpSignIn = () => {
 			}
 		} else {
 			try {
-                const res = await API.post('/account/login/', { 'email': email, 'password': password });
+                await API.post('/account/login/', { 'email': email, 'password': password });
                 toast.success("Login successful");
-                login(res);
+                login();
                 if (!res.data.is_verified) {
                     navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
                 } else {

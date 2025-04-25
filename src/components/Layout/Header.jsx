@@ -26,14 +26,11 @@ const Header = () => {
     const [blurBackground, setBlurBackground] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [isActive, setIsActive] = useState()
     const { user } = useAuth();
 
 
     useEffect(() => {
-        const is_active = JSON.parse(localStorage.getItem('is_active'))
-        setIsActive(is_active)
-        console.log({user, isActive})
+        console.log({user})
     }, [location.pathname])
 
     useEffect(() => {
@@ -138,7 +135,7 @@ const Header = () => {
                                 }
                                 if(link.name === "Join") {
                                     return (
-                                        <Link key={index} to={isActive ? "/dashboard" : link.goto} id='joinBtn' className={location.pathname === (isActive ? "/dashboard" : link.goto) ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>{ isActive ? 'Account' : link.name }</Link>
+                                        <Link key={index} to={user ? "/dashboard" : link.goto} id='joinBtn' className={location.pathname === (user ? "/dashboard" : link.goto) ? "active" : ""} onClick={isMobile ? handleMenuToggle : undefined}>{ user ? 'Account' : link.name }</Link>
                                     )
                                 }
                                 return (

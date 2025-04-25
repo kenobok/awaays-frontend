@@ -39,28 +39,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import FAQs from "./pages/FAQs";
 import NotFound from "./pages/NotFound";
 
-
-const checkAuth = ({ request }) => {
-    const is_active = JSON.parse(localStorage.getItem("is_active"));
-    const is_verified = JSON.parse(localStorage.getItem("is_verified"));
-    const url = new URL(request.url);
-    const from = url.pathname + url.search;
-
-    if (!is_active) throw redirect(`/auth?from=${encodeURIComponent(from)}`);
-    if (!is_verified) throw redirect(`/auth/verify-email?from=${encodeURIComponent(from)}`);
-};
-
-const checkUser = () => {
-    const is_active = JSON.parse(localStorage.getItem("is_active"));
-    const is_verified = JSON.parse(localStorage.getItem("is_verified"));
-
-    if (is_active && is_verified) throw redirect("/give-item");
-}
-
-const checkVer = () => {
-    const is_active = JSON.parse(localStorage.getItem("is_active"));
-    if (!is_active) throw redirect("/auth");
-}
+import { RequireAuth, BlockIfSignedIn, RequireUnverifiedOnly } from "./context/UserAuth";
 
 
 const router = createBrowserRouter([
@@ -68,7 +47,7 @@ const router = createBrowserRouter([
         path: "/", element: <Layout />,
         children: [
             { index: true, element: <Home /> },
-            { path: 'give-item', element: <GiveItem />, loader: checkAuth },
+            { path: 'give-item', element: <RequireAuth><GiveItem /></RequireAuth> },
             { path: 'giveaway-items', element: <GiveawayItems /> },
             { path: 'giveaway-item-details/:slug', element: <GiveawayItemDetails /> },
             { path: "how-it-works", element: <HowItWorks /> },
@@ -80,17 +59,17 @@ const router = createBrowserRouter([
 
             // Authentication Link
             {
-                path: "auth", element: <AuthPage />, loader: checkUser,
+                path: "auth", element: <AuthPage />,
                 children: [
-                    { index: true, element: <SignUpSignIn /> },
-                    { path: 'reset-password', element: < ResetPassword /> },
-                    { path: 'verify-email', element: <VerifyEmail />, loader: checkVer },
+                    { index: true, element: <BlockIfSignedIn><SignUpSignIn /></BlockIfSignedIn> },
+                    { path: 'reset-password', element: <BlockIfSignedIn><ResetPassword /></BlockIfSignedIn> },
+                    { path: 'verify-email', element: <RequireUnverifiedOnly><VerifyEmail /></RequireUnverifiedOnly> },
                 ]
             },
 
             // Dashboard Link
             {
-                path: "/dashboard", element: <DashboardLayout />, loader: checkAuth,
+                path: "/dashboard", element: <RequireAuth><DashboardLayout /></RequireAuth>,
                 children: [
                     { index: true, element: <Dashboard /> },
                     { path: "profile", element: <Profile /> },
