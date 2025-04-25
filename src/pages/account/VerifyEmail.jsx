@@ -18,7 +18,7 @@ const VerifyEmail = () => {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const { user, revalidateUser } = useAuth();
-    const from = searchParams.get("from") || "/give-item";
+    const from = searchParams.get("from") || "/";
 
 
     useEffect(() => {

@@ -54,7 +54,7 @@ const DashboardNav = ({ toggleDashMenu, onLinkClick }) => {
             await API.post("/account/logout/");
             toast.success("You’ve been logged out.");
             logout();
-            navigate('/');
+            navigate("/");
         } catch (error) {
             toast.error("Error logging out. Try again.");
         } finally {

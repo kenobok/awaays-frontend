@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser(null);
-        setAuthChecked(false);
+        // setAuthChecked(false);
         mutate('/account/users/me/', null, false);
     };
 

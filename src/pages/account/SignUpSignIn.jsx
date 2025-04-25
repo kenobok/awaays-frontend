@@ -25,7 +25,7 @@ const SignUpSignIn = () => {
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
     const { login } = useAuth();
-    const from = searchParams.get("from") || "/give-item";
+    const from = searchParams.get("from") || "/";
 
 	useEffect(() => {
 		const fetchUserLocation = async () => {
@@ -167,7 +167,6 @@ const SignUpSignIn = () => {
                 login();
                 navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
 			} catch (error) {
-                console.log(error)
 				const err = error.response?.data;
                 if (err?.email) {
                     toast.error(err.email[0]);
@@ -186,7 +185,7 @@ const SignUpSignIn = () => {
 			}
 		} else {
 			try {
-                await API.post('/account/login/', { 'email': email, 'password': password });
+                const res = await API.post('/account/login/', { 'email': email, 'password': password });
                 toast.success("Login successful");
                 login();
                 if (!res.data.is_verified) {
@@ -195,6 +194,7 @@ const SignUpSignIn = () => {
                     navigate(from, { replace: true });
                 }
             } catch (error) {
+                console.log(error)
                 if (error.response?.data?.detail) {
                     toast.error(error.response.data.detail);
                     setErrorMsg(true);
