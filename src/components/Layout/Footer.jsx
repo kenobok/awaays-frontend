@@ -9,20 +9,11 @@ import '../../assets/styles/header-footer.css'
 export default function Footer() {
     const location = useLocation();
     const [bactToTop, setBactToTop] = useState(false);
-    const [hideFooter, setHideFooter] = useState(false);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
-    useEffect(() => {
-        setHideFooter(
-            location.pathname == '/giveaway-items' || 
-            location.pathname.startsWith('/dashboard') ||
-            location.pathname.startsWith('/community')
-        );
-    }, [location.pathname]);
 
     const handleScroll = () => {
         if (window.scrollY > 1000) {
@@ -43,7 +34,7 @@ export default function Footer() {
 
 
     return (
-        <footer className={`mt-[10rem] ${hideFooter ? 'hidden' : ''}`}>
+        <footer className={`mt-[10rem]`}>
             <section className="relative px-[8rem] max-[768px]:px-[4rem] pt-[12rem] max-[768px]:pt-[8rem] pb-[8rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
                 <Link to="/" className="block mb-5">
                     <img loading="lazy" src={logo} alt="logo" className="w-[12rem] max-[768px]:w-[10rem] mx-auto"/>

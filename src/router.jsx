@@ -59,11 +59,11 @@ const router = createBrowserRouter([
 
             // Authentication Link
             {
-                path: "auth", element: <AuthPage />,
+                path: "auth", element: <BlockIfSignedIn><AuthPage /></BlockIfSignedIn>,
                 children: [
-                    { index: true, element: <BlockIfSignedIn><SignUpSignIn /></BlockIfSignedIn> },
-                    { path: 'reset-password', element: <BlockIfSignedIn><ResetPassword /></BlockIfSignedIn> },
-                    { path: 'verify-email', element: <RequireUnverifiedOnly><VerifyEmail /></RequireUnverifiedOnly> },
+                    { index: true, element: <SignUpSignIn /> },
+                    { path: 'reset-password', element: <ResetPassword /> },
+                    { path: 'verify-email', element: <VerifyEmail /> },
                 ]
             },
 

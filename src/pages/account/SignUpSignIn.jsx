@@ -25,7 +25,7 @@ const SignUpSignIn = () => {
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
     const { login } = useAuth();
-    const from = searchParams.get("from") || "/";
+    const from = searchParams.get("from") || "/give-item";
 
 	useEffect(() => {
 		const fetchUserLocation = async () => {
@@ -165,7 +165,7 @@ const SignUpSignIn = () => {
                 setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false });
                 setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false });
                 login();
-                navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
+                navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });
 			} catch (error) {
 				const err = error.response?.data;
                 if (err?.email) {
@@ -189,7 +189,7 @@ const SignUpSignIn = () => {
                 toast.success("Login successful");
                 login();
                 if (!res.data.is_verified) {
-                    navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
+                    navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });
                 } else {
                     navigate(from, { replace: true });
                 }

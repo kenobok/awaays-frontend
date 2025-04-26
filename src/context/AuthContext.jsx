@@ -16,15 +16,17 @@ export const AuthProvider = ({ children }) => {
     const { data: userData, error, isValidating } = useSWR('/account/users/me/', fetcher, {
         revalidateOnFocus: false,
         errorRetryCount: 3,
-        onSuccess: () => setAuthChecked(true),
-        onError: () => setAuthChecked(true),
     });
 
     useEffect(() => {
         if (userData) {
             setUser(userData);
+            setAuthChecked(true);
+        } else if (error) {
+            setUser(null);
+            setAuthChecked(true);
         }
-    }, [userData]);
+    }, [userData, error]);
 
     const login = () => {
         localStorage.setItem('Random', JSON.stringify(true));
@@ -33,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         setUser(null);
-        // setAuthChecked(false);
+        setAuthChecked(false);
         mutate('/account/users/me/', null, false);
     };
 

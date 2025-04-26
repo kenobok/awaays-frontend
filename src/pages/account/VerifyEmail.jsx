@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext'
 import { motion } from "framer-motion";
 import API from '/src/api/axiosInstance';
@@ -10,7 +10,7 @@ import '../../assets/styles/account.css';
 
 const VerifyEmail = () => {
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
+    const location = useLocation();
     const [formData, setFormData] = useState({ code: "" });
     const [inputFocus, setInputFocus] = useState({ code: false });
     const [error, setError] = useState('');
@@ -18,8 +18,6 @@ const VerifyEmail = () => {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const { user, revalidateUser } = useAuth();
-    const from = searchParams.get("from") || "/";
-
 
     useEffect(() => {
         if (cooldown === 0) return;
@@ -83,7 +81,6 @@ const VerifyEmail = () => {
             setError('');
             setCooldown(0);
             revalidateUser();
-            navigate(from, { replace: true });
         } catch (error) {
             toast.error(error.response?.data?.error || "An error occurred");
             if(error.response?.data?.error) setError(error.response.data.error)
