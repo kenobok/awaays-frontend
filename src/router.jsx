@@ -39,7 +39,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import FAQs from "./pages/FAQs";
 import NotFound from "./pages/NotFound";
 
-import { RequireAuth, BlockIfSignedIn, RequireUnverifiedOnly } from "./context/UserAuth";
+import { RequireAuth, BlockIfSignedIn } from "./context/UserAuth";
 
 
 const router = createBrowserRouter([

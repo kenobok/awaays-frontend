@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import useSWR, { mutate } from 'swr';
 import API from '../api/axiosInstance';
 
+
 const fetcher = async (url) => {
     const res = await API.get(url);
     return res.data;
@@ -15,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     const { data: userData, error, isValidating } = useSWR('/account/users/me/', fetcher, {
         revalidateOnFocus: false,
-        errorRetryCount: 3,
+        errorRetryCount: 5,
     });
 
     useEffect(() => {

@@ -28,7 +28,7 @@ API.interceptors.response.use(
 
         if (error.response?.status === 401 && !originalRequest._retry) {
             if (isRefreshing) {
-                return new Promise((resolve) => {
+                return new Promise((resolve, reject) => {
                     subscribeTokenRefresh(() => resolve(API(originalRequest)));
                 });
             }
@@ -37,7 +37,7 @@ API.interceptors.response.use(
             isRefreshing = true;
 
             try {
-                await axios.get('https://127.0.0.1:8000/api/account/token/refresh/', {
+                await API.get('/account/token/refresh/', {
                     withCredentials: true,
                 });
 
@@ -45,7 +45,8 @@ API.interceptors.response.use(
                 onAccessTokenFetched();
                 return API(originalRequest);
             } catch (refreshError) {
-                isRefreshing = false;
+                isRefreshing = false;    
+                // window.location.href = '/auth'; 
                 return Promise.reject(refreshError);
             }
         }

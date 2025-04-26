@@ -22,7 +22,7 @@ const Profile = () => {
     const [errors, setErrors] = useState({});
     const [userLocation, setUserLocation] = useState('');
     const [loading, setLoading] = useState(false);
-    const csrfToken = getCookie('csrftoken');
+    // const csrfToken = getCookie('csrftoken');
 
 
     useEffect(() => {
@@ -156,7 +156,7 @@ const Profile = () => {
                 data.append("profile_image", profileImage);
             }
 
-            const response = await API.patch(`/account/users/${user.id}/`, data, {headers: {"Content-Type": "multipart/form-data", "X-CSRFToken": csrfToken},withCredentials: true,});
+            const response = await API.patch(`/account/users/${user.id}/`, data, {headers: {"Content-Type": "multipart/form-data"}});
             console.log(response.data);
             toast.success("Profile update successful");
             setFormData({ name: "", phone: "", old_password: "", new_password: "" });
@@ -177,23 +177,23 @@ const Profile = () => {
                     <div className='profile-data border border-gray-300 w-[20rem] p-10 px-8 max-[941px]:mb-10 overflow-hidden rounded-2xl'>
                         <div>
                             <h4>Name</h4>
-                            <p>Tomase Edison Ogbemodian Chuckwuemeka</p>
+                            <p>{user.full_name}</p>
                         </div>
                         <div>
                             <h4>Email</h4>
-                            <p>tomaseedisonintothebadlandofcorsesmediocrity@gmail.com</p>
+                            <p>{user.email}</p>
                         </div>
                         <div>
                             <h4>Phone Number</h4>
-                            <p>+234904563960</p>
+                            <p>{user.mobile}</p>
                         </div>
                         <div>
                             <h4>Country</h4>
-                            <p>Nigeria</p>
+                            <p>{user.country || 'None'}</p>
                         </div>
                         <div>
                             <h4>State/Region</h4>
-                            <p>Lagos</p>
+                            <p>{user.state || 'None'}</p>
                         </div>
                     </div>
                 </div>

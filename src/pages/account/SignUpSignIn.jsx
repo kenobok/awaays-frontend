@@ -194,7 +194,6 @@ const SignUpSignIn = () => {
                     navigate(from, { replace: true });
                 }
             } catch (error) {
-                console.log(error)
                 if (error.response?.data?.detail) {
                     toast.error(error.response.data.detail);
                     setErrorMsg(true);
