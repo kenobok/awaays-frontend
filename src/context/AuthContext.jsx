@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         setAuthChecked(false);
         mutate('/account/users/me/', null, false);
+        window.location.href = '/'
     };
 
     const revalidateUser = useCallback(() => {

@@ -31,7 +31,7 @@ const Layout = () => {
 
     useEffect(() => {
         console.log({user})
-        console.log({isOffline})
+        // console.log({isOffline})
     }, [location.pathname])
 
     if(isOffline) toast.error('Check your internet connection');
