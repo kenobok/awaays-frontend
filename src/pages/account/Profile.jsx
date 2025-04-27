@@ -19,6 +19,7 @@ const Profile = () => {
     const { user, updateUser, isValidating } = useAuth();
     const [formData, setFormData] = useState({ full_name: "", mobile: "", old_password: "", new_password: "" });
     const [profileImage, setProfileImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
     const [inputFocus, setInputFocus] = useState({ full_name: false, mobile: false, old_password: false, new_password: false });
     const [passwordToggle, setPasswordToggle] = useState(false);
     const [errors, setErrors] = useState({});
@@ -68,26 +69,23 @@ const Profile = () => {
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
+        setSelectedImage(file);
+    };
 
-        // setUploadingImage(true);
+    const processImage = async (file) => {
+        if (!file) return;
+    
         try {
             const options = { maxSizeMB: 1, maxWidthOrHeight: 800, useWebWorker: true };
             const compressedFile = await imageCompression(file, options);
-
+    
             const imageUrl = await uploadToCloudinary(compressedFile);
-            console.log(imageUrl);
-            if (imageUrl) {
-                setProfileImage(imageUrl);
-                console.log({ profileImage })
-            }
+            setProfileImage(imageUrl);
         } catch (err) {
-            console.error('Error compressing or uploading image:', err);
+            toast.error('Unable to upload image, try again');
+            setErrors((prev) => ({ ...prev, image: 'Unable to upload image, try again' }));
         }
-        // finally {
-        //     setUploadingImage(false);
-        // }
-    };
-
+    }
 
     const validateField = (field, value) => {
         let error = "";
@@ -125,6 +123,8 @@ const Profile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        processImage(selectedImage);
 
         const allFieldsEmpty = Object.values(formData).every(value => !value?.toString().trim());
         const isImageEmpty = !profileImage;
@@ -214,13 +214,13 @@ const Profile = () => {
             } else if (err?.old_password) {
                 toast.error(err.old_password[0]);
                 setErrors((prev) => ({ ...prev, old_password: err.old_password }));
-                setFormData({ full_name: "", mobile: "" });
+                setFormData({ full_name: "", mobile: "", old_password: old_password, new_password: new_password });
                 setInputFocus({ full_name: false, mobile: false, old_password: true, new_password: true });
                 profileImage && setProfileImage(null);
             } else if (err?.new_password) {
                 toast.error(err.new_password[0]);
                 setErrors((prev) => ({ ...prev, new_password: err.new_password }));
-                setFormData({ full_name: "", mobile: "" });
+                setFormData({ full_name: "", mobile: "", old_password: old_password, new_password: new_password });
                 setInputFocus({ full_name: false, mobile: false, old_password: true, new_password: true });
                 profileImage && setProfileImage(null);
             } else {
@@ -290,12 +290,19 @@ const Profile = () => {
                             {errors.mobile && <small>{errors.mobile}</small>}
                         </div>
                         <div className="form-input relative">
-                            <input type="file" accept="image/*" className='w-full h-full bg-red-300' onChange={handleImageChange} />
-                            {uploadingImage &&
-                                <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full py-[13px] pt-[14px] rounded-lg flex justify-center items-center bg-[rgba(255,255,255,.5)]'>
-                                    <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-[var(--p-color)]' />
+                            <label htmlFor="editProfileImage" className={``}>Profile Image</label>
+                            <input type="file" accept="image/*" id="editProfileImage" className={`pr-16 ${errors.image ? 'error' : ''} hidden`} onChange={handleImageChange}/>
+
+                            {selectedImage && (
+                                <img src={URL.createObjectURL(selectedImage)} alt="preview" className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 object-cover rounded-full border"/>
+                            )}
+
+                            {uploadingImage && (
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full py-[13px] pt-[14px] rounded-lg flex justify-center items-center bg-[rgba(255,255,255,.5)]">
+                                    <FontAwesomeIcon icon="fa-spinner" className="animate-spin text-[1.3rem] text-[var(--p-color)]" />
                                 </div>
-                            }
+                            )}
+                            {errors.image && <small>{errors.image}</small>}
                         </div>
 
                         <h4 className='text-center font-bold mt-4'>Change Password</h4>
