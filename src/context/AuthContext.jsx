@@ -46,8 +46,12 @@ export const AuthProvider = ({ children }) => {
         mutate('/account/users/me/');
     }, []);
 
+    const updateUser = (newUserData) => {
+        setUser((prevUser) => ({ ...prevUser, ...newUserData }));
+    };
+
     return (
-        <AuthContext.Provider value={{ user, authChecked, login, logout, revalidateUser, isValidating, error }}>
+        <AuthContext.Provider value={{ user, authChecked, login, logout, revalidateUser, updateUser, isValidating, error }}>
             {children}
         </AuthContext.Provider>
     );
