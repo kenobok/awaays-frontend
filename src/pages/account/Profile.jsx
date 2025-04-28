@@ -68,24 +68,42 @@ const Profile = () => {
 
     const handleImageChange = async (e) => {
         const file = e.target.files[0];
-        if (!file) return;
+        if (!file) {
+            toast.error('Please select a valid file');
+            return;
+        }
+    
         setSelectedImage(file);
+        
+        try {
+            await processImage(file); 
+        } catch (err) {
+            // console.error('Image processing failed:', err); 
+            toast.error('Image processing failed, please try again');
+        }
     };
-
+    
     const processImage = async (file) => {
-        if (!file) return;
+        if (!file) {
+            throw new Error('No file to process');
+        }
+    
+        setUploadingImage(true); 
     
         try {
             const options = { maxSizeMB: 1, maxWidthOrHeight: 800, useWebWorker: true };
             const compressedFile = await imageCompression(file, options);
-    
             const imageUrl = await uploadToCloudinary(compressedFile);
+            
             setProfileImage(imageUrl);
+    
         } catch (err) {
-            toast.error('Unable to upload image, try again');
-            setErrors((prev) => ({ ...prev, image: 'Unable to upload image, try again' }));
+            // console.error('Image upload failed:', err);
+            throw new Error('Unable to upload image, try again'); 
+        } finally {
+            setUploadingImage(false);
         }
-    }
+    };
 
     const validateField = (field, value) => {
         let error = "";
@@ -123,8 +141,6 @@ const Profile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        processImage(selectedImage);
 
         const allFieldsEmpty = Object.values(formData).every(value => !value?.toString().trim());
         const isImageEmpty = !profileImage;
@@ -202,6 +218,7 @@ const Profile = () => {
             setFormData({ full_name: "", mobile: "", old_password: "", new_password: "" });
             setInputFocus({ full_name: false, mobile: false, old_password: false, new_password: false });
             setProfileImage(null);
+            setSelectedImage(null);
         } catch (error) {
             console.log(error)
             const err = error.response?.data;
@@ -216,13 +233,15 @@ const Profile = () => {
                 setErrors((prev) => ({ ...prev, old_password: err.old_password }));
                 setFormData({ full_name: "", mobile: "", old_password: old_password, new_password: new_password });
                 setInputFocus({ full_name: false, mobile: false, old_password: true, new_password: true });
-                profileImage && setProfileImage(null);
+                setProfileImage(null);
+                setSelectedImage(null);
             } else if (err?.new_password) {
                 toast.error(err.new_password[0]);
                 setErrors((prev) => ({ ...prev, new_password: err.new_password }));
                 setFormData({ full_name: "", mobile: "", old_password: old_password, new_password: new_password });
                 setInputFocus({ full_name: false, mobile: false, old_password: true, new_password: true });
-                profileImage && setProfileImage(null);
+                setProfileImage(null);
+                setSelectedImage(null);
             } else {
                 toast.error("An error occurred, try again");
             }
@@ -289,8 +308,8 @@ const Profile = () => {
                             />
                             {errors.mobile && <small>{errors.mobile}</small>}
                         </div>
-                        <div className="form-input relative">
-                            <label htmlFor="editProfileImage" className={``}>Profile Image</label>
+                        <div className="py-[1rem] relative overflow-hidden">
+                            <label htmlFor="editProfileImage" className={`block py-[11px] pl-4 border border-[#D1D5DB] rounded-[.5rem] cursor-pointer`} style={{position:'relative',width:'100% '}}>{ !selectedImage ? 'Select Image' : 'Change Image' } </label>
                             <input type="file" accept="image/*" id="editProfileImage" className={`pr-16 ${errors.image ? 'error' : ''} hidden`} onChange={handleImageChange}/>
 
                             {selectedImage && (
@@ -329,7 +348,7 @@ const Profile = () => {
                         {
                             uploadingImage ?
                                 <div className="mt-3 mb-4">
-                                    <button className={`w-full bg-[var(--p-color)] cursor-pointer text-white text-[1rem] h-12 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition cursor-progress`} disabled>Waiting for image...</button>
+                                    <button className={`w-full bg-[var(--p-color)] cursor-pointer text-white text-[1rem] h-12 rounded-lg font-semibold shadow-md transition cursor-progress`} disabled>Processing image....</button>
                                 </div>
                                 :
                                 <SubmitButton loading={loading} />
