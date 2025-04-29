@@ -35,9 +35,12 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
         fetchUserLocation();
     }, []);
 
-    useEffect(() => {
-        resetLocation();
-    }, [isCloseToMe]);
+    // useEffect(() => {
+    //     const closeToMe = JSON.parse(localStorage.getItem('closeToMe'))
+    //     if (closeToMe) {
+    //         resetLocation()
+    //     }
+    // }, [isCloseToMe]);
 
 
     const handleCountryFilter = (selectedOption) => {
@@ -99,11 +102,13 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
             setCountryFilter([{label: userLocation.country, value: userLocation.country}]);
             setStateFilter(userLocation.state);
             setSelectedStates([{label: userLocation.state, value: userLocation.state}]);
+            // JSON.stringify(localStorage.setItem('closeToMe', true));
         } 
         else {
             setCountryFilter([]);
             setStateFilter();
             setSelectedStates([]);
+            // JSON.stringify(localStorage.setItem('closeToMe', false));
         }
     }  
 
