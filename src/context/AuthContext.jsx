@@ -1,60 +1,46 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import useSWR, { mutate } from 'swr';
-import API from '../api/axiosInstance';
-
-
-const fetcher = async (url) => {
-    const res = await API.get(url);
-    return res.data;
-};
+import { createContext, useContext, useCallback } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchMe } from '../services/fetchServices';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
-    const [authChecked, setAuthChecked] = useState(false);
+    const queryClient = useQueryClient();
 
-    const { data: userData, error, isValidating } = useSWR('/account/users/me/', fetcher, {
-        revalidateOnFocus: false,
-        errorRetryCount: 5,
+    const { data: user, isLoading, isError, refetch, error, isFetching } = useQuery({
+        queryKey: ['auth-user'],
+        queryFn: fetchMe,
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        retry: 2,
+        refetchOnWindowFocus: false,
+        initialData: null,
     });
 
-    useEffect(() => {
-        if (userData) {
-            setUser(userData);
-            setAuthChecked(true);
-        } else if (error) {
-            setUser(null);
-            setAuthChecked(true);
-        }
-    }, [userData, error]);
+    const authChecked = !isLoading && !isFetching;
 
-    const login = () => {
+    const login = useCallback(() => {
         localStorage.setItem('Random', JSON.stringify(true));
-        revalidateUser();
-    };
+        refetch(); // revalidate user
+    }, [refetch]);
 
-    const logout = () => {
-        setUser(null);
-        setAuthChecked(false);
-        mutate('/account/users/me/', null, false);
-        window.location.href = '/'
-    };
+    const logout = useCallback(() => {
+        queryClient.removeQueries(['auth-user']);
+        window.location.href = '/';
+    }, [queryClient]);
 
-    const revalidateUser = useCallback(() => {
-        setAuthChecked(false);
-        mutate('/account/users/me/');
-    }, []);
-
-    const updateUser = (newUserData) => {
-        setUser((prevUser) => ({ ...prevUser, ...newUserData }));
-    };
+    const updateUser = useCallback((newUserData) => {
+        queryClient.setQueryData(['auth-user'], (oldData) => ({
+            ...oldData,
+            ...newUserData,
+        }));
+    }, [queryClient]);
 
     return (
-        <AuthContext.Provider value={{ user, authChecked, login, logout, revalidateUser, updateUser, isValidating, error }}>
+        <AuthContext.Provider value={{ user, authChecked, login, logout, updateUser, isError, error, isFetching }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
 export const useAuth = () => useContext(AuthContext);
+

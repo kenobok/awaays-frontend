@@ -1,20 +1,25 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from 'framer-motion'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import mockItems from "../../components/giveaway/mockItems";
+import { useQuery } from '@tanstack/react-query';
+import { fetchGiveaways } from "../../services/fetchServices";
 import FilterItem from '../../components/giveaway/FilterItems';
 import { GetUserLocationFromAPI } from "../../components/utils/getUserLocationFromAPI";
 import { Loader1 } from '../../components/utils/Preloader';
 
 const GiveawayItems = () => {
+    const { data: items, isLoading, isError, error, refetch } = useQuery({
+        queryKey: ['giveaway-items'],
+        queryFn: fetchGiveaways,
+    });
+
     const hideFilter = useMediaQuery({ query: "(max-width: 940px)" });
     const filterIconRef = useRef(null);
     const filterRef = useRef(null);
     const navigate = useNavigate();
     const [showFilter, setShowFilter] = useState(false);
-    const [items, setItems] = useState([]);
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get("search") || "";
     const [filteredItems, setFilteredItems] = useState({ country: [], state: [] });
@@ -27,10 +32,10 @@ const GiveawayItems = () => {
         const fetchUserLocation = async () => {
             try {
                 const locationData = await GetUserLocationFromAPI();
-                const userLoc = { country: [locationData.country], state: locationData.region ? [locationData.region] : []};
+                const userLoc = { country: [locationData.country], state: locationData.region ? [locationData.region] : [] };
                 setUserLocation(userLoc);
-                setFilteredItems(userLoc); 
-                filterItems(userLoc, searchQuery); 
+                setFilteredItems(userLoc);
+                filterItems(userLoc, searchQuery);
             } catch (error) {
                 console.error("Error fetching user location:", error);
             } finally {
@@ -47,13 +52,9 @@ const GiveawayItems = () => {
         };
     }, []);
 
-    useEffect(() => {
-        filterItems(filteredItems, searchQuery);
-    }, [filteredItems, searchQuery]);
-
-    const filterItems = (location, query) => {
-        let displayItems = mockItems;
-
+    const filterItems = (allItems, location, query) => {
+        let displayItems = allItems || []; 
+    
         if (query) {
             displayItems = displayItems.filter((item) =>
                 item.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -69,8 +70,13 @@ const GiveawayItems = () => {
         if (location?.state?.length) {
             displayItems = displayItems.filter(item => location.state.includes(item.state));
         }
-        setItems(displayItems);
+        return displayItems;
     };
+    
+
+    const filteredDisplayItems = useMemo(() => {
+        return filterItems(items, filteredItems, searchQuery);
+    }, [items, filteredItems, searchQuery]);
 
     const handleClickOutside = (e) => {
         if (filterIconRef.current && !filterIconRef.current.contains(e.target) && filterRef.current && !filterRef.current.contains(e.target)) {
@@ -84,7 +90,7 @@ const GiveawayItems = () => {
             setFilteredItems(userLocation);
         }
         else {
-            setFilteredItems({country: null, state: null});
+            setFilteredItems({ country: null, state: null });
         }
     };
 
@@ -92,9 +98,9 @@ const GiveawayItems = () => {
         const value = e.target.id;
         setIsCloseToMe(value === "closeToMe");
         if (value === "allLocation") {
-            setFilteredItems({ country: null, state: null });  
+            setFilteredItems({ country: null, state: null });
         } else {
-            setFilteredItems({ country: userLocation.country, state: userLocation.state }); 
+            setFilteredItems({ country: userLocation.country, state: userLocation.state });
         }
     };
 
@@ -103,26 +109,37 @@ const GiveawayItems = () => {
             country: updatedFilters.country
                 ? [...new Set([...(Array.isArray(prev?.country) ? prev.country : [prev.country]).filter(Boolean), updatedFilters.country])]
                 : prev?.country || [],
-    
+
             state: updatedFilters.state
                 ? [...new Set([...(Array.isArray(prev?.state) ? prev.state : [prev.state]).filter(Boolean), updatedFilters.state])]
                 : prev?.state || [],
         }));
-    };    
+    };
+
+    if (isError) {
+        return (
+            <div className="text-red-500">
+                Error loading giveaways: {error.message}
+                <button onClick={() => refetch()} className="ml-4 p-2 bg-blue-500 text-white rounded">
+                    Retry
+                </button>
+            </div>
+        );
+    }
 
 
     return (
         <main className={`relative overflow-hidden flex`}>
             <div className={`filter-wrp w-70 z-2 ${hideFilter ? 'hidden' : ''} ${showFilter ? 'show-filter' : ''}`}>
-                
-                <div  ref={filterRef} className="">
-                    <FilterItem 
-                        onClearFilter={handleClearFilter} 
-                        onLocationChange={handleLocationChange} 
-                        isCloseToMe={isCloseToMe} 
-                        multipleFilter={handleMultipleFilter} 
-                        onRemoveCountry={(updatedCountries) => {setFilteredItems(prev => ({...prev, country: updatedCountries}));}}
-                        onRemoveState={(updatedStates) => {setFilteredItems(prev => ({...prev, state: updatedStates}));}}
+
+                <div ref={filterRef} className="">
+                    <FilterItem
+                        onClearFilter={handleClearFilter}
+                        onLocationChange={handleLocationChange}
+                        isCloseToMe={isCloseToMe}
+                        multipleFilter={handleMultipleFilter}
+                        onRemoveCountry={(updatedCountries) => { setFilteredItems(prev => ({ ...prev, country: updatedCountries })); }}
+                        onRemoveState={(updatedStates) => { setFilteredItems(prev => ({ ...prev, state: updatedStates })); }}
                     />
                 </div>
                 <div className="filter-layer hidden max-[941px]:block"></div>
@@ -132,12 +149,12 @@ const GiveawayItems = () => {
                     <FontAwesomeIcon icon="filter" /> {showFilter ? 'Close' : 'Filters'}
                 </button>
             </div>
-            
+
             <section className="relative flex-1 ml-2 max-[941px]:ml-0 mt-[6rem] max-[941px]:mt-[6.5rem]">
-                { loading ? <div className='h-[75vh]'><Loader1 /></div> :
+                {isLoading ? <div className='h-[75vh]'><Loader1 /></div> :
                     <motion.div className="relative grid grid-cols-4 max-[1401px]:grid-cols-3 max-[1081px]:grid-cols-2 max-[941px]:grid-cols-3 max-[768px]:grid-cols-2 max-[321px]:grid-cols-1 gap-7 max-[941px]:gap-x-5 p-5 pb-50 max-[561px]:gap-x-3" initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
-                        {items.length > 0 ? (
-                            items.map((item) => (
+                        {filteredDisplayItems.length > 0 ? (
+                            filteredDisplayItems.map((item) => (
                                 <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1, ease: "easeInOut" }}>
                                     <Link to={`/giveaway-item-details/${item.slug}`} className='block'>
                                         <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />

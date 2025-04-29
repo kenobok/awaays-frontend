@@ -26,27 +26,21 @@ const SignUpSignIn = () => {
 	const [loading, setLoading] = useState(false);
     const { login } = useAuth();
     const from = searchParams.get("from") || "/give-item";
+    const locationData = GetUserLocationFromAPI();
 
 	useEffect(() => {
-		const fetchUserLocation = async () => {
-			try {
-				const locationData = await GetUserLocationFromAPI();	
-				setFormData((prevData) => ({
-					...prevData,
-					ip: locationData.ip,
-					isp: locationData.isp,
-					city: locationData.city,
-					region: locationData.region,
-					country: locationData.country,
-					countryCode: locationData.countryCode
-				}));
-			} catch (error) {
-				console.error("Failed to fetch location data:", error);
-			}
+        if (locationData && locationData.country) {
+            setFormData((prevData) => ({
+                ...prevData,
+                ip: locationData.ip,
+                isp: locationData.isp,
+                city: locationData.city,
+                region: locationData.region,
+                country: locationData.country,
+                countryCode: locationData.countryCode
+            }));
 		};
-	
-		fetchUserLocation();
-	}, []);
+	}, [locationData]);
 
     useEffect(() => {
         const is_user = JSON.parse(localStorage.getItem("Random"));

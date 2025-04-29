@@ -1,17 +1,28 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from "framer-motion";
+import API from '/src/api/axiosInstance';
+import { toast } from 'react-toastify';
+import { useAuth } from '../../context/AuthContext';
 import CountryStateSelector from '../../components/utils/CountryStateSelector';
 import GiveawayPurpose from '../../components/giveaway/GiveawayPurpose';
 import { SubmitButton } from '../../components/utils/SubmitButton';
-import '../../assets/styles/giveaway.css'
+import '../../assets/styles/giveaway.css';
 
 
 const GiveItem = () => {
-    const [formData, setFormData] = useState({ purpose: "", item: "", description: "", instructions: "", country: "", state: "", showNumber: false, images: [] });
-    const [inputFocus, setInputFocus] = useState({ purpose: false, item: false, description: false, instructions: false, images: false });
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({ purpose: "", item: "", description: "", instruction: "", country: "", state: "", showNumber: false, images: [] });
+    const [inputFocus, setInputFocus] = useState({ purpose: false, item: false, description: false, instruction: false, images: false });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
+    const { user } = useAuth();
 
+    useEffect(() => {
+        return () => {
+            formData.images.forEach((image) => URL.revokeObjectURL(image));
+        }
+    }, [formData.images]);
 
     const handleInputFocus = (field) => {
         setInputFocus((prev) => ({ ...prev, [field]: true }));
@@ -64,9 +75,9 @@ const GiveItem = () => {
                     error = "Must be at least 5 words";
                 }
                 break;
-            case "instructions":
+            case "instruction":
                 if (!value.trim()) {
-                    error = "Pickup location or other instructions";
+                    error = "Pickup location or other instruction";
                 }
                 break;
             case "country":
@@ -82,7 +93,7 @@ const GiveItem = () => {
         setErrors((prev) => ({ ...prev, [field]: error }));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         let newErrors = {};
@@ -101,8 +112,43 @@ const GiveItem = () => {
             return;
         }
 
-        console.log(formData)
-        // setFormData({ name: "", email: "", message: "" });
+        const data = new FormData();
+        data.append('donor', user.id);
+        data.append('purpose', formData.purpose);
+        data.append('name', formData.item);
+        data.append('description', formData.description);
+        data.append('instruction', formData.instruction);
+        data.append('state', formData.state);
+        data.append('country', formData.country);
+        data.append('show_number', formData.showNumber);
+
+        for (let i = 0; i < formData.images.length; i++) {
+            data.append('uploaded_images', formData.images[i]);
+        }
+
+        setLoading(true)
+        try {
+            const response = await API.post('/giveaway-items/', data, {
+                headers: { "Content-Type": "multipart/form-data" }
+            })
+            toast.success(`Thank you ${user.full_name} for your donation 💖`)
+            setFormData({ purpose: "", item: "", description: "", instruction: "", country: "", state: "", showNumber: false, images: [] });
+            setInputFocus({ purpose: false, item: false, description: false, instruction: false, images: false });
+            setErrors({});
+            navigate('/dashboard/my-giveaways')
+        } catch(error) {
+            console.log(error)
+            if (error.response.data.uploaded_images) {
+                toast.error("Invalid or corrupted image file...");
+                setErrors((prev) => ({...prev, images: 'Invalid or corrupted image file...'}))
+            } else if (error.response.data) {
+                toast.error("Failed to submit. Please try again.");
+            } else {
+                toast.error('An error occurred')
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
 
@@ -112,7 +158,7 @@ const GiveItem = () => {
 
             <motion.section className="p-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-5 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut"  }}>
                 <div className="relative flex justify-center mb-4 mx-auto">
-					<button className={`border-b-2 py-2 px-6 rounded-2xl shadow-lg text-center text-[var(--p-color)] text-xl font-bold }`}>GIVE ITEM</button>
+					<button className={`border-b-2 py-2 px-6 rounded-2xl shadow-lg text-center text-[var(--p-color)] text-xl font-bold `}>GIVE ITEM</button>
 				</div>
 				<motion.form className="give-item-form p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }} onSubmit={ handleSubmit }>
                     <div className='flex gap-x-7 max-[601px]:flex-col'>
@@ -130,9 +176,9 @@ const GiveItem = () => {
                             {errors.description && <small>{errors.description}</small>}
                         </div>
                         <div className="form-input textarea">
-                            <label htmlFor="instructions" className={`block text-gray-700 font-medium ${inputFocus.instructions ? 'is-focus' : ''}`}>Instructions</label>
-                            <textarea name="instructions" id="instructions" className={`h-25 ${errors.instructions ? 'error' : ''}`} value={formData.instructions} onChange={handleChange} onFocus={() => handleInputFocus("instructions")} onBlur={() => handleInputBlur("instructions")} />
-                            {errors.instructions && <small>{errors.instructions}</small>}
+                            <label htmlFor="instruction" className={`block text-gray-700 font-medium ${inputFocus.instruction ? 'is-focus' : ''}`}>Instructions</label>
+                            <textarea name="instruction" id="instruction" className={`h-25 ${errors.instruction ? 'error' : ''}`} value={formData.instruction} onChange={handleChange} onFocus={() => handleInputFocus("instruction")} onBlur={() => handleInputBlur("instruction")} />
+                            {errors.instruction && <small>{errors.instruction}</small>}
                         </div>
                     </div>
                     <CountryStateSelector value={{ country: formData.country, state: formData.state }} onChange={handleLocationChange} error={{ country: errors.country, state: errors.state }} />

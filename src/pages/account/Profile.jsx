@@ -172,10 +172,7 @@ const Profile = () => {
             }));
             return;
         } else if (!old_password && new_password) {
-            setErrors((prev) => ({
-                ...prev,
-                old_password: 'Old password is required',
-            }));
+            setErrors((prev) => ({ ...prev, old_password: 'Old password is required'}));
             return;
         }
 
