@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from 'framer-motion'
-import { Link, useSearchParams, useLocation } from 'react-router-dom'
+import { Link, useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from '@tanstack/react-query';
@@ -20,24 +20,36 @@ const GiveawayItems = () => {
     const filterIconRef = useRef(null);
     const filterRef = useRef(null);
     const location = useLocation();
+    const navigate = useNavigate();
     const { locationFromApi } = useUserLocation();
     const [showFilter, setShowFilter] = useState(false);
     const [searchParams] = useSearchParams();
     const searchQuery = searchParams.get("search") || "";
     const [filteredItems, setFilteredItems] = useState({ country: [], state: [] });
     const [userLocation, setUserLocation] = useState({ country: null, state: null });
-    const [isCloseToMe, setIsCloseToMe] = useState(true);
+    const [isCloseToMe, setIsCloseToMe] = useState(false);
 
     useEffect(() => {
         error || isError && console.log({error, isError})
     }, [error, isError])
 
     useEffect(() => {
-        const userLoc = { country: [locationFromApi.country], state: locationFromApi.region ? [locationFromApi.region] : [] };
-        setUserLocation(userLoc);
-        setFilteredItems(userLoc);
-        filterItems(userLoc, searchQuery);
+        if(locationFromApi) {
+            const userLoc = { country: [locationFromApi.country_name], state: locationFromApi.region ? [locationFromApi.region] : [] };
+            setUserLocation(userLoc);
+            setFilteredItems(userLoc);
+            filterItems(userLoc, searchQuery);
+        }
     }, [locationFromApi]);
+
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        const country = query.get('country')?.split(',') || [];
+        const state = query.get('state')?.split(',') || [];
+        const closeToMe = query.get('isCloseToMe') !== 'false';
+        setFilteredItems({ country, state });
+        setIsCloseToMe(closeToMe);
+    }, [location.search]);
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -47,9 +59,12 @@ const GiveawayItems = () => {
     }, []);
 
     useEffect(() => {
-        const closeBy = JSON.parse(localStorage.getItem('closeToMe'));
-        setIsCloseToMe(closeBy);
-    }, [location.pathname === '/giveaway-items'])
+        if (!localStorage.getItem('closeToMe')) {
+            localStorage.setItem('closeToMe', JSON.stringify(false));
+        }
+        const closeToMe = JSON.parse(localStorage.getItem('closeToMe'));
+        setIsCloseToMe(closeToMe);
+    }, [location.pathname])
 
     const filterItems = (allItems, location, query) => {
         let displayItems = allItems || []; 
@@ -63,14 +78,11 @@ const GiveawayItems = () => {
                 item.state.toLowerCase().includes(query.toLowerCase())
             );
         }
-        const closeBy = JSON.parse(localStorage.getItem('closeToMe'));
-        if (closeBy) {
-            if (location?.country?.length) {
-                displayItems = displayItems.filter(item => location.country.includes(item.country));
-            }
-            if (location?.state?.length) {
-                displayItems = displayItems.filter(item => location.state.includes(item.state));
-            }
+        if (location?.country?.length) {
+            displayItems = displayItems.filter(item => location.country.includes(item.country));
+        }
+        if (location?.state?.length) {
+            displayItems = displayItems.filter(item => location.state.includes(item.state));
         }
         return displayItems;
     };
@@ -86,44 +98,86 @@ const GiveawayItems = () => {
     };
 
     const handleClearFilter = () => {
+        const updatedFilters = isCloseToMe
+            ? { country: userLocation.country, state: userLocation.state }
+            : { country: null, state: null };
+    
+        setFilteredItems(updatedFilters);
+    
+        const newUrlParams = new URLSearchParams(window.location.search);
+        newUrlParams.delete('country');
+        newUrlParams.delete('state');
+        newUrlParams.delete('closeToMe');
+    
         if (isCloseToMe) {
-            setFilteredItems(userLocation);
+            newUrlParams.set('country', userLocation.country);
+            newUrlParams.set('state', userLocation.state);
+            newUrlParams.set('closeToMe', 'true');
         }
-        else {
-            setFilteredItems({ country: null, state: null });
-        }
-        localStorage.removeItem('closeToMe')
+    
+        window.history.replaceState({}, '', `${window.location.pathname}?${newUrlParams.toString()}`);
     };
-
+    
     const handleLocationChange = (e) => {
         const value = e.target.id;
+    
+        const newUrlParams = new URLSearchParams(window.location.search);
+        newUrlParams.delete('country');
+        newUrlParams.delete('state');
+        newUrlParams.delete('closeToMe');
+    
         if (value === "closeToMe") {
-            setIsCloseToMe(true)
+            setIsCloseToMe(true);
             setFilteredItems({ country: userLocation.country, state: userLocation.state });
-            JSON.stringify(localStorage.setItem('closeToMe', true));
+            localStorage.setItem('closeToMe', JSON.stringify(true));
+            newUrlParams.set('country', userLocation.country);
+            newUrlParams.set('state', userLocation.state);
+            newUrlParams.set('closeToMe', 'true');
         } else {
-            setIsCloseToMe(false)
+            setIsCloseToMe(false);
             setFilteredItems({ country: null, state: null });
-            JSON.stringify(localStorage.setItem('closeToMe', false));
+            localStorage.setItem('closeToMe', JSON.stringify(false));
         }
+    
+        window.history.replaceState({}, '', `${window.location.pathname}?${newUrlParams.toString()}`);
     };
-
+    
     const handleAllLocations = () => {
-        setIsCloseToMe(false)
+        handleClearFilter();
+        setIsCloseToMe(false);
         setFilteredItems({ country: null, state: null });
-        JSON.stringify(localStorage.setItem('closeToMe', false));
+        localStorage.setItem('closeToMe', JSON.stringify(false));
+    
+        const newUrlParams = new URLSearchParams(window.location.search);
+        newUrlParams.delete('country');
+        newUrlParams.delete('state');
+        newUrlParams.delete('closeToMe');
+    
+        window.history.replaceState({}, '', `${window.location.pathname}?${newUrlParams.toString()}`);
+    };
+    
+
+    const updateURLParams = (filters) => {
+        const params = new URLSearchParams();
+        if (filters.country?.length) params.set('country', filters.country.join(','));
+        if (filters.state?.length) params.set('state', filters.state.join(','));
+        if (!isCloseToMe) params.set('isCloseToMe', 'false');
+        navigate({ search: params.toString() }, { replace: true });
     };
 
     const handleMultipleFilter = (updatedFilters) => {
-        setFilteredItems((prev) => ({
-            country: updatedFilters.country
-                ? [...new Set([...(Array.isArray(prev?.country) ? prev.country : [prev.country]).filter(Boolean), updatedFilters.country])]
-                : prev?.country || [],
-
-            state: updatedFilters.state
-                ? [...new Set([...(Array.isArray(prev?.state) ? prev.state : [prev.state]).filter(Boolean), updatedFilters.state])]
-                : prev?.state || [],
-        }));
+        setFilteredItems((prev) => {
+            const newFilters = {
+                country: updatedFilters.country
+                    ? [...new Set([...(prev.country || []), updatedFilters.country])]
+                    : prev.country || [],
+                state: updatedFilters.state
+                    ? [...new Set([...(prev.state || []), updatedFilters.state])]
+                    : prev.state || [],
+            };
+            updateURLParams(newFilters);
+            return newFilters;
+        });
     };
 
 
@@ -136,7 +190,8 @@ const GiveawayItems = () => {
                         onClearFilter={handleClearFilter}
                         onLocationChange={handleLocationChange}
                         isCloseToMe={isCloseToMe}
-                        multisilencedpleFilter={handleMultipleFilter}
+                        setIsCloseToMe={setIsCloseToMe}
+                        multipleFilter={handleMultipleFilter}
                         onRemoveCountry={(updatedCountries) => { setFilteredItems(prev => ({ ...prev, country: updatedCountries })); }}
                         onRemoveState={(updatedStates) => { setFilteredItems(prev => ({ ...prev, state: updatedStates })); }}
                     />

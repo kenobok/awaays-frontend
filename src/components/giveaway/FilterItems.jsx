@@ -10,8 +10,8 @@ const countryOptions = Object.keys(countriesData).map(country => ({
     value: country
 }));
 
-const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFilter, onRemoveCountry, onRemoveState }) => {
-    const { locationFromApi } = useUserLocation();
+const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, setIsCloseToMe, multipleFilter, onRemoveCountry, onRemoveState }) => {
+    const { locationFromApi, isLoading } = useUserLocation();
     const [userLocation, setUserLocation] = useState({ country: null, state: null });
     const [countryFilter, setCountryFilter] = useState([]);
     const [stateFilter, setStateFilter] = useState('');
@@ -21,18 +21,52 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
 
 
     useEffect(() => {
-        setUserLocation({country: locationFromApi.country_name, state: locationFromApi.city || ""});
-        setCountryFilter([{label: locationFromApi.country_name, value: locationFromApi.country_name}]);
-        setStateFilter({label: locationFromApi.region, value: locationFromApi.region})
-        setSelectedStates([{label: locationFromApi.region, value: locationFromApi.region}])
+        if (locationFromApi) {
+            setUserLocation({country: locationFromApi.country_name, state: locationFromApi.region || ""});
+            setCountryFilter([{label: locationFromApi.country_name, value: locationFromApi.country_name}]);
+            setStateFilter({label: locationFromApi.region, value: locationFromApi.region})
+            setSelectedStates([{label: locationFromApi.region, value: locationFromApi.region}])
+        }
     }, [locationFromApi]);
 
-    // useEffect(() => {
-    //     const closeToMe = JSON.parse(localStorage.getItem('closeToMe'))
-    //     if (closeToMe) {
-    //         resetLocation()
-    //     }
-    // }, [isCloseToMe]);
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const savedCloseToMe = JSON.parse(localStorage.getItem("closeToMe"));
+    
+        const countryParam = params.get('country');
+        const stateParam = params.get('state');
+    
+        setIsCloseToMe(savedCloseToMe || false);
+    
+        if (countryParam) {
+            setCountryFilter([{ label: countryParam, value: countryParam }]);
+        }
+    
+        if (stateParam) {
+            setStateFilter({ label: stateParam, value: stateParam });
+            setSelectedStates([{ label: stateParam, value: stateParam }]);
+        }
+    
+        if (savedCloseToMe && locationFromApi) {
+            setUserLocation({
+                country: locationFromApi.country_name,
+                state: locationFromApi.region
+            });
+        }
+    }, []);
+    
+
+    useEffect(() => {
+        if (isCloseToMe && userLocation.country && userLocation.state) {
+            setCountryFilter([{ label: userLocation.country, value: userLocation.country }]);
+            setStateFilter({ label: userLocation.state, value: userLocation.state });
+            setSelectedStates([{ label: userLocation.state, value: userLocation.state }]);
+        }
+    }, [userLocation, isCloseToMe]);
+
+    useEffect(() => {
+        resetLocation()
+    }, [isCloseToMe]);
 
 
     const handleCountryFilter = (selectedOption) => {
@@ -45,7 +79,6 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
         setActiveCountry(selectedOption);
     };
 
-    
     const handleRemoveCountry = (countryValue) => {
         setCountryFilter((prev) => {
             const updatedCountries = prev.filter(country => country.value !== countryValue);
@@ -90,19 +123,16 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
     };
 
     const resetLocation = () => {
-        if(isCloseToMe) {
-            setCountryFilter([{label: userLocation.country, value: userLocation.country}]);
-            setStateFilter(userLocation.state);
-            setSelectedStates([{label: userLocation.state, value: userLocation.state}]);
-            // JSON.stringify(localStorage.setItem('closeToMe', true));
-        } 
-        else {
+        if (isCloseToMe) {
+            setCountryFilter([{ label: userLocation.country, value: userLocation.country }]);
+            setStateFilter({ label: userLocation.state, value: userLocation.state });
+            setSelectedStates([{ label: userLocation.state, value: userLocation.state }]);
+        } else {
             setCountryFilter([]);
-            setStateFilter();
+            setStateFilter(null);
             setSelectedStates([]);
-            // JSON.stringify(localStorage.setItem('closeToMe', false));
         }
-    }  
+    }; 
 
 
     return (
@@ -137,7 +167,7 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
                             {countryFilter.map((country, index) => (
                                 <div key={index} className="flex justify-between items-center">
                                     <li>{country.label}</li>
-                                    <FontAwesomeIcon icon="times" className="text-red-400 cursor-pointer" onClick={() => handleRemoveCountry(country.value)} />
+                                    {!isCloseToMe && <FontAwesomeIcon icon="times" className="text-red-400 cursor-pointer" onClick={() => handleRemoveCountry(country.value)} />}
                                 </div>
                             ))}
                         </ul>
@@ -146,7 +176,7 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
                         <CustomSelect
                             options={stateOptions} 
                             onChange={handleStateFilter} 
-                            value=""
+                            value={selectedStates} 
                             isMulti={true} 
                             placeholder={countryFilter.length>0 ? `Filter ${countryFilter[0]?.label} States` : 'States filter...'} 
                         />

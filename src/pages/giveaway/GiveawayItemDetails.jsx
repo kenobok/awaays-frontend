@@ -78,15 +78,13 @@ const GiveawayItemDetails = () => {
                                 mousewheel={true}
                                 className={`modal-img-slide ${isEnlarged ? 'enlarge-img bg-gray-700 cursor-zoom-out' : '' }`}
                             >
-                                {isLoading ? <FontAwesomeIcon icon="fas spinner" className='animate-pulse' /> 
-                                :
-                                (
+                                {
                                     data.images.map((image, index) => (
                                         <SwiperSlide key={index}>
                                             <img src={image} alt={`slide-${index}`} className={`w-full h-[30rem] m-auto rounded-xl object-contain transition-transform duration-300 ${isEnlarged ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} onClick={() => {setIsEnlarged(!isEnlarged)}}/>
                                         </SwiperSlide>
                                     ))
-                                )}
+                                }
                             </Swiper>
                         </motion.div>
                     </section>
@@ -104,13 +102,12 @@ const GiveawayItemDetails = () => {
                                 <p className="leading-[1.3rem]">{data.instruction}</p>
                             </div>
                             <div className="relative my-7">
-                                <div className='flex justify-between items-center absolute border border-green-500 border-r-0 text-green-600 shadow-lg py-[7px] pl-10 pr-5 max-[768px]:pr-0 rounded-s-3xl top-0 right-0'>
+                                <div className='flex justify-between items-center absolute border border-green-500 border-r-0 text-green-600 shadow-lg py-[5px] pl-10 pr-5 max-[768px]:pr-0 rounded-s-3xl top-0 right-0'>
                                     <div className='flex-1'>
-                                        <h4 className="font-bold text-[1.1rem] leading-[1.1rem] border-b border-gray-300 mb-2">Donor</h4>
-                                        <p className="text-green-900 font-semibold text-[1.1rem] leading-[1.4rem]"><FontAwesomeIcon icon='user' /> {data.donor.full_name}</p>
-                                        { data.show_number == 'True' && user && user.is_verified && <><FontAwesomeIcon icon='phone' className='text-blue-900' /> <a href={`tel:${data.donor.mobile}`} className='inline-block text-blue-900 tracking-[1px] leading-[1.4rem] font-semibold text-[1rem]'>{data.donor.mobile}</a></> }
+                                        <p className={`text-green-700 font-semibold ${data.show_number == 'True' && user && user.is_verified ? 'pt-[.2rem] pb-[.3rem] border-b border-gray-400' : ''}`}><FontAwesomeIcon icon='user' /> {data.donor.full_name}</p>
+                                        { data.show_number == 'True' && user && user.is_verified && <div className='text-blue-800 pt-[.4rem]'><FontAwesomeIcon icon='phone' /> <a href={`tel:${data.donor.mobile}`} className='inline-block tracking-[.5px] font-semibold'>{data.donor.mobile}</a></div> }
                                     </div>
-                                    <img src={data.donor.profile_image} alt='pic' className='w-[50px] ml-4' />
+                                    <img src={data.donor.profile_image} alt='pic' className='w-[40px] ml-4' />
                                 </div>
                             </div>
                             <form className={`w-full pr-1 justify-evenly ${data.show_number == 'True' ? 'mt-[8rem]' : 'mt-[7rem]'}`}>

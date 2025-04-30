@@ -8,9 +8,9 @@ const CountryStateSelector = ({ value, onChange, error = {} }) => {
     const [selectedState, setSelectedState] = useState(value?.state || "");
 
     useEffect(() => {
-        if (!selectedCountry) {
-            setSelectedCountry(locationFromApi.country);
-            onChange({ country: locationFromApi.country, state: "" });
+        if (!selectedCountry && locationFromApi) {
+            setSelectedCountry(locationFromApi.country_name);
+            onChange({ country: locationFromApi.country_name, state: "" });
         }
     }, [selectedCountry, onChange]);
 
