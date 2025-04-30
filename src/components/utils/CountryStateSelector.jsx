@@ -1,23 +1,16 @@
 import { useState, useEffect } from "react";
-import { GetUserLocationFromAPI } from './getUserLocationFromAPI';
+import { useUserLocation } from "/src/hooks/useUserLocationFromAPI";
 import countriesData from './countriesFile';
 
 const CountryStateSelector = ({ value, onChange, error = {} }) => {
+    const { locationFromApi } = useUserLocation();
     const [selectedCountry, setSelectedCountry] = useState(value?.country || "");
     const [selectedState, setSelectedState] = useState(value?.state || "");
 
     useEffect(() => {
         if (!selectedCountry) {
-            const fetchUserLocation = async () => {
-                try {
-                    const locationData = await GetUserLocationFromAPI();
-                    setSelectedCountry(locationData.country);
-                    onChange({ country: locationData.country, state: "" });
-                } catch (error) {
-                    console.error("Failed to fetch location data:", error);
-                }
-            };
-            fetchUserLocation();
+            setSelectedCountry(locationFromApi.country);
+            onChange({ country: locationFromApi.country, state: "" });
         }
     }, [selectedCountry, onChange]);
 

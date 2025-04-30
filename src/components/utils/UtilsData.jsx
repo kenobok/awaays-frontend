@@ -10,18 +10,18 @@ import img9 from '../../assets/images/hero1.png'
 import img10 from '../../assets/images/hero4.png'
 
 const HeaderLinks = [
-    { name: 'Give Item', goto: '/give-item/'},
-    { name: 'Giveaways', goto: '/giveaway-items/'},
+    { name: 'Give Item', goto: '/give-item'},
+    { name: 'Giveaways', goto: '/giveaway-items'},
     { name: 'Community', dropdown:[
-        { name: 'Leaderboard', goto: '/community/leaderboard/' },
-        { name: 'Forums', goto: '/community/forums/' },
-        { name: 'Groups', goto: '/community/groups/' },
-        { name: 'Events', goto: '/community/events/' },
-        { name: 'Gallery', goto: '/community/gallery/' },
+        { name: 'Leaderboard', goto: '/community/leaderboard' },
+        { name: 'Forums', goto: '/community/forums' },
+        { name: 'Groups', goto: '/community/groups' },
+        { name: 'Events', goto: '/community/events' },
+        { name: 'Gallery', goto: '/community/gallery' },
     ]},
-    { name: 'How It Works', goto: '/how-it-works/'},
-    { name: 'FAQs', goto: '/faqs/'},
-    { name: 'Join', goto: '/auth/'}
+    { name: 'How It Works', goto: '/how-it-works'},
+    { name: 'FAQs', goto: '/faqs'},
+    { name: 'Join', goto: '/auth'}
 ]
 
 const heroImages = [

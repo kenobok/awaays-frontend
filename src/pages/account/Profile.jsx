@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from "../../context/AuthContext";
 import API from '/src/api/axiosInstance';
-import { getCookie } from '../../components/utils/csrf';
 import { motion } from 'framer-motion'
 import { toast } from 'react-toastify';
 import isEmail from 'validator/lib/isEmail';
 import PhoneInput from 'react-phone-number-input'
 import { isValidPhoneNumber } from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import { GetUserLocationFromAPI } from '../../components/utils/getUserLocationFromAPI';
+import { useUserLocation } from "/src/hooks/useUserLocationFromAPI";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SubmitButton } from '../../components/utils/SubmitButton'
 import uploadToCloudinary from '../../components/utils/uploadToCloudinary';
@@ -17,28 +16,21 @@ import imageCompression from 'browser-image-compression';
 
 const Profile = () => {
     const { user, updateUser, isValidating } = useAuth();
+    const { locationFromApi } = useUserLocation();
+    const [userLocation, setUserLocation] = useState('');
     const [formData, setFormData] = useState({ full_name: "", mobile: "", old_password: "", new_password: "" });
     const [profileImage, setProfileImage] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
     const [inputFocus, setInputFocus] = useState({ full_name: false, mobile: false, old_password: false, new_password: false });
     const [passwordToggle, setPasswordToggle] = useState(false);
     const [errors, setErrors] = useState({});
-    const [userLocation, setUserLocation] = useState('');
     const [loading, setLoading] = useState(false);
     const [uploadingImage, setUploadingImage] = useState(false);
 
 
     useEffect(() => {
-        const fetchUserLocation = async () => {
-            try {
-                const locationData = await GetUserLocationFromAPI();
-                setUserLocation(locationData.countryCode);
-            } catch (error) {
-                console.error("Failed to fetch location data:", error);
-            }
-        };
-        fetchUserLocation();
-    }, []);
+        setUserLocation(locationFromApi.country_code);
+    }, [locationFromApi]);
 
     const handlePasswordToggle = () => {
         setPasswordToggle(prevState => !prevState);
@@ -202,7 +194,6 @@ const Profile = () => {
                 const res = await API.patch(`/account/users/${user.id}/`, data, {
                     headers: { "Content-Type": "multipart/form-data" }
                 });
-                console.log(res);
                 updateUser(res.data);
             }
 
@@ -217,7 +208,6 @@ const Profile = () => {
             setProfileImage(null);
             setSelectedImage(null);
         } catch (error) {
-            console.log(error)
             const err = error.response?.data;
             if (err?.full_name) {
                 toast.error(err.full_name[0]);

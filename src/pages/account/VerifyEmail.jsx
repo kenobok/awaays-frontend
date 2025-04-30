@@ -10,6 +10,9 @@ import '../../assets/styles/account.css';
 
 
 const VerifyEmail = () => {
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+    const from = searchParams.get("from") || "/give-item";
     const [changeEmail, setChangeEmail] = useState(false);
     const [formData, setFormData] = useState({ code: "", email: "" });
     const [inputFocus, setInputFocus] = useState({ code: false, email: false });
@@ -17,7 +20,7 @@ const VerifyEmail = () => {
     const [cooldown, setCooldown] = useState(0);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
-    const { user, revalidateUser, updateUser } = useAuth();
+    const { user, refetch } = useAuth();
 
     useEffect(() => {
         if (cooldown === 0) return;
@@ -98,7 +101,8 @@ const VerifyEmail = () => {
                 setInputFocus({ code: false });
                 setError({});
                 setCooldown(0);
-                revalidateUser();
+                refetch();
+                navigate(from, { replace: true });
             } catch (error) {
                 toast.error(error.response?.data?.error || "An error occurred");
                 if(error.response?.data?.error) setError({'code': error.response.data.error})
@@ -117,11 +121,17 @@ const VerifyEmail = () => {
                 setFormData({ email: '' });
                 setInputFocus({ email: false });
                 setError({});
-                revalidateUser();
+                refetch();
                 handleRequestNewCode();
             } catch (error) {
-                toast.error(error.response?.data?.error || "An error occurred");
-                if(error.response?.data?.error) setError({'email': error.response.data.error})
+                console.log(error)
+                const err = error?.response?.data
+                if(err.email[0]) {
+                    toast.error(err.email[0]);
+                    setError({'email': err.email[0]})
+                } else {
+                    toast.error("An error occurred...try again");
+                }
             } finally {
                 setLoading(false);
             }

@@ -10,17 +10,16 @@ export const AuthProvider = ({ children }) => {
     const { data: user, isLoading, isError, refetch, error, isFetching } = useQuery({
         queryKey: ['auth-user'],
         queryFn: fetchMe,
-        staleTime: 5 * 60 * 1000, // 5 minutes
+        staleTime: 5 * 60 * 1000, 
         retry: 2,
-        refetchOnWindowFocus: false,
-        initialData: null,
+        refetchOnWindowFocus: false
     });
 
     const authChecked = !isLoading && !isFetching;
 
     const login = useCallback(() => {
         localStorage.setItem('Random', JSON.stringify(true));
-        refetch(); // revalidate user
+        refetch(); 
     }, [refetch]);
 
     const logout = useCallback(() => {
@@ -36,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     }, [queryClient]);
 
     return (
-        <AuthContext.Provider value={{ user, authChecked, login, logout, updateUser, isError, error, isFetching }}>
+        <AuthContext.Provider value={{ user, authChecked, refetch, login, logout, updateUser, isError, error, isFetching }}>
             {children}
         </AuthContext.Provider>
     );

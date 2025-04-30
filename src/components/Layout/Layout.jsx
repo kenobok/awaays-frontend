@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, Outlet } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useUserLocation } from '/src/hooks/useUserLocationFromAPI';
 import { useAuth } from '../../context/AuthContext';
 import { CheckingUser, NetworkStatus } from '../utils/CheckingUser';
 import ScrollToTop from "../utils/ScrollToTop";
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 
 
 const Layout = () => {
+    const { locationFromApi } = useUserLocation();
     const navigate = useNavigate();
     const { user, authChecked, errorFetchingData, error } = useAuth();
     const location = useLocation();

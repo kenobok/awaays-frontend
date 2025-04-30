@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { GetUserLocationFromAPI } from '../utils/getUserLocationFromAPI';
+import { useUserLocation } from "/src/hooks/useUserLocationFromAPI";
 import countriesData from '../utils/countriesFile';
 import CustomSelect from '../utils/CustomSelect';
 
@@ -11,6 +11,7 @@ const countryOptions = Object.keys(countriesData).map(country => ({
 }));
 
 const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFilter, onRemoveCountry, onRemoveState }) => {
+    const { locationFromApi } = useUserLocation();
     const [userLocation, setUserLocation] = useState({ country: null, state: null });
     const [countryFilter, setCountryFilter] = useState([]);
     const [stateFilter, setStateFilter] = useState('');
@@ -20,20 +21,11 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, multipleFil
 
 
     useEffect(() => {
-        const fetchUserLocation = async () => {
-            try {
-                const locationData = await GetUserLocationFromAPI();
-                setUserLocation({country: locationData.country, state: locationData.region || ""});
-                setCountryFilter([{label: locationData.country, value: locationData.country}]);
-                setStateFilter({label: locationData.region, value: locationData.region})
-                setSelectedStates([{label: locationData.region, value: locationData.region}])
-            } catch(error) {
-                console.error(error)
-            }
-        };
-
-        fetchUserLocation();
-    }, []);
+        setUserLocation({country: locationFromApi.country_name, state: locationFromApi.city || ""});
+        setCountryFilter([{label: locationFromApi.country_name, value: locationFromApi.country_name}]);
+        setStateFilter({label: locationFromApi.region, value: locationFromApi.region})
+        setSelectedStates([{label: locationFromApi.region, value: locationFromApi.region}])
+    }, [locationFromApi]);
 
     // useEffect(() => {
     //     const closeToMe = JSON.parse(localStorage.getItem('closeToMe'))

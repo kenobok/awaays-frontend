@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { motion } from "framer-motion";
-import { GetUserLocationFromAPI } from "../../components/utils/getUserLocationFromAPI";
+import { useUserLocation } from "../../hooks/useUserLocationFromAPI";
 import API from '/src/api/axiosInstance';
 import isEmail from 'validator/lib/isEmail';
 import PhoneInput from 'react-phone-number-input'
@@ -24,23 +24,29 @@ const SignUpSignIn = () => {
 	const [errors, setErrors] = useState({});
 	const [errorMsg, setErrorMsg] = useState(false);
 	const [loading, setLoading] = useState(false);
+    const { locationFromApi } = useUserLocation();
     const { login } = useAuth();
     const from = searchParams.get("from") || "/give-item";
-    const locationData = GetUserLocationFromAPI();
+    const [locationSet, setLocationSet] = useState(false);
 
-	useEffect(() => {
-        if (locationData && locationData.country) {
+    useEffect(() => {
+        if (authMode === 'signup' && locationFromApi && !locationSet) {
             setFormData((prevData) => ({
                 ...prevData,
-                ip: locationData.ip,
-                isp: locationData.isp,
-                city: locationData.city,
-                region: locationData.region,
-                country: locationData.country,
-                countryCode: locationData.countryCode
+                ip: locationFromApi.ip,
+                isp: locationFromApi.org,
+                city: locationFromApi.city,
+                region: locationFromApi.region,
+                country: locationFromApi.country_name,
+                countryCode: locationFromApi.country_code,
             }));
-		};
-	}, [locationData]);
+            setLocationSet(true);
+        }
+    }, [authMode, locationFromApi, locationSet]);
+
+    // useEffect(() => {
+    //     console.log(locationFromApi)
+    // }, [authMode])
 
     useEffect(() => {
         const is_user = JSON.parse(localStorage.getItem("Random"));
@@ -50,7 +56,7 @@ const SignUpSignIn = () => {
     }, []);
 
 	const handleSignUp = () => {
-		setFormData((prevData) => ({ ...prevData, full_name: "", email: "", mobile: "", password: "", agree: false }));		
+		setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", isp: "", city: "", region: "", country: "", countryCode: "" });
 		setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false});
         setAuthMode("signup");
         setPasswordToggle(false);
@@ -60,11 +66,7 @@ const SignUpSignIn = () => {
     };
 
 	const handleSignIn = () => {
-		setFormData(({ ip, isp, city, region, country, countryCode }) => ({
-			ip, isp, city, region, country, countryCode,
-			email: "",
-			password: "",
-		}));
+		setFormData(({ email: "", password: ""}));
 		setInputFocus({ email: false, password: false });
         setAuthMode("signin");
         setPasswordToggle(false);
@@ -188,6 +190,7 @@ const SignUpSignIn = () => {
                     navigate(from, { replace: true });
                 }
             } catch (error) {
+                console.log(error.response)
                 if (error.response?.data?.detail) {
                     toast.error(error.response.data.detail);
                     setErrorMsg(true);
@@ -229,7 +232,7 @@ const SignUpSignIn = () => {
                         <PhoneInput
                             international
                             countryCallingCodeEditable={false}
-                            defaultCountry={formData.countryCode}
+                            defaultCountry={locationFromApi.country_code}
                             value={formData.mobile}
                             onChange={(mobile) => handleChange(mobile, "mobile")}
                             onFocus={() => handleInputFocus("mobile")} 
@@ -252,13 +255,18 @@ const SignUpSignIn = () => {
                 { authMode === "signup" &&
                     <div className="form-input flex space-[0rem]" style={{ padding:"2px 0 5px 0" }}>
                         <input type="checkbox" name="agree" className="error" checked={formData.agree || false} onChange={handleChange} />
-                        <p className="inline-block pl-3 text-[.95rem] leading-[1.2rem]">I agree to the <Link to="/terms-and-conditions/" className="text-[var(--p-color)]">Terms</Link> and <Link to="/privacy-policy/" className="text-[var(--p-color)]">Privacy Policy</Link> <cite className="text-red-500 text-sm">{errors.agree && "(check the box)"}</cite></p>
+                        <p className="inline-block pl-3 text-[.95rem] leading-[1.2rem]">I agree to the <Link to="/terms-and-conditions" className="text-[var(--p-color)]">Terms</Link> and <Link to="/privacy-policy" className="text-[var(--p-color)]">Privacy Policy</Link> <cite className="text-red-500 text-sm">{errors.agree && "(check the box)"}</cite></p>
                     </div>
                 }
                 { authMode === "signin" &&
-                    <p className="inline-block text-[.95rem] leading-[1.2rem]">Forgot Password? <Link to="/auth/reset-password/" className="text-[var(--p-color)] cursor-pointer">Reset Password</Link></p>
+                    <p className="inline-block text-[.95rem] leading-[1.2rem]">Forgot Password? <Link to="/auth/reset-password" className="text-[var(--p-color)] cursor-pointer">Reset Password</Link></p>
                 }
                 <SubmitButton loading={loading} />
+                {/* <div className="mt-3 mb-4">
+                    <button type="submit" className={`w-full bg-[var(--p-color)] cursor-pointer text-white text-[1.2rem] h-12 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition disabled:cursor-progress`} >
+                    { loading ? 'Loading...' : 'Submit' }
+                    </button>
+                </div> */}
                 <div className="flex justify-between gap-x-5 my-3 p-1 continue-with-google">
                     <button className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center">
                         <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" className="w-5 h-5 mr-1"/>
