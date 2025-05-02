@@ -54,7 +54,6 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, setIsCloseT
             });
         }
     }, []);
-    
 
     useEffect(() => {
         if (isCloseToMe && userLocation.country && userLocation.state) {

@@ -155,7 +155,6 @@ const GiveawayItems = () => {
     
         window.history.replaceState({}, '', `${window.location.pathname}?${newUrlParams.toString()}`);
     };
-    
 
     const updateURLParams = (filters) => {
         const params = new URLSearchParams();
@@ -217,6 +216,7 @@ const GiveawayItems = () => {
                         <motion.div className="relative grid grid-cols-4 max-[1401px]:grid-cols-3 max-[1081px]:grid-cols-2 max-[941px]:grid-cols-3 max-[768px]:grid-cols-2 max-[321px]:grid-cols-1 gap-7 max-[941px]:gap-x-5 p-5 pb-50 max-[561px]:gap-x-3" initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
                             {filteredDisplayItems.length > 0 ? (
                                 filteredDisplayItems.map((item) => (
+                                    item.status == 'Accepted' &&
                                     <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1, ease: "easeInOut" }}>
                                         <Link to={`/giveaway-item-details/${item.slug}`} className='block'>
                                             <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />

@@ -48,6 +48,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Home /> },
             { path: 'give-item', element: <RequireAuth><GiveItem /></RequireAuth> },
+            { path: 'give-item/:slug', element: <RequireAuth><GiveItem /></RequireAuth> },
             { path: 'giveaway-items', element: <GiveawayItems /> },
             { path: 'giveaway-item-details/:slug', element: <GiveawayItemDetails /> },
             { path: "how-it-works", element: <HowItWorks /> },

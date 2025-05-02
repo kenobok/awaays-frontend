@@ -11,7 +11,12 @@ export const fetchGiveaways = async () => {
 };
 
 export const fetchGiveawaysItemDetails = async (slug) => {
-    const response = await API.get(`/giveaway-items/slug/${slug}/`);
+    const response = await API.get(`/giveaway-items/${slug}/`);
+    return response.data;
+};
+
+export const fetchMyGiveaways = async (slug) => {
+    const response = await API.get(`/giveaway-items/?mine=true`);
     return response.data;
 };
 

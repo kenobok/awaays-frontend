@@ -107,7 +107,7 @@ const GiveawayItemDetails = () => {
                                         <p className={`text-green-700 font-semibold ${data.show_number == 'True' && user && user.is_verified ? 'pt-[.2rem] pb-[.3rem] border-b border-gray-400' : ''}`}><FontAwesomeIcon icon='user' /> {data.donor.full_name}</p>
                                         { data.show_number == 'True' && user && user.is_verified && <div className='text-blue-800 pt-[.4rem]'><FontAwesomeIcon icon='phone' /> <a href={`tel:${data.donor.mobile}`} className='inline-block tracking-[.5px] font-semibold'>{data.donor.mobile}</a></div> }
                                     </div>
-                                    <img src={data.donor.profile_image} alt='pic' className='w-[40px] ml-4' />
+                                    <img src={data.donor.profile_image} alt='pic' className='w-[50px] h-[50px] object-cover rounded-full ml-4' />
                                 </div>
                             </div>
                             <form className={`w-full pr-1 justify-evenly ${data.show_number == 'True' ? 'mt-[8rem]' : 'mt-[7rem]'}`}>

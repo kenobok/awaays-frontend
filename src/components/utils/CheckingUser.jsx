@@ -19,7 +19,7 @@ const CheckingUser = () => {
 
     return (
         <div className='relative flex flex-col justify-center items-center my-[12rem] m-auto bg-[var(--bg-color)] w-[25rem] max-[577px]:w-[90%] h-[15rem] z-5 rounded-4xl'>
-            <FontAwesomeIcon icon="fa-solid fa-spinner" className="animate-spin text-[1.9rem] text-[var(--p-color)] " />;
+            <FontAwesomeIcon icon="fa-solid fa-spinner" className="animate-spin text-[1.9rem] text-[var(--p-color)] mb-2" />
             <div className='text-center'>
                 <p className='text-base font-semibold'>Just a moment...</p>
                 <p className={`text-sm text-orange-500 ${showMessage ? 'visible' : 'invisible'}`}>

@@ -70,7 +70,6 @@ const Profile = () => {
         try {
             await processImage(file); 
         } catch (err) {
-            // console.error('Image processing failed:', err); 
             toast.error('Image processing failed, please try again');
         }
     };
@@ -90,7 +89,6 @@ const Profile = () => {
             setProfileImage(imageUrl);
     
         } catch (err) {
-            // console.error('Image upload failed:', err);
             throw new Error('Unable to upload image, try again'); 
         } finally {
             setUploadingImage(false);
