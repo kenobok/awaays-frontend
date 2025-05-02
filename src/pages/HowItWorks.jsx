@@ -28,8 +28,8 @@ const HowItWorks = () => {
                     <h4 className="text-xl font-semibold">New Users – Sign Up & Verification</h4>
                     <ul className="pl-5 mt-2 space-y-2">
                         <li>To create an account, click on <b className="text-[var(--p-color)]">Join</b> and sign up by filling the form (or Sign Up using Google/Apple).</li>
-                        <li>A verification link will be sent to your email.</li>
-                        <li>Click the link to activate your account and gain full access.</li>
+                        <li>A verification code will be sent to your email.</li>
+                        <li>Use the code to verify your email in other and gain full access.</li>
                     </ul>
                 </div>
                 <div className="hiw-ul-li mt-3">
@@ -56,7 +56,9 @@ const HowItWorks = () => {
                     </h4>
                     <ul className="pl-5 mt-2 space-y-2">
                         <li>
-                            <b>Select Giving Purpose:</b> Choose the reason for giving—whether to help those in the hospital, prison, people with disabilities or for any other purpose.
+                            <b>Select Giving Purpose: </b> 
+                            Choose the reason for your donation—whether it's to support individuals in hospitals, prisons, disability homes, orphanages, or for another specific cause. If you're giving to the general public, select the General Giveaway option. In this case, people can request your item, and you will choose who to give it to.
+                            For all other purposes, AWAAYS will handle the process. We will contact you, collect the item, and deliver it to the appropriate recipients based on the purpose you selected.
                         </li>
                         <li>
                             <b>Item Name:</b> Enter the name of the item you’re giving away (e.g., Clothes, Carton of Noodles, Chairs, ₦10,000, Generator, etc.).
@@ -68,7 +70,7 @@ const HowItWorks = () => {
                             <b>Instructions:</b> Specify any additional instructions, such as pickup details or conditions for receiving the item.
                         </li>
                         <li>
-                            <b>Images:</b> Upload at least one clear image of the item (maximum of five images allowed).
+                            <b>Images:</b> Upload at least one clear image of the item (maximum of 3 images allowed).
                         </li>
                     </ul>
                 </div>
@@ -78,32 +80,29 @@ const HowItWorks = () => {
                 <div className="text-left">
                     <h2 className="text-3xl text-center font-semibold">Collect an Item for Free</h2>
                     <p className="mt-2 text-lg">
-                        Need something? Browse available giveaways and request an item in just a few simple steps.
+                        Need something? Browse available giveaways and request an item for free.
                     </p>
                 </div>
 
                 <div className="hiw-ul-li mt-3">
-                    <h4 className="text-xl font-normal">
-                        Follow these steps to request and collect an item:
-                    </h4>
                     <ul className="pl-5 mt-2 space-y-2">
                         <li>
                             <b>Browse or Search:</b> Explore available giveaways by clicking on <b className="text-[var(--p-color)]">Giveaways</b> or use the search bar to find specific items.
                         </li>
                         <li>
-                            <b>Request an Item:</b> Click on the item you want and submit a request. Some givers may ask why you need the item before approval.
+                            <b>Request an Item:</b> Click on the item you’re interested in and read the instructions carefully. Some givers may want to understand why you need the item, so it’s recommended to write a brief but clear note explaining your reason before clicking the Request Item button.
                         </li>
                         <li>
                             <b>Wait for Approval:</b> If the giver approves your request, you’ll receive a notification and can proceed with collection.
                         </li>
                         <li>
-                            <b>Connect with the Giver:</b> Use the chat feature to arrange pickup or discuss any necessary details.
+                            <b>Connect with the Giver:</b> Use the chat feature to arrange pickup or discuss any necessary details. Some givers may provide their phone number so you can easily contact them for pickup.
                         </li>
                         <li>
                             <b>Pick Up the Item:</b> Meet the giver at the agreed location and collect your item. Be punctual and polite!
                         </li>
                         <li>
-                            <b>Confirm & Leave a Review:</b> After receiving the item, mark it as "Received" on the platform and leave a review to help build trust in the community.
+                            <b>Confirm Receipt:</b> Once you receive the item, please mark it as "Received" on the platform. Then, head over to the community forum to share a brief testimonial about your experience.
                         </li>
                     </ul>
                 </div>

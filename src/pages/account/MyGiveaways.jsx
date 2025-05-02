@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import API from '../../api/axiosInstance';
 import { fetchMyGiveaways } from "../../services/fetchServices";
 import { motion } from 'framer-motion'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toast } from 'react-toastify'
+import Swal from 'sweetalert2';
 import { Loader1 } from '../../components/utils/Preloader';
 import no_network from '../../assets/images/no-network.png'
 
@@ -14,6 +17,39 @@ const MyGiveaways = () => {
         queryFn: fetchMyGiveaways,
     });
     const navigate = useNavigate();
+    const [deleting, setDeleting] = useState(null)
+
+
+    const handleDelete = async (slug) => {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "This action cannot be undone.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e3342f',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Delete',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: 'my-confirm-btn',
+                cancelButton: 'my-cancel-btn',
+            }
+        });
+    
+        if (result.isConfirmed) {
+            setDeleting(slug)
+            try {
+                await API.delete(`/giveaway-items/${slug}/`);
+                toast.success('Item deleted successfully');
+                refetch()
+            } catch (error) {
+                console.error(error);
+                toast.error('An error occurred, try again...');
+            } finally {
+                setDeleting(null)
+            }
+        }
+    };
 
 
     return (
@@ -56,8 +92,18 @@ const MyGiveaways = () => {
                                             <td>{item.state}, {item.country}</td>
                                             <td>{item.status}</td>
                                             <td className="flex flex-col justify-center items-center h-full gap-x-2 gap-y-3">
-                                                <button className='px-3 pt-[3px] rounded-xl text-sm text-blue-500 cursor-pointer border-2 border-blue-500 shadow-sm' onClick={() => navigate(`/give-item/${item.slug}`)}>Edit</button>
-                                                <button className='px-3 pt-[3px] rounded-xl text-sm text-red-500 cursor-pointer border-2 border-red-400 shadow-sm'>Delete</button>
+                                                { item.status == 'Collected' ? 
+                                                    <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-green-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}`)}>Repost <FontAwesomeIcon icon='list' /></button>
+                                                    :
+                                                    <>
+                                                        <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-blue-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}`)}>Edit <FontAwesomeIcon icon='edit' /></button>
+                                                        <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-red-500 cursor-pointer leading-[.9rem]' onClick={() => handleDelete(item.slug)}>
+                                                            { deleting === item.slug ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin' />
+                                                            : 
+                                                            <>Delete <FontAwesomeIcon icon='trash-alt' /></> }
+                                                        </button>
+                                                    </>
+                                                }
                                             </td>
                                         </tr>
                                     ))}
@@ -77,8 +123,18 @@ const MyGiveaways = () => {
                                         <p><strong>Status:</strong> {item.status}</p>
                                         <div className='flex mt-2'>
                                             <div className="flex-1 flex justify-start gap-x-5">
-                                                <button className='px-3 pt-[3px] rounded-xl text-sm text-blue-500 cursor-pointer border-2 border-blue-500 shadow-sm' onClick={() => navigate(`/give-item/${item.slug}`)}>Edit</button>
-                                                <button className='px-3 pt-[3px] rounded-xl text-sm text-red-500 cursor-pointer border-2 border-red-400 shadow-sm'>Delete</button>
+                                                { item.status == 'Collected' ? 
+                                                    <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-green-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}`)}>Repost <FontAwesomeIcon icon='list' /></button>
+                                                    :
+                                                    <>
+                                                        <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-blue-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}`)}>Edit <FontAwesomeIcon icon='edit' /></button>
+                                                        <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-red-500 cursor-pointer leading-[.9rem]' onClick={() => handleDelete(item.slug)}>
+                                                            { deleting === item.slug  ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin' />
+                                                            : 
+                                                            <>Delete <FontAwesomeIcon icon='trash-alt' /></> }
+                                                        </button>
+                                                    </>
+                                                }
                                             </div>
                                         </div>
                                     </div>

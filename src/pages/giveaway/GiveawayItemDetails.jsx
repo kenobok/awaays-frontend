@@ -112,12 +112,21 @@ const GiveawayItemDetails = () => {
                             </div>
                             <form className={`w-full pr-1 justify-evenly ${data.show_number == 'True' ? 'mt-[8rem]' : 'mt-[7rem]'}`}>
                                 <div className='form-input'>
-                                    <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Reason for request (Optional)' onChange={handleChange} disabled={!user || !user.is_verified}></textarea>
+                                    <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Reason for request (Optional)' onChange={handleChange} disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified}></textarea>
                                     <p className='absolute right-[5px] text-[.95rem]'>{countWords(formData)}/{maxLength} words </p>{wordLength && <small>{wordLength}</small>}
                                 </div>
-                                <button className="mt-4 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={!user || !user.is_verified}>Request Item</button>
+                                <button className="mt-4 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified}>Request Item</button>
+                                { data.purpose !== 'General Giveaway' ? 
+                                <p className='mt-3'>
+                                    Only <b>General Giveaway</b> items can be requested. <br/>
+                                    Visit <Link to='/how-it-works' className='font-bold text-[var(--p-color)] cursor-pointer'>How It Works</Link> page to learn more.....
+                                </p>
+                                :
+                                <>
                                 { user && !user.is_verified && <p className='mt-4'>To request items, you must <Link className='text-[var(--p-color)] font-semibold' onClick={() => redirectToVerifyEmail()}>Verify Your Email </Link></p>}
                                 { !user && <p className='mt-4'><Link className='text-[var(--p-color)] font-semibold' onClick={() => redirectToAuthPage()}>Sign Up | Sign In </Link>  to request item</p> }
+                                </>
+                                }
                             </form>
                         </motion.div>
                     </section>
