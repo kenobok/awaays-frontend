@@ -232,7 +232,7 @@ const SignUpSignIn = () => {
                         <PhoneInput
                             international
                             countryCallingCodeEditable={false}
-                            defaultCountry={locationFromApi.country_code}
+                            defaultCountry={locationFromApi?.country_code}
                             value={formData.mobile}
                             onChange={(mobile) => handleChange(mobile, "mobile")}
                             onFocus={() => handleInputFocus("mobile")} 

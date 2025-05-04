@@ -20,5 +20,12 @@ export const fetchMyGiveaways = async (slug) => {
     return response.data;
 };
 
+export const fetchRequests = async (slug) => {
+    const response = await API.get(`/item-requests/`);
+    return response.data;
+};
+
+
+
 
 

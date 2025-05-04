@@ -23,8 +23,8 @@ const GiveawayItems = () => {
     const navigate = useNavigate();
     const { locationFromApi } = useUserLocation();
     const [showFilter, setShowFilter] = useState(false);
-    const [searchParams] = useSearchParams();
-    const searchQuery = searchParams.get("search") || "";
+    let [searchParams] = useSearchParams();
+    let searchQuery = searchParams.get("search") || "";
     const [filteredItems, setFilteredItems] = useState({ country: [], state: [] });
     const [userLocation, setUserLocation] = useState({ country: null, state: null });
     const [isCloseToMe, setIsCloseToMe] = useState(false);
@@ -104,10 +104,7 @@ const GiveawayItems = () => {
     
         setFilteredItems(updatedFilters);
     
-        const newUrlParams = new URLSearchParams(window.location.search);
-        newUrlParams.delete('country');
-        newUrlParams.delete('state');
-        newUrlParams.delete('closeToMe');
+        const newUrlParams = new URLSearchParams();
     
         if (isCloseToMe) {
             newUrlParams.set('country', userLocation.country);
@@ -115,8 +112,9 @@ const GiveawayItems = () => {
             newUrlParams.set('closeToMe', 'true');
         }
     
-        window.history.replaceState({}, '', `${window.location.pathname}?${newUrlParams.toString()}`);
+        navigate({ pathname: window.location.pathname, search: newUrlParams.toString() }, { replace: true });
     };
+    
     
     const handleLocationChange = (e) => {
         const value = e.target.id;

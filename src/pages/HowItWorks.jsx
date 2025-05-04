@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import '../assets/styles/about.css'
@@ -6,11 +6,21 @@ import '../assets/styles/about.css'
 
 const HowItWorks = () => {
 
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            const element = document.getElementById(hash.replace('#', ''));
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, []);
+
     return (
         <motion.main className="hiw-wrp mx-auto p-10 pb-20 rounded-lg translate-y-[6rem] max-[941px]:p-5" initial={{ y: 200, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 1 }}>
             <section className="howitworks-hero text-center text-white rounded-3xl">
                 <div className="howitworks-hero-inner w-full h-full p-40 max-[993px]:py-20 max-[768px]:px-5 rounded-3xl">
-                    <h1 className="text-4xl font-bold" style={{ color:'#eee' }}>HOW IT WORKS</h1>
+                    <h1 className="text-4xl font-bold" style={{ color: '#eee' }}>HOW IT WORKS</h1>
                     <p className="mt-4 text-xl">Our platform is built to connect people who want to give away free items to those who need them. Our community makes sharing easy, safe, and rewarding.</p>
                 </div>
             </section>
@@ -45,7 +55,7 @@ const HowItWorks = () => {
                 <div className="text-left">
                     <h2 className="text-3xl text-center font-semibold">List an Item for Giveaway</h2>
                     <p className="mt-2 text-lg">
-                        Have something you no longer need? Make a difference by giving it away to someone who does!  
+                        Have something you no longer need? Make a difference by giving it away to someone who does!
                         Follow these simple steps to list an item for giveaway:
                     </p>
                 </div>
@@ -56,12 +66,12 @@ const HowItWorks = () => {
                     </h4>
                     <ul className="pl-5 mt-2 space-y-2">
                         <li>
-                            <b>Select Giving Purpose: </b> 
+                            <b>Select Giving Purpose: </b>
                             Choose the reason for your donation—whether it's to support individuals in hospitals, prisons, disability homes, orphanages, or for another specific cause. If you're giving to the general public, select the General Giveaway option. In this case, people can request your item, and you will choose who to give it to.
                             For all other purposes, AWAAYS will handle the process. We will contact you, collect the item, and deliver it to the appropriate recipients based on the purpose you selected.
                         </li>
                         <li>
-                            <b>Item Name:</b> Enter the name of the item you’re giving away (e.g., Clothes, Carton of Noodles, Chairs, ₦10,000, Generator, etc.).
+                            <b id="scroll-to-view">Item Name:</b> Enter the name of the item you’re giving away (e.g., Clothes, Carton of Noodles, Chairs, ₦10,000, Generator, etc.).
                         </li>
                         <li>
                             <b>Description:</b> Provide a detailed description of the item, including its condition, size, or any important details.
@@ -90,7 +100,7 @@ const HowItWorks = () => {
                             <b>Browse or Search:</b> Explore available giveaways by clicking on <b className="text-[var(--p-color)]">Giveaways</b> or use the search bar to find specific items.
                         </li>
                         <li>
-                            <b>Request an Item:</b> Click on the item you’re interested in and read the instructions carefully. Some givers may want to understand why you need the item, so it’s recommended to write a brief but clear note explaining your reason before clicking the Request Item button.
+                            <b>Request an Item:</b> Click on the item you’re interested in and read the instructions carefully. Some givers may want to understand why you need the item, so it’s recommended to write a brief but clear note explaining your reason before clicking the Request Item button. <b>NOTE: Only General Giveaway items can be requested for. All other purposes are handled by Awaays.</b> Awaays collect the items and distribute it to Prisons, Hospitals, Orphanages or other purposes selected.
                         </li>
                         <li>
                             <b>Wait for Approval:</b> If the giver approves your request, you’ll receive a notification and can proceed with collection.

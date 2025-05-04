@@ -35,7 +35,6 @@ const GiveItem = () => {
 
     useEffect(() => {
         if (slug && data) {
-            console.log(data)
             setFormData({
                 purpose: data.purpose,
                 item: data.name,
@@ -190,7 +189,6 @@ const GiveItem = () => {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length > 0) {
-            // console.log("Errors exist:", newErrors);
             return;
         }
 
@@ -226,9 +224,15 @@ const GiveItem = () => {
             navigate('/dashboard/my-giveaways')
         } catch (error) {
             const err = error?.response?.data
+
             if (err?.uploaded_images) {
-                toast.error("Invalid or corrupted image file...");
-                setErrors((prev) => ({ ...prev, images: 'Invalid or corrupted image file...' }))
+                if (err?.uploaded_images == 'You must upload between 1 and 3 images.') {
+                    toast.error('Upload between 1 - 3 Images');
+                    setErrors((prev) => ({ ...prev, images: 'Upload between 1 - 3 Images' }))
+                } else {
+                    toast.error('Invalid or corrupt image file(.svg)');
+                    setErrors((prev) => ({ ...prev, images: 'Invalid or corrupt image file(.svg)' }))
+                }
             } else if (err) {
                 toast.error("Failed to submit. Please try again.");
             } else {
