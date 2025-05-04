@@ -54,7 +54,7 @@ const MyGiveaways = () => {
 
     return (
         <motion.section className='user-requests flex-1 p-7 pb-20 max-[1221px]:px-5' initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-2xl font-bold text-center border-b border-gray-100 mb-10'>My Giveaways</h2>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100 mb-10'>My Giveaways</h2>
             {
                 isError ?
                     <div className="flex flex-col justify-center items-center text-center w-full h-[75vh]">

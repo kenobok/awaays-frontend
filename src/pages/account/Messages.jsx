@@ -17,7 +17,7 @@ const Messages = () => {
 
     return (
         <motion.section className={`space-y-7 flex-1 p-7 pb-20 max-[941px]:px-5`} initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-2xl font-bold text-center border-b border-gray-100'>Messages</h2>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100'>Messages</h2>
             <div className='flex justify-evenly flex-wrap gap-5'>
                 <div className={`message-list border border-gray-300 rounded-xl p-4 py-3 shadow-lg w-[18rem] max-[651px]:flex-1 max-[768px]:w-[15rem] h-[72vh] overflow-x-hidden overflow-y-auto ${isMessageList ? '' : 'hide-list'}`}>
                     <ul className={`space-y-3 mt-4`}>

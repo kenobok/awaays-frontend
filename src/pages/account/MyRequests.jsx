@@ -29,7 +29,7 @@ const MyRequests = () => {
 
     return (
         <motion.section className='user-requests flex-1 p-7 pb-20 max-[466px]:px-5' initial={{ opacity: 0, x: -300 }}  animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-2xl font-bold text-center border-b border-gray-100 mb-10'>My Requests</h2>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100 mb-10'>My Requests</h2>
             <div className='requests-data border border-gray-300 p-10 px-8 rounded-2xl max-[577px]:px-5'>
                 <div className="overflow-x-auto">
                     <table className="w-full h-full max-[577px]:hidden">

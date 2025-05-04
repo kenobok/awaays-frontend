@@ -239,7 +239,7 @@ const Profile = () => {
 
     return (
         <motion.section className='user-profile flex-1 p-7 pb-20 max-[391px]:px-5' initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-2xl font-bold text-center border-b border-gray-100 mb-10'>Profile</h2>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100 mb-10'>Profile</h2>
             <div className='flex max-[671px]:flex-col max-[671px]:items-center gap-x-5 justify-evenly'>
                 <div>
                     <div className='profile-data border border-gray-300 w-[20rem] p-10 px-8 max-[941px]:mb-10 overflow-hidden rounded-2xl'>

@@ -81,12 +81,8 @@ const router = createBrowserRouter([
                         ]
                     },
                     { path: "my-requests", element: <MyRequests /> },
-                    {
-                        path: "item-requests", element: <ItemRequests />,
-                        children: [
-                            { path: ":slug", element: <ViewItemRequests /> }
-                        ]
-                    },
+                    { path: "item-requests", element: <ItemRequests /> },
+                    { path: "item-requests/:slug", element: <ViewItemRequests /> },
                     { path: "my-giveaways", element: <MyGiveaways /> },
                     { path: "received-items", element: <ReceivedItems /> },
                     { path: "forums-and-groups", element: <ForumGroups /> },

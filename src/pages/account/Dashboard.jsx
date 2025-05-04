@@ -7,7 +7,7 @@ const Dashboard = () => {
 
     return (
         <motion.section className={`space-y-7 flex-1 p-7 pb-20 max-[941px]:px-5 ${location.pathname === '/dashboard' ? '' : 'hidden'}`} initial={{ opacity: 0, x: -300 }}  animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-2xl font-bold text-center border-b border-gray-100'>Dashboard</h2>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100'>Dashboard</h2>
             <div className='dash-overview'>
                 <div className='grid grid-cols-3 max-[577px]:grid-cols-1 gap-x-5 max-[577px]:gap-y-5'>
                     <div className='bg-green-500 p-5 h-[10rem] text-center text-white rounded-xl shadow-lg'>

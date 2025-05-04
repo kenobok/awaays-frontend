@@ -8,7 +8,7 @@ const ForumGroups = () => {
 
     return (
         <motion.section className={`flex-1 p-7 pb-20 max-[941px]:px-5`} initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-2xl font-bold text-center border-b border-gray-100 mb-5'>Forums & Groups</h2>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100 mb-5'>Forums & Groups</h2>
             <div className='space-y-7 flex max-[851px]:flex-col justify-evenly flex-wrap gap-5'>
                 <div className={`w-[16rem] max-[851px]:w-full border border-gray-300 rounded-xl p-2 py-3 shadow-lg`}>
                     <h3 className='text-center font-bold text-[1.25rem] border-b border-gray-300'>Forums</h3>

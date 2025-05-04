@@ -39,7 +39,16 @@ const BlockIfSignedIn = ({ children }) => {
 
         if (user) {
             if (user.is_verified) {
-                if (from.includes('/auth') || location.pathname.includes('/auth')) {
+                if (
+                    from === '/auth' || 
+                    from === '/auth/' || 
+                    from.includes('verify-email') || 
+                    from.includes('reset-password') ||
+                    location.pathname === '/auth' || 
+                    location.pathname === '/auth/' || 
+                    location.pathname.includes('verify-email') || 
+                    location.pathname.includes('reset-password')
+                ) {
                     navigate( '/give-item', { replace: true });
                 } else {
                     navigate( from, { replace: true });
