@@ -34,13 +34,13 @@ const GiveawayItems = () => {
     }, [error, isError])
 
     useEffect(() => {
-        if(locationFromApi) {
+        if(locationFromApi && isCloseToMe) {
             const userLoc = { country: [locationFromApi.country_name], state: locationFromApi.region ? [locationFromApi.region] : [] };
             setUserLocation(userLoc);
             setFilteredItems(userLoc);
             filterItems(userLoc, searchQuery);
         }
-    }, [locationFromApi]);
+    }, [locationFromApi, isCloseToMe]);
 
     useEffect(() => {
         const query = new URLSearchParams(location.search);
@@ -89,7 +89,7 @@ const GiveawayItems = () => {
 
     const filteredDisplayItems = useMemo(() => {
         return filterItems(items, filteredItems, searchQuery);
-    }, [items, filteredItems, searchQuery]);
+    }, [items, filteredItems, searchQuery, isCloseToMe]);
 
     const handleClickOutside = (e) => {
         if (filterIconRef.current && !filterIconRef.current.contains(e.target) && filterRef.current && !filterRef.current.contains(e.target)) {
@@ -114,7 +114,6 @@ const GiveawayItems = () => {
     
         navigate({ pathname: window.location.pathname, search: newUrlParams.toString() }, { replace: true });
     };
-    
     
     const handleLocationChange = (e) => {
         const value = e.target.id;
@@ -218,10 +217,10 @@ const GiveawayItems = () => {
                                         <Link to={`/giveaway-item-details/${item.slug}`} className='block'>
                                             <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
                                             <h3 className="font-bold mt-3 truncate">{item.purpose}</h3>
-                                            <h3 className="font-semibold truncate">{item.name}</h3>
+                                            <h3 className="text-[var(--p-color)] font-semibold truncate">{item.name}</h3>
                                             <p className="truncate">{item.description}</p>
                                             <p className="truncate">
-                                                <FontAwesomeIcon icon="location-dot" className="mr-1 text-sm" />
+                                                <FontAwesomeIcon icon="location-dot" className="mr-1 text-sm text-[var(--p-color)]" />
                                                 {item.country}, {item.state}
                                             </p>
                                         </Link>

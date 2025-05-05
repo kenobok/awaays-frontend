@@ -18,7 +18,7 @@ const SignUpSignIn = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [authMode, setAuthMode] = useState("signup");
-	const [formData, setFormData] = useState({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", isp: "", city: "", region: "", country: "", countryCode: ""});
+	const [formData, setFormData] = useState({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", org: "", city: "", region: "", country: ""});
     const [inputFocus, setInputFocus] = useState({full_name: false, email: false, mobile: false, password: false, agree: false});
     const [passwordToggle, setPasswordToggle] = useState(false);
 	const [errors, setErrors] = useState({});
@@ -27,22 +27,19 @@ const SignUpSignIn = () => {
     const { locationFromApi } = useUserLocation();
     const { login } = useAuth();
     const from = searchParams.get("from") || "/give-item";
-    const [locationSet, setLocationSet] = useState(false);
 
     useEffect(() => {
-        if (authMode === 'signup' && locationFromApi && !locationSet) {
+        if (authMode === 'signup' && locationFromApi) {
             setFormData((prevData) => ({
                 ...prevData,
                 ip: locationFromApi.ip,
-                isp: locationFromApi.org,
+                org: locationFromApi.org,
                 city: locationFromApi.city,
                 region: locationFromApi.region,
                 country: locationFromApi.country_name,
-                countryCode: locationFromApi.country_code,
             }));
-            setLocationSet(true);
         }
-    }, [authMode, locationFromApi, locationSet]);
+    }, [authMode, locationFromApi]);
 
     // useEffect(() => {
     //     console.log(locationFromApi)
@@ -56,7 +53,7 @@ const SignUpSignIn = () => {
     }, []);
 
 	const handleSignUp = () => {
-		setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", isp: "", city: "", region: "", country: "", countryCode: "" });
+		setFormData({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", org: "", city: "", region: "", country: "" });
 		setInputFocus({ full_name: false, email: false, mobile: false, password: false, agree: false});
         setAuthMode("signup");
         setPasswordToggle(false);
@@ -190,9 +187,9 @@ const SignUpSignIn = () => {
                     navigate(from, { replace: true });
                 }
             } catch (error) {
-                console.log(error.response)
-                if (error.response?.data?.detail) {
-                    toast.error(error.response.data.detail);
+                const err = error?.response?.data?.detail
+                if (err || err == 'Refresh token not provided') {
+                    toast.error('Wrong email or password');
                     setErrorMsg(true);
                 } else {
                     toast.error("An error occurred, try again");

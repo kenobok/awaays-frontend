@@ -147,21 +147,25 @@ const GiveawayItemDetails = () => {
                                 <h3 className="text-[1.1rem] font-semibold">Instructions</h3>
                                 <p className="leading-[1.3rem]">{data.instruction}</p>
                             </div>
+                            <div className="mb-3">
+                                <h3 className="text-[1.1rem] font-semibold">Location</h3>
+                                <p className="leading-[1.3rem]">{data.state}, {data.country}</p>
+                            </div>
                             <div className="relative my-7">
                                 <div className='flex justify-between items-center absolute border border-green-500 border-r-0 text-green-600 shadow-lg py-[5px] pl-10 pr-5 max-[768px]:pr-0 rounded-s-3xl top-0 right-0'>
                                     <div className='flex-1'>
                                         <p className={`text-green-700 font-semibold ${data.show_number == 'True' && user && user.is_verified ? 'pt-[.2rem] pb-[.3rem] border-b border-gray-400' : ''}`}><FontAwesomeIcon icon='user' /> {data.donor.full_name}</p>
-                                        { data.show_number == 'True' && user && user.is_verified && <div className='text-blue-800 pt-[.4rem]'><FontAwesomeIcon icon='phone' /> <a href={data.pupose === "General Giveaway" && `tel:${data.donor.mobile}`} className='inline-block tracking-[.5px] font-semibold'>{data.purpose === "General Giveaway" && data.donor.mobile ? data.donor.mobile : '---------------------'}</a></div> }
+                                        { data.show_number == 'True' && user && user.is_verified && <div className='text-blue-800 pt-[.4rem]'><FontAwesomeIcon icon='phone' /> <a href={data.purpose === "General Giveaway" && `tel:${data.donor.mobile}`} className='inline-block tracking-[.5px] font-semibold'>{data.purpose === "General Giveaway" && data.donor.mobile ? data.donor.mobile : '---------------------'}</a></div> }
                                     </div>
                                     <img src={data.donor.profile_image} alt='pic' className='w-[50px] h-[50px] object-cover rounded-full ml-4' />
                                 </div>
                             </div>
                             <form onSubmit={handleSubmit} className={`w-full pr-1 justify-evenly ${data.show_number == 'True' ? 'mt-[8rem]' : 'mt-[7rem]'}`}>
                                 <div className='form-input'>
-                                    <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Reason for request (Optional)' value={formData} onChange={handleChange} disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || user?.id === data.donor.id || checkRequest}></textarea>
+                                    <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Reason for request (Optional)' value={formData} onChange={handleChange} disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || user?.id === data.donor.id || checkRequest || user?.country !== data?.country}></textarea>
                                     <p className='absolute right-[5px] text-[.95rem]'>{countWords(formData)}/{maxLength} words </p>{wordLength && <small>{wordLength}</small>}
                                 </div>
-                                <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || loading || user?.id === data.donor.id || checkRequest}>{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Request Item' }</button>
+                                <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || loading || user?.id === data.donor.id || checkRequest || user?.country !== data?.country}>{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Request Item' }</button>
                                 { data.purpose !== 'General Giveaway' ? 
                                 <p className=''>
                                     Only <b>General Giveaway</b> items can be requested. <br/>
@@ -169,10 +173,11 @@ const GiveawayItemDetails = () => {
                                 </p>
                                 :
                                 <>
-                                { checkRequest && <p className='text-orange-500'>You have requested for this item</p>}
+                                { checkRequest && <p className='text-orange-500'>You have requested for this item...<Link to='/dashboard/my-requests' className='text-[var(--p-color)]'>view my requests</Link></p>}
                                 { user && user.id === data.donor.id && <p className='text-orange-500'>You cannot request for your giveaway...</p>}
                                 { user && !user.is_verified && <p className=''>To request items, you must <Link className='text-[var(--p-color)] font-semibold' onClick={() => redirectToVerifyEmail()}>Verify Your Email </Link></p>}
                                 { !user && <p className=''><Link className='text-[var(--p-color)] font-semibold' onClick={() => redirectToAuthPage()}>Sign Up | Sign In </Link>  to request item</p> }
+                                { user && user?.id !== data.donor.id && user?.country !== data?.country && <p className='text-orange-500'>You cannot request for giveaways in a different country</p> }
                                 </>
                                 }
                             </form>

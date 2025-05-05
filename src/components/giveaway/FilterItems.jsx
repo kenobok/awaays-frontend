@@ -21,13 +21,13 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, setIsCloseT
 
 
     useEffect(() => {
-        if (locationFromApi) {
+        if (locationFromApi && isCloseToMe) {
             setUserLocation({country: locationFromApi.country_name, state: locationFromApi.region || ""});
             setCountryFilter([{label: locationFromApi.country_name, value: locationFromApi.country_name}]);
             setStateFilter({label: locationFromApi.region, value: locationFromApi.region})
             setSelectedStates([{label: locationFromApi.region, value: locationFromApi.region}])
         }
-    }, [locationFromApi]);
+    }, [locationFromApi, isCloseToMe]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -89,7 +89,7 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, setIsCloseT
             onRemoveState(updatedStates.map(state => state.value));
             return updatedStates;
         });
-        if (stateFilter && countriesData[countryValue]?.includes(stateFilter.value)) {
+        if (stateFilter && countriesData[countryValue]?.includes(stateFilter?.value)) {
             setStateFilter(null);
         }
     };

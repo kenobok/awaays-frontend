@@ -261,7 +261,7 @@ const Profile = () => {
                         </div>
                         <div>
                             <h4>State/Region</h4>
-                            <p>{user.state || 'None'}</p>
+                            <p>{user.region || 'None'}</p>
                         </div>
                     </div>
                 </div>

@@ -15,12 +15,12 @@ export const fetchGiveawaysItemDetails = async (slug) => {
     return response.data;
 };
 
-export const fetchMyGiveaways = async (slug) => {
+export const fetchMyGiveaways = async () => {
     const response = await API.get(`/giveaway-items/?mine=true`);
     return response.data;
 };
 
-export const fetchRequests = async (slug) => {
+export const fetchRequests = async () => {
     const response = await API.get(`/item-requests/`);
     return response.data;
 };

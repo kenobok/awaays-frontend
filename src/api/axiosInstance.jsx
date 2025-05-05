@@ -14,7 +14,7 @@ const subscribeTokenRefresh = (callback) => {
 };
 
 const API = axios.create({
-    baseURL: 'https://127.0.0.1:8000/api/',
+    baseURL: 'https://192.168.43.67:8000/api/',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json',

@@ -1,6 +1,5 @@
 const GiveawayPurpose = ({ value, onChange, error }) => {
     const options = [
-        { id: 1, value: 'Support Awaays', label: 'Support Awaays' },
         { id: 2, value: 'General Giveaway', label: 'General Giveaway' },
         { id: 3, value: 'Healthcare Support', label: 'Healthcare Support' },
         { id: 4, value: 'Prison Outreach', label: 'Prison Outreach' },
@@ -9,6 +8,7 @@ const GiveawayPurpose = ({ value, onChange, error }) => {
         { id: 7, value: 'Orphanages Support', label: 'Orphanages Support' },
         { id: 8, value: 'Disaster Relief', label: 'Disaster Relief' },
         { id: 9, value: 'Disabilities Support', label: 'Disabilities Support' },
+        { id: 1, value: 'Support Awaays', label: 'Support Awaays' },
     ];
 
     return (
