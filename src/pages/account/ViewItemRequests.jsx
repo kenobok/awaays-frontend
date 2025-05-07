@@ -38,12 +38,6 @@ const ViewItemRequests = () => {
         if (filtered.length > 0) setItemName(filtered[0].item.name);
     }, [requests, slug]);
 
-    useEffect(() => {
-        const get_item = itemRequests.some((item) => (item.status == 'Accepted'))
-        console.log(get_item)
-        console.log(itemRequests)
-    }, [itemRequests])
-
     const handleAccept = async (req_id) => {
         const receiver_id = itemRequests.find(request => request.id === req_id)
         setWaiting(req_id)

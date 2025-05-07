@@ -23,10 +23,6 @@ const ReceivedItems = () => {
         setMyReceivedItems(myItemReceived);
     }, [requests, user]);
 
-    useEffect(() => {
-        console.log(myReceivedItems)
-    }, [myReceivedItems, requests])
-
 
     return (
         <motion.section className='user-requests flex-1 p-7 pb-20 max-[466px]:px-5' initial={{ opacity: 0, x: -300 }}  animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>

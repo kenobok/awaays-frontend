@@ -25,6 +25,11 @@ export const fetchRequests = async () => {
     return response.data;
 };
 
+export const fetchConversations = async () => {
+    const response = await API.get(`/account/conversations`);
+    return response.data;
+};
+
 
 
 
