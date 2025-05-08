@@ -36,24 +36,24 @@ const LeaderboardDetails = () => {
             <table className="w-full max-[577px]:hidden overflow-y-auto">
                 <thead className="border-b-2 border-gray-400 text-left">
                     <tr>
-                        <th>#</th>
+                        {/* <th>#</th> */}
                         <th>Donor</th>
                         <th>Item</th>
                         <th>Location</th>
                         <th>Receiver</th>
-                        <th>Status</th>
+                        {/* <th>Status</th> */}
                     </tr>
                 </thead>
                 <tbody>
                     { 
                         leaderboardData.map((item, index) => (
                             <tr key={index}>
-                                <td>{index + 1}</td>
+                                {/* <td>{index + 1}</td> */}
                                 <td>{item.donor || 'Anonymous'}</td>
                                 <td>{item.item}</td>
                                 <td>{item.location.state}, {item.location.country}</td>
                                 <td>{item.receiver}</td>
-                                <td className={`text-green-500`}>{item.status}</td>
+                                {/* <td className={`text-green-500`}>{item.status}</td> */}
                             </tr>
                         ))
                     }
@@ -63,12 +63,12 @@ const LeaderboardDetails = () => {
             <div className="hidden max-[577px]:block px-3">
                 {leaderboardData.map((item, index) => (
                     <div key={index} className="space-y-1 leading-[1.2rem] px-4 py-4 mb-5 border-b border-gray-200 rounded-lg shadow-lg">
-                        <p><strong>#:</strong> {index + 1}</p>
+                        {/* <p><strong>#:</strong> {index + 1}</p> */}
                         <p><strong>Donor:</strong> {item.donor || 'Anonymous'}</p>
                         <p><strong>Item:</strong> {item.item}</p>
                         <p><strong>Location:</strong> {item.location.state}, {item.location.country}</p>
                         <p><strong>Receiver:</strong> {item.receiver}</p>
-                        <strong>Status:</strong> <p className={`inline-block text-green-500`}>{item.status}</p>
+                        {/* <strong>Status:</strong> <p className={`inline-block text-green-500`}>{item.status}</p> */}
                     </div>
                 ))}
             </div>

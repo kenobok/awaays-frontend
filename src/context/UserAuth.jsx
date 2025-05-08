@@ -37,6 +37,8 @@ const BlockIfSignedIn = ({ children }) => {
 
         const from = (location.pathname + location.search) || '/give-item';
 
+        console.log(from)
+
         if (user) {
             if (user.is_verified) {
                 if (

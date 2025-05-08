@@ -29,19 +29,19 @@ const ForumDetails = () => {
 
     return (
         <div className='ml-25 max-[768px]:ml-0'>
-            <h3 className='text-center text-[1.3rem] font-semibold mb-5 border-b border-gray-200'>{ forum.name }</h3>
-            <div className='py-10'>
+            <h3 className='text-center text-[1.3rem] font-semibold border-b border-gray-200'>{ forum.name }</h3>
+            <div className='py-10 pt-8'>
                 <div className='forum mx-auto space-y-5 max-w-4xl pr-5 max-[768px]:px-5'>
                     {
                         forum ? 
                         forum.conversations.length>0 ? 
                         forum.conversations.map((item, index) => (
                             <div key={index} className={`single-discussion relative border-b-2 border-gray-300 pb-4`}>
-                                <h4 className='font-bold text-[1.1rem] leading-[1.2rem]'>{item.title}</h4>
+                                <h4 className='font-semibold text-[1.1rem] leading-[1.2rem]'>{item.title}</h4>
                                 <p className={`leading-[1.3rem] max-[600px]:leading-[1.2rem] ${expandedPosts.includes(index) ? '' : 'line-clamp-3'}`}>{item.content}</p>
                                 <div className='flex justify-end pr-3'>
                                     {item.content.length > 250 && (
-                                        <button onClick={() => handleReadMoreToggle(index)} className="text-sm text-blue-500 hover:font-bold leading-[1rem] cursor-pointer border-2 border-blue-500 p-[1px] pt-[3.5px] px-[5px] rounded-full">
+                                        <button onClick={() => handleReadMoreToggle(index)} className="text-sm text-blue-500 hover:font-bold leading-[1rem] cursor-pointer border border-blue-500 p-[1px] pt-[3px] px-[7px] rounded-full">
                                             {expandedPosts.includes(index) ? 'Show Less' : 'Read More'}
                                         </button>
                                     )}

@@ -30,6 +30,11 @@ export const fetchConversations = async () => {
     return response.data;
 };
 
+export const fetchConversationsDetails = async (slug) => {
+    const response = await API.get(`/account/conversations/${slug}`);
+    return response.data;
+};
+
 
 
 

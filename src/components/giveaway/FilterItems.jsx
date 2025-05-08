@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUserLocation } from "/src/hooks/useUserLocationFromAPI";
@@ -11,6 +12,7 @@ const countryOptions = Object.keys(countriesData).map(country => ({
 }));
 
 const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, setIsCloseToMe, multipleFilter, onRemoveCountry, onRemoveState }) => {
+    const { user } = useAuth();
     const { locationFromApi, isLoading } = useUserLocation();
     const [userLocation, setUserLocation] = useState({ country: null, state: null });
     const [countryFilter, setCountryFilter] = useState([]);
@@ -21,13 +23,22 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, setIsCloseT
 
 
     useEffect(() => {
-        if (locationFromApi && isCloseToMe) {
+        if (user) {
+            setUserLocation({country: user.country, state: user.region || ""});
+            setCountryFilter([{label: user.country, value: user.country}]);
+            setStateFilter({label: user.region, value: user.region})
+            setSelectedStates([{label: user.region, value: user.region}])
+        }
+    }, [user, isCloseToMe]);
+
+    useEffect(() => {
+        if (!user && locationFromApi && isCloseToMe) {
             setUserLocation({country: locationFromApi.country_name, state: locationFromApi.region || ""});
             setCountryFilter([{label: locationFromApi.country_name, value: locationFromApi.country_name}]);
             setStateFilter({label: locationFromApi.region, value: locationFromApi.region})
             setSelectedStates([{label: locationFromApi.region, value: locationFromApi.region}])
         }
-    }, [locationFromApi, isCloseToMe]);
+    }, [!user, locationFromApi, isCloseToMe]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
@@ -47,7 +58,12 @@ const FilterItems = ({ onClearFilter, onLocationChange, isCloseToMe, setIsCloseT
             setSelectedStates([{ label: stateParam, value: stateParam }]);
         }
     
-        if (savedCloseToMe && locationFromApi) {
+        if (savedCloseToMe && user) {
+            setUserLocation({
+                country: user.country,
+                state: user.region
+            });
+        } else if (!user && savedCloseToMe && locationFromApi) {
             setUserLocation({
                 country: locationFromApi.country_name,
                 state: locationFromApi.region

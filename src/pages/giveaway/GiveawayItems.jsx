@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from 'framer-motion'
 import { Link, useSearchParams, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from "../../context/AuthContext";
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from '@tanstack/react-query';
@@ -8,15 +9,17 @@ import { fetchGiveaways } from "../../services/fetchServices";
 import FilterItem from '../../components/giveaway/FilterItems';
 import { useUserLocation } from "/src/hooks/useUserLocationFromAPI";
 import { Loader1 } from '../../components/utils/Preloader';
-import no_network from '../../assets/images/no-network.png'
+import { SomethingWentWrong } from "../../components/utils/SomethingWentWrong";
+
 
 const GiveawayItems = () => {
-    const { data: items, isLoading, isError, error, refetch } = useQuery({
+    const { data: items, isLoading, isError, error, refetch, isFetching } = useQuery({
         queryKey: ['giveaway-items'],
         queryFn: fetchGiveaways,
     });
 
     const hideFilter = useMediaQuery({ query: "(max-width: 940px)" });
+    const { user } = useAuth();
     const filterIconRef = useRef(null);
     const filterRef = useRef(null);
     const location = useLocation();
@@ -34,13 +37,22 @@ const GiveawayItems = () => {
     }, [error, isError])
 
     useEffect(() => {
-        if(locationFromApi && isCloseToMe) {
+        if(user && isCloseToMe) {
+            const userLoc = { country: [user.country], state: user.region ? [user.region] : [] };
+            setUserLocation(userLoc);
+            setFilteredItems(userLoc);
+            filterItems(userLoc, searchQuery);
+        }
+    }, [user, isCloseToMe]);
+
+    useEffect(() => {
+        if(!user && locationFromApi && isCloseToMe) {
             const userLoc = { country: [locationFromApi.country_name], state: locationFromApi.region ? [locationFromApi.region] : [] };
             setUserLocation(userLoc);
             setFilteredItems(userLoc);
             filterItems(userLoc, searchQuery);
         }
-    }, [locationFromApi, isCloseToMe]);
+    }, [!user, locationFromApi, isCloseToMe]);
 
     useEffect(() => {
         const query = new URLSearchParams(location.search);
@@ -202,11 +214,7 @@ const GiveawayItems = () => {
 
             {
                 isError ? 
-                    <div className="flex flex-col justify-center items-center text-center w-full h-[75vh] mt-10">
-                            <img src={no_network} alt="Connection error" className="w-[15rem]" />
-                            <p className="text-orange-500 text-[1rem] font-semibold mb-3">Check your internet connection</p>
-                            <button onClick={() => refetch()} className="p-[5px] px-5 border-2 border-[var(--p-color)] text-[var(--p-color)] rounded-xl cursor-pointer">Retry</button>
-                    </div>
+                    <SomethingWentWrong onHandleRefresh={refetch} isError={isError} isFetching={isFetching} />
                 :
                 <section className="relative flex-1 min-h-[75vh] ml-2 max-[941px]:ml-0 mt-[6rem] max-[941px]:mt-[6.5rem]">
                     {isLoading ? <div className='h-[75vh]'><Loader1 /></div> :

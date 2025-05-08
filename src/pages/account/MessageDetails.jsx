@@ -1,36 +1,38 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { useParams } from 'react-router-dom'
-import { messages } from '../../components/utils/UtilsData'; 
+import { useAuth } from '../../context/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { fetchConversationsDetails } from '../../services/fetchServices';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Loader1 } from '../../components/utils/Preloader';
 
 
 const MessageDetails = () => {
     const { slug } = useParams();
-    const [user, setUser] = useState(null);
+    const { user } = useAuth();
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+    const socketRef = useRef(null);
 
-    const message = useMemo(() => {
-        return messages.find(msg => msg.slug === slug);
-    }, [slug])
-
-    useEffect(() => {
-        if (message) {
-            setUser(message.participants[1]);
-        }
-    }, [message]);
+    const { data: conversation, isLoading } = useQuery({
+        queryKey: ['conversation', slug],
+        queryFn: () => fetchConversationsDetails(slug),
+    });
 
 
     return (
         <>
-            <p className='pt-1 text-center border-b border-gray-300'>Chat with {message && message.participants.find(name => name !== user)}</p>
+            <p className='pt-1 text-center border-b border-gray-300 text-sm'>Chats with { conversation?.participant_1_id === user?.id ? conversation?.participant_2_name : conversation?.participant_1_name }</p>
             <div className={`h-full py-0`}>
                 <div className='relative h-[58vh] overflow-x-hidden overflow-y-auto'>
                         { 
-                            message.conversation.length > 0 ? message.conversation.map((msg, index) => (
-                                <div key={index} className={`flex relative ${msg.receiver === user ? 'justify-end' : 'justify-start'}`}>
-                                    <div className={`relative p-[10px] pb-[5px] mt-3 max-w-[70%] max-[1081px]:max-w-[80%] rounded-lg ${msg.receiver === user ? 'bg-blue-200' : 'bg-gray-200'}`}>
+                            isLoading ? <div className='h-[100%]'><Loader1 /></div> :
+                            conversation?.messages?.length > 0 ? conversation?.messages.map((msg, index) => (
+                                <div key={index} className={`flex relative ${msg.receiver === user.id ? 'justify-end' : 'justify-start'}`}>
+                                    <div className={`relative p-[10px] pb-[5px] mt-3 max-w-[70%] max-[1081px]:max-w-[80%] rounded-lg ${msg.receiver === user.id ? 'bg-blue-200' : 'bg-gray-200'}`}>
                                         <p className='text-[.93rem] leading-[1rem] mb-1'>{msg.message}</p>
-                                        <address className='text-black text-[.66rem]'>12:56 PM || 21/04/2025</address>
-                                        <FontAwesomeIcon icon='circle' className={`absolute bottom-[5px] right-[5px] text-[.55rem] ${msg.read ? 'text-blue-600' : 'text-gray-400'}`} />
+                                        <address className='text-black text-[.66rem] mr-7'>{msg.time.slice(0, 5)} || {msg.date}</address>
+                                        { msg.receiver === user.id && <FontAwesomeIcon icon={`${msg.read ? 'eye' : 'eye-slash'}`} className={`absolute bottom-[8px] right-[7px] text-[.6rem] ${msg.read ? 'text-blue-600' : 'text-gray-400'}`} /> }
                                     </div>
                                 </div>
                             )) : <p>No Conversation</p>

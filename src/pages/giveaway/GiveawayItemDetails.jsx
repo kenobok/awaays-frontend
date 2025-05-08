@@ -9,8 +9,8 @@ import { Navigation, Pagination, Autoplay, EffectCards, Mousewheel } from 'swipe
 import { motion } from 'framer-motion';
 import { Loader1 } from '../../components/utils/Preloader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import no_network from '../../assets/images/no-network.png'
 import { toast } from 'react-toastify';
+import { SomethingWentWrong } from '../../components/utils/SomethingWentWrong'
 
 
 const useGiveawayItemDetails = (slug) => {
@@ -26,7 +26,7 @@ const GiveawayItemDetails = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { user } = useAuth();
-    const { data, error, isLoading, refetch } = useGiveawayItemDetails(slug);
+    const { data, isError, isLoading, refetch, isFetching } = useGiveawayItemDetails(slug);
     const { data: requests, isLoading: isReqLoading, refetch: reload } = useQuery({
         queryKey: ['check-item-requests', data?.id],
         queryFn: async () => {
@@ -104,12 +104,8 @@ const GiveawayItemDetails = () => {
     return (
         <main className={`relative mt-[9rem] max-[941px]:mt-[6rem] flex w-full h-full max-[768px]:block max-[768px]:p-5 overflow-y-auto overflow-x-hidden`}>
             { isLoading ? <div className='h-[75vh] w-full'><Loader1 /></div> :
-                !data || error ?
-                    <div className="flex flex-col justify-center items-center text-center w-full h-[75vh]">
-                        <img src={no_network} alt="Connection error" className="w-[15rem]" />
-                        <p className="text-orange-500 text-[1rem] font-semibold mb-3">Check your internet connection</p>
-                        <button onClick={() => refetch()} className="p-[5px] px-5 border-2 border-[var(--p-color)] text-[var(--p-color)] rounded-xl cursor-pointer">Retry</button>
-                    </div>
+                !data || isError ?
+                    <SomethingWentWrong onHandleRefresh={refetch} isError={isError} isFetching={isFetching} />
                 :
                 <>
                     <section className="flex-1 overflow-hidden">
@@ -127,7 +123,7 @@ const GiveawayItemDetails = () => {
                                 {
                                     data.images.map((image, index) => (
                                         <SwiperSlide key={index}>
-                                            <img src={image} alt={`slide-${index}`} className={`w-full h-[30rem] m-auto rounded-xl object-contain transition-transform duration-300 ${isEnlarged ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} onClick={() => {setIsEnlarged(!isEnlarged)}}/>
+                                            <img src={image} alt={`slide-${index}`} loading='lazy' className={`w-full h-[30rem] m-auto rounded-xl object-contain transition-transform duration-300 ${isEnlarged ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} onClick={() => {setIsEnlarged(!isEnlarged)}}/>
                                         </SwiperSlide>
                                     ))
                                 }
@@ -161,11 +157,22 @@ const GiveawayItemDetails = () => {
                                 </div>
                             </div>
                             <form onSubmit={handleSubmit} className={`w-full pr-1 justify-evenly ${data.show_number == 'True' ? 'mt-[8rem]' : 'mt-[7rem]'}`}>
-                                <div className='form-input'>
-                                    <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Reason for request (Optional)' value={formData} onChange={handleChange} disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || user?.id === data.donor.id || checkRequest || user?.country !== data?.country}></textarea>
-                                    <p className='absolute right-[5px] text-[.95rem]'>{countWords(formData)}/{maxLength} words </p>{wordLength && <small>{wordLength}</small>}
-                                </div>
-                                <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || loading || user?.id === data.donor.id || checkRequest || user?.country !== data?.country}>{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Request Item' }</button>
+                                { checkRequest ?
+                                    <>
+                                        <div className='form-input'>
+                                            <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Send message to donor' value={formData} onChange={handleChange}></textarea>
+                                        </div>
+                                        <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)]">{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Send message' }</button>
+                                    </>
+                                    :
+                                    <>
+                                        <div className='form-input'>
+                                            <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Reason for request (Optional)' value={formData} onChange={handleChange} disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || user?.id === data.donor.id || checkRequest || user?.country !== data?.country}></textarea>
+                                            <p className='absolute right-[5px] text-[.95rem]'>{countWords(formData)}/{maxLength} words </p>{wordLength && <small>{wordLength}</small>}
+                                        </div>
+                                        <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || loading || user?.id === data.donor.id || checkRequest || user?.country !== data?.country}>{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Request Item' }</button>
+                                    </>
+                                }
                                 { data.purpose !== 'General Giveaway' ? 
                                 <p className=''>
                                     Only <b>General Giveaway</b> items can be requested. <br/>
