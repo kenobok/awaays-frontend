@@ -33,8 +33,19 @@ const GiveawayItems = () => {
     const [isCloseToMe, setIsCloseToMe] = useState(false);
 
     useEffect(() => {
-        error || isError && console.log({error, isError})
-    }, [error, isError])
+        if (!items || !Array.isArray(items)) return;
+    
+        const validIds = new Set(items.map(item => String(item.id)));
+    
+        Object.keys(localStorage).forEach((key) => {
+            if (key.startsWith('requested-')) {
+                const id = key.split('requested-')[1];
+                if (!validIds.has(id)) {
+                    localStorage.removeItem(key); 
+                }
+            }
+        });
+    }, [items]);
 
     useEffect(() => {
         if(user && isCloseToMe) {

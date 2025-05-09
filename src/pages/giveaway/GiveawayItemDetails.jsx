@@ -39,6 +39,10 @@ const GiveawayItemDetails = () => {
     const hasRequested = requests?.some(req => req?.item.id === data?.id && req?.user.id === user?.id);
     const [checkRequest, setCheckRequest] = useState(false);
     const [isEnlarged, setIsEnlarged] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messageError, setMessageError] = useState('');
+    const [messaged, setMessaged] = useState(false);
+    const [requested, setRequested] = useState(false);
     const [formData, setFormData] = useState('');
     const [wordLength, setWordLength] = useState('');
     const [loading, setIsLoading] = useState(false);
@@ -48,6 +52,13 @@ const GiveawayItemDetails = () => {
     useEffect(() => {
         setCheckRequest(hasRequested);
     }, [hasRequested]);
+
+    useEffect(() => {
+        const getReqStat = JSON.parse(localStorage.getItem(`requested-${data?.id}`))
+        const getMsgStat =  JSON.parse(localStorage.getItem(`messaged-${data?.donor?.id}`))
+        setRequested(getReqStat)
+        setMessaged(getMsgStat)
+    }, [data?.id, data?.donor?.id])
 
     const redirectToVerifyEmail = () => {
         navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });
@@ -75,28 +86,63 @@ const GiveawayItemDetails = () => {
         e.preventDefault();
 
         setIsLoading(true)
-        try {
-            const payload = { item: data.id, reason: formData || '' };
-            await API.post(`/item-requests/`, payload)
-            toast.success('Your request is sent')
-            setFormData('');
-            setWordLength('');
-            refetch();
-            reload()
-        } catch(error) {
-            console.log(error)
-            const err = error?.response?.data
-            if (err.non_field_errors) {
-                toast.error('You already requested for this item')
-                setFormData(''); 
+        if (!checkRequest) {
+            try {
+                const payload = { item: data.id, reason: formData || '' };
+                await API.post(`/item-requests/`, payload)
+                toast.success('Your request is sent')
+                setFormData('');
                 setWordLength('');
                 refetch();
                 reload()
-            } else {
-                toast.error('An error occurred, try again')
+                localStorage.setItem(`requested-${data?.id}`, JSON.stringify(true))
+                setRequested(true)
+            } catch(error) {
+                const err = error?.response?.data
+                if (err.non_field_errors) {
+                    toast.error('You already requested for this item')
+                    setFormData(''); 
+                    setWordLength('');
+                    refetch();
+                    reload()
+                    localStorage.setItem(`requested-${data?.id}`, JSON.stringify(true))
+                    setRequested(true)
+                } else {
+                    toast.error('An error occurred, try again')
+                }
+            } finally {
+                setIsLoading(false)
             }
-        } finally {
-            setIsLoading(false)
+        } else {
+            if (!message.trim()) {
+                setMessageError('Message cannot be blank')
+                setIsLoading(false)
+                return
+            } else {
+                setMessageError('')
+                try {
+                    await API.post(`account/conversations/`, {
+                        participant_2_id: data.donor.id,
+                        initial_message: message
+                    })
+                    setMessage('')
+                    toast.success('Message sent to donor')
+                    localStorage.setItem(`messaged-${data?.donor?.id}`, JSON.stringify(true))
+                    setMessaged(true)
+                } catch (error) {
+                    const err = error?.response?.data
+                    if (err == "A conversation with this user already exists.") {
+                        toast.warning('You’ve already started a conversation. Continue it from your dashboard.')
+                        setMessage('')
+                        localStorage.setItem(`messaged-${data?.donor?.id}`, JSON.stringify(true))
+                        setMessaged(true)
+                    } else {
+                        toast.error('An error occurred')
+                    }
+                } finally {
+                    setIsLoading(false)
+                }
+            }
         }
     }
 
@@ -157,20 +203,21 @@ const GiveawayItemDetails = () => {
                                 </div>
                             </div>
                             <form onSubmit={handleSubmit} className={`w-full pr-1 justify-evenly ${data.show_number == 'True' ? 'mt-[8rem]' : 'mt-[7rem]'}`}>
-                                { checkRequest ?
+                                { checkRequest || requested ?
                                     <>
                                         <div className='form-input'>
-                                            <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Send message to donor' value={formData} onChange={handleChange}></textarea>
+                                            <textarea className={`h-[7rem] resize-none disabled:cursor-not-allowed ${messageError ? 'error' : ''}`} placeholder='Send message to donor' value={message} onChange={(e) => {setMessage(e.target.value)}} disabled={ messaged }></textarea>
+                                            <small>{messageError && messageError}</small>
                                         </div>
-                                        <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)]">{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Send message' }</button>
+                                        <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={loading || messaged}>{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Send message' }</button>
                                     </>
                                     :
                                     <>
                                         <div className='form-input'>
-                                            <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Reason for request (Optional)' value={formData} onChange={handleChange} disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || user?.id === data.donor.id || checkRequest || user?.country !== data?.country}></textarea>
+                                            <textarea className='h-[7rem] resize-none disabled:cursor-not-allowed' placeholder='Reason for request (Optional)' value={formData} onChange={handleChange} disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || user?.id === data.donor.id || checkRequest || requested || user?.country !== data?.country}></textarea>
                                             <p className='absolute right-[5px] text-[.95rem]'>{countWords(formData)}/{maxLength} words </p>{wordLength && <small>{wordLength}</small>}
                                         </div>
-                                        <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || loading || user?.id === data.donor.id || checkRequest || user?.country !== data?.country}>{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Request Item' }</button>
+                                        <button className="my-3 bg-[var(--p-color)] text-white py-3 px-5 rounded-xl shadow-md cursor-pointer disabled:bg-[var(--s-color)] disabled:cursor-not-allowed" disabled={data.purpose !== 'General Giveaway' || !user || !user.is_verified || loading || user?.id === data.donor.id || checkRequest || requested || user?.country !== data?.country}>{ loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem] text-white' /> : 'Request Item' }</button>
                                     </>
                                 }
                                 { data.purpose !== 'General Giveaway' ? 
@@ -180,7 +227,8 @@ const GiveawayItemDetails = () => {
                                 </p>
                                 :
                                 <>
-                                { checkRequest && <p className='text-orange-500'>You have requested for this item...<Link to='/dashboard/my-requests' className='text-[var(--p-color)]'>view my requests</Link></p>}
+                                { checkRequest && <p className='text-orange-500'>You have requested for this item.....<Link to='/dashboard/my-requests' className='text-[var(--p-color)]'>view my requests</Link></p>}
+                                { requested && messaged && <p className='text-gray-800'>Continue chatting with donor.....<Link to={`/dashboard/messages`} className='text-[var(--p-color)]'>view my chats</Link></p>}
                                 { user && user.id === data.donor.id && <p className='text-orange-500'>You cannot request for your giveaway...</p>}
                                 { user && !user.is_verified && <p className=''>To request items, you must <Link className='text-[var(--p-color)] font-semibold' onClick={() => redirectToVerifyEmail()}>Verify Your Email </Link></p>}
                                 { !user && <p className=''><Link className='text-[var(--p-color)] font-semibold' onClick={() => redirectToAuthPage()}>Sign Up | Sign In </Link>  to request item</p> }
