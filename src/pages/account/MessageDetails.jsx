@@ -45,12 +45,11 @@ const MessageDetails = () => {
     }, [conversation, messages]);
 
     const formatTo12Hour = (timeStr) => {
-        const [hour, minute] = timeStr.split(':');
-        const date = new Date();
-        date.setHours(hour);
-        date.setMinutes(minute);
-
-        return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+        if (!timeStr) return '';
+        let [hour, minute] = timeStr.split(':').map(Number);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        hour = hour % 12 || 12; 
+        return `${hour}:${minute.toString().padStart(2, '0')} ${ampm}`;
     };
 
     const handleSend = async (e) => {

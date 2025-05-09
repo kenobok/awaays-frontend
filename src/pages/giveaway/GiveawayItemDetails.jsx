@@ -36,7 +36,7 @@ const GiveawayItemDetails = () => {
         },
         enabled: !!data?.id && !!user,
     });
-    const hasRequested = requests?.some(req => req?.item.id === data?.id && req?.user.id === user?.id);
+    // const hasRequested = requests?.some(req => req?.item.id === data?.id && req?.user.id === user?.id);
     const [checkRequest, setCheckRequest] = useState(false);
     const [isEnlarged, setIsEnlarged] = useState(false);
     const [message, setMessage] = useState('');
@@ -49,16 +49,35 @@ const GiveawayItemDetails = () => {
     const from = location.pathname + location.search;
     const maxLength = 50;
 
+    // useEffect(() => {
+    //     const reqstat = JSON.parse(localStorage.useGiveawayItemDetailsetItem(`requested-${data?.id}`))
+    //     setCheckRequest(reqstat);
+    // }, [data, checkRequest, location.pathname]);
+
     useEffect(() => {
-        setCheckRequest(hasRequested);
-    }, [hasRequested]);
+        const updateRequestStatus = () => {
+            const reqStat = JSON.parse(localStorage.getItem(`requested-${data?.id}`));
+            setCheckRequest(reqStat);
+        };
+        updateRequestStatus();
+        const handleStorageChange = (e) => {
+            if (e.key === `requested-${data?.id}`) {
+                updateRequestStatus();
+            }
+        };
+        window.addEventListener('storage', handleStorageChange);
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, [data?.id]);
+    
 
     useEffect(() => {
         const getReqStat = JSON.parse(localStorage.getItem(`requested-${data?.id}`))
         const getMsgStat =  JSON.parse(localStorage.getItem(`messaged-${data?.donor?.id}`))
         setRequested(getReqStat)
         setMessaged(getMsgStat)
-    }, [data?.id, data?.donor?.id])
+    }, [data?.id, data?.donor?.id, location.pathname])
 
     const redirectToVerifyEmail = () => {
         navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });

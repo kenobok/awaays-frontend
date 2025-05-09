@@ -27,6 +27,7 @@ const Messages = () => {
             refetch();
         }, 5000);
 
+        console.log(data)
         return () => clearInterval(interval);
     }, [refetch]);
 

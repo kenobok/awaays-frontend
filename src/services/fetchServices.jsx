@@ -5,23 +5,25 @@ export const fetchMe = async () => {
     return response.data;
 };
 
-export const fetchGiveaways = async () => {
-    const response = await API.get('/giveaway-items/');
-    return response.data;
-};
+// export const fetchMyGiveaways = async (url = '/giveaway-items/my-items') => {
+//     const response = await API.get(url);
+//     return response.data;
+// };
+
+export const fetcher = (url) => API.get(url).then(res => res.data);
 
 export const fetchGiveawaysItemDetails = async (slug) => {
-    const response = await API.get(`/giveaway-items/${slug}/`);
+    const response = await API.get(`/giveaway-items/${slug}/?no_pagination=true`);
     return response.data;
 };
 
 export const fetchMyGiveaways = async () => {
-    const response = await API.get(`/giveaway-items/?mine=true`);
+    const response = await API.get(`/giveaway-items/?mine=true&no_pagination=true`);
     return response.data;
 };
 
 export const fetchRequests = async () => {
-    const response = await API.get(`/item-requests/`);
+    const response = await API.get(`/item-requests/?no_pagination=true`);
     return response.data;
 };
 
