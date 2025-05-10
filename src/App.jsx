@@ -19,13 +19,6 @@ const App = () => {
             staleTime: 5 * 60 * 1000,
             retry: 2, 
         });
-
-        // queryClient.prefetchQuery({
-        //     queryKey: ['giveaway-items'],
-        //     queryFn: fetchMyGiveaways,
-        //     staleTime: 5 * 60 * 1000,
-        //     retry: 2, 
-        // });
     }, [queryClient]);
 
     useEffect(() => {

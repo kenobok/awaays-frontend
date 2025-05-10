@@ -5,12 +5,12 @@ export const fetchMe = async () => {
     return response.data;
 };
 
-// export const fetchMyGiveaways = async (url = '/giveaway-items/my-items') => {
-//     const response = await API.get(url);
-//     return response.data;
-// };
-
 export const fetcher = (url) => API.get(url).then(res => res.data);
+
+export const fetchCollectedGiveaways = async () => {
+    const response = await API.get('/giveaway-items/collected/?no_pagination=true');
+    return response.data;
+};
 
 export const fetchGiveawaysItemDetails = async (slug) => {
     const response = await API.get(`/giveaway-items/${slug}/?no_pagination=true`);

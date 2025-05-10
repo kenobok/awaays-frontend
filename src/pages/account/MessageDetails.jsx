@@ -19,16 +19,9 @@ const MessageDetails = () => {
         queryKey: ['conversation', slug],
         queryFn: () => fetchConversationsDetails(slug),
         refetchOnWindowFocus: false,
+        refetchInterval: 5000,
         enabled: true,
     });
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            refetch();
-        }, 5000);
-
-        return () => clearInterval(interval);
-    }, [refetch]);
 
     useEffect(() => {
         if (conversation?.messages) {

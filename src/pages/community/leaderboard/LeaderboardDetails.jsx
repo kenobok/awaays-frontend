@@ -1,9 +1,22 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { fetchCollectedGiveaways, fetchMyGiveaways } from '../../../services/fetchServices'
 import { leaderboardLinks, leaderboard } from '/src/components/utils/UtilsData'
 
 
 const LeaderboardDetails = () => {
+    const { data, isLoading, isError, error, refetch, isFetching } = useQuery({
+        queryKey: ['collected-items'],
+        queryFn: fetchCollectedGiveaways,
+    });
+
+    useEffect(() => {
+        console.log(data)
+        console.log(isError)
+        console.log(error)
+    }, [data, isError, error])
+
     const location = useLocation();
     const today = new Date();
     const oneWeekAgo = new Date(today);

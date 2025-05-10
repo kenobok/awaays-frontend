@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMyGiveaways, fetchRequests } from '../../services/fetchServices';
+import { useQuery, useQueries } from '@tanstack/react-query';
+import { fetchMyGiveaways, fetchRequests, fetchConversations, fetchConversationsDetails } from '../../services/fetchServices';
 import { useAuth } from '../../context/AuthContext';
 import { SomethingWentWrong } from '../../components/utils/SomethingWentWrong';
 
 
 const Dashboard = () => {
     const { user } = useAuth();
+    const [totalGiveaway, setTotalGiveaway] = useState(0)
+    const [totalRequest, setTotalRequest] = useState(0)
+    const [totalRecieved, setTotalReceived] = useState(0)
+
     const { data: items, isLoading, isError, error, refetch, isFetching } = useQuery({
         queryKey: ['my-giveaway-items'],
         queryFn: fetchMyGiveaways,
@@ -18,32 +22,44 @@ const Dashboard = () => {
         queryKey: ['items-request'],
         queryFn: fetchRequests,
     });
-    
-    const [totalGiveaway, setTotalGiveaway] = useState(0)
-    const [totalRequest, setTotalRequest] = useState(0)
-    const [totalRecieved, setTotalReceived] = useState(0)
+
+    const { data: conversations } = useQuery({
+        queryKey: ['fetch-conversations'],
+        queryFn: fetchConversations,
+        refetchOnWindowFocus: false,
+        refetchInterval: false,
+    });
+
+    const slugs = conversations?.map((conv) => conv.slug) || [];
+
+    const conversationQueries = useQueries({
+        queries: slugs.map((slug) => ({
+            queryKey: ['conversation', slug],
+            queryFn: () => fetchConversationsDetails(slug),
+            refetchOnWindowFocus: false,
+            enabled: !!slug,
+        })),
+    });
+
 
     useEffect(() => {
         if (items) {
             setTotalGiveaway(items?.length || 0);
             setTotalReceived(items?.filter(item => item?.receiver?.id === user?.id).length || 0);
         }
-    
+
         if (requests && Array.isArray(requests)) {
             setTotalRequest(requests?.filter(req => req?.user?.id === user?.id).length || 0);
         }
-    }, [items, user, requests]);   
+    }, [items, user, requests]);
 
-    useEffect(() => {
-        console.log(requests)
-    }, [requests])
 
     return (
-        <motion.section className={`space-y-7 flex-1 p-7 pb-20 max-[941px]:px-5 ${location.pathname === '/dashboard' ? '' : 'hidden'}`} initial={{ opacity: 0, x: -300 }}  animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+        <motion.section className={`space-y-7 flex-1 p-7 pb-20 max-[941px]:px-5 ${location.pathname === '/dashboard' ? '' : 'hidden'}`} initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
             <h2 className='text-xl font-bold text-center border-b border-gray-100'>Dashboard</h2>
             {isError ?
                 <SomethingWentWrong onHandleRefresh={refetch} isError={isError} isFetching={isFetching} />
-            :
+                :
                 <>
                     <div className='dash-overview'>
                         <div className='grid grid-cols-3 max-[577px]:grid-cols-1 gap-x-5 max-[577px]:gap-y-5'>
@@ -51,21 +67,21 @@ const Dashboard = () => {
                                 <FontAwesomeIcon icon="people-carry" className="text-[2rem]" />
                                 <h4 className='text-lg font-bold text-[1.3rem] py-2 leading-[1.2rem]'>Total Giveaway</h4>
                                 <p className='text-gray-700 text-[2rem] font-bold'>
-                                    { isLoading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem]' /> : totalGiveaway}
+                                    {isLoading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem]' /> : totalGiveaway}
                                 </p>
                             </div>
                             <div className='bg-orange-400 text-white p-5 h-[10rem] text-center rounded-xl shadow-lg'>
                                 <FontAwesomeIcon icon="hand-holding" className="text-[2rem]" />
                                 <h4 className='text-lg font-bold text-[1.3rem] py-2 leading-[1.2rem]'>Total Requests</h4>
                                 <p className='text-gray-700 text-[2rem] font-bold'>
-                                    { loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem]' /> : totalRequest}
+                                    {loading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem]' /> : totalRequest}
                                 </p>
                             </div>
                             <div className='bg-blue-400 p-5 h-[10rem] text-center text-white rounded-xl shadow-lg'>
                                 <FontAwesomeIcon icon="boxes" className="text-[2rem]" />
                                 <h4 className='text-lg font-bold text-[1.3rem] py-2 leading-[1.2rem]'>Total Received</h4>
                                 <p className='text-gray-700 text-[2rem] font-bold'>
-                                    { isLoading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem]' /> : totalRecieved}
+                                    {isLoading ? <FontAwesomeIcon icon='fa-spinner' className='animate-spin text-[1.3rem]' /> : totalRecieved}
                                 </p>
                             </div>
                         </div>

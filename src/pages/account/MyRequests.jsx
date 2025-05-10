@@ -37,7 +37,7 @@ const MyRequests = () => {
         console.log(donor)
         setContacting(donor)
         const mesageToDonor = `
-            Hello, I hope you're doing well! I wanted to reach out regarding the item I requested. I'm really excited you accepted my request and I’d love to discuss the next steps with you. Please let me know if you need any additional information from my side. Looking forward to hearing from you soon!\n
+            Hello, I hope you're doing well! I'm reaching out to you regarding the item I requested. I'm really excited you accepted my request and I’d love to discuss the next steps with you. Please let me know if you need any additional information from my side. Looking forward to hearing from you soon!\n
             Best regards,\n
             ${user?.full_name}
         `;
@@ -133,7 +133,7 @@ const MyRequests = () => {
                                         </p>
                                         <div className='flex items-center'>
                                             <div className="mt-2 flex-1 flex justify-start items-center my-auto gap-x-5">
-                                                <button className='px-3 py-1 pt-[5px] rounded-xl text-sm text-blue-600 cursor-pointer border border-blue-600 shadow-sm disabled:text-blue-200 disabled:border-blue-200 disabled:cursor-not-allowed' disabled={req.status !== 'Accepted'}>Contact donor</button>
+                                                <button className='px-3 py-1 pt-[5px] rounded-xl text-sm text-blue-600 cursor-pointer border border-blue-600 shadow-sm disabled:text-blue-200 disabled:border-blue-200 disabled:cursor-not-allowed' disabled={req.status !== 'Accepted' || contacting} onClick={() => {handleContactDonor(req.item.donor)}}>{ contacting === req.item.donor ? 'Contacting...' : 'Contact donor' }</button>
                                             </div>
                                         </div>
                                     </div>

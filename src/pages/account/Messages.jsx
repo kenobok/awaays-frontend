@@ -19,17 +19,9 @@ const Messages = () => {
         queryKey: ['fetch-conversations'],
         queryFn: fetchConversations,
         refetchOnWindowFocus: false,
+        refetchInterval: 5000,
         enabled: true,
     });
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            refetch();
-        }, 5000);
-
-        console.log(data)
-        return () => clearInterval(interval);
-    }, [refetch]);
 
     useEffect(() => {
         setIsMessageList(location.pathname === '/dashboard/messages' || location.pathname === '/dashboard/messages/')
@@ -50,7 +42,6 @@ const Messages = () => {
 
     const handleOpened = async (slug) => {
         try {
-            // 1. Update the cache immediately (optimistic)
             queryClient.setQueryData(['fetch-conversations'], (oldData) => {
                 if (!oldData) return [];
                 return oldData.map(conv =>
@@ -65,12 +56,8 @@ const Messages = () => {
                         : conv
                 );
             });
-
-            // 2. Send API call to mark messages as read
             await API.post(`/account/conversations/${slug}/mark-read/`);
         } catch (err) {
-            // console.error('Failed to mark messages as read:', err);
-
             queryClient.invalidateQueries(['fetch-conversations']);
         }
     };

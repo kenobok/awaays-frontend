@@ -24,6 +24,7 @@ const ViewItemRequests = () => {
     const [itemRequests, setItemRequests] = useState([]);
     const [itemName, setItemName] = useState('');
     const [waiting, setWaiting] = useState(null);
+    const [contacting, setContacting] = useState(null)
 
     const { data: requests, isLoading, refetch } = useQuery({
         queryKey: ['items-request'],
@@ -68,6 +69,31 @@ const ViewItemRequests = () => {
         }
     }
 
+    const handleContactReceiver =  async (receiver) => {
+        console.log(receiver)
+        setContacting(receiver)
+        const mesageToDonor = `
+            Hello, I hope you're doing well! I'm reaching out to you regarding the item you requested!`;
+        try {
+            await API.post(`account/conversations/`, {
+                participant_2_id: receiver,
+                initial_message: mesageToDonor
+            })
+            toast.success('Message sent to receiver')
+            navigate('/dashboard/messages')
+        } catch (error) {
+            const err = error?.response?.data[0]
+            if (err == "A conversation with this user already exists.") {
+                toast.warning('You’ve already started a conversation. Continue it from your dashboard.')
+                navigate('/dashboard/messages')
+            } else {
+                toast.error('An error occurred')
+            }
+        } finally {
+            setContacting(false)
+        }
+    }
+
 
     return (
         <motion.section className="user-requests flex-1 p-7 pb-20 max-[466px]:px-5" initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
@@ -101,7 +127,7 @@ const ViewItemRequests = () => {
                                                 <td className="">
                                                     <div className="flex flex-col justify-center items-center gap-y-3">
                                                         { req.status === 'Accepted' ?  
-                                                            <button className='px-3 py-1 pt-[5px] rounded-xl text-sm text-blue-600 cursor-pointer border border-blue-600 shadow-sm disabled:text-blue-300 disabled:border-blue-300 disabled:cursor-not-allowed'>Contact receiver</button>
+                                                            <button className='px-3 py-1 pt-[5px] rounded-xl text-sm text-blue-600 cursor-pointer border border-blue-600 shadow-sm disabled:text-blue-300 disabled:border-blue-300 disabled:cursor-not-allowed' disabled={contacting} onClick={() => {handleContactReceiver(req.item.receiver)}}>{ contacting === req.item.receiver ? 'Contacting...' : 'Contact receiver' }</button>
                                                         : 
                                                             <>
                                                                 <button className='min-w-[4rem] text-sm text-green-600 cursor-pointer disabled:text-green-300 disabled:cursor-not-allowed' disabled={data?.status === 'Selected'} onClick={() => {handleAccept(req.id)}}>
@@ -132,7 +158,7 @@ const ViewItemRequests = () => {
                                             <p><strong>Reason:</strong> {req.reason || '-----'}</p>
                                             <div className='flex space-x-5 mt-2'>
                                                 { req.status === 'Accepted' ?  
-                                                        <button className='px-3 py-1 pt-[5px] rounded-xl text-sm text-blue-600 cursor-pointer border border-blue-600 shadow-sm disabled:text-blue-300 disabled:border-blue-300 disabled:cursor-not-allowed'>Contact receiver</button>
+                                                        <button className='px-3 py-1 pt-[5px] rounded-xl text-sm text-blue-600 cursor-pointer border border-blue-600 shadow-sm disabled:text-blue-300 disabled:border-blue-300 disabled:cursor-not-allowed' disabled={contacting} onClick={() => {handleContactReceiver(req.item.receiver)}}>{ contacting === req.item.receiver ? 'Contacting...' : 'Contact receiver' }</button>
                                                     :
                                                     <>
                                                         <button className='min-w-[4rem] text-sm text-green-600 cursor-pointer disabled:text-green-300 disabled:cursor-not-allowed' disabled={data?.status === 'Selected'} onClick={() => {handleAccept(req.id)}}>
