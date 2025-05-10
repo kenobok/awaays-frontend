@@ -2,12 +2,16 @@ import img1 from '../../assets/images/awaays3.png'
 import img2 from '../../assets/images/gfin.png'
 import img3 from '../../assets/images/awaays2.png'
 import img4 from '../../assets/images/community.png'
-import img5 from '../../assets/images/hero2.png'
 import img6 from '../../assets/images/awaays1.png'
 import img7 from '../../assets/images/chat.png'
 import img8 from '../../assets/images/awaays4.png'
-import img9 from '../../assets/images/hero1.png'
-import img10 from '../../assets/images/hero4.png'
+import healthcare from '../../assets/images/healthcare.png'
+import disaster from '../../assets/images/disaster.png'
+import disability from '../../assets/images/disability.png'
+import prison from '../../assets/images/prison.png'
+import education from '../../assets/images/education.png'
+import homeless from '../../assets/images/homeless.png'
+import orphans from '../../assets/images/orphans.png'
 
 const HeaderLinks = [
     { name: 'Give Item', goto: '/give-item'},
@@ -25,11 +29,9 @@ const HeaderLinks = [
 ]
 
 const heroImages = [
+    { src: img6 },
     { src: img1 },
     { src: img2 },
-    { src: img3 },
-    { src: img4 },
-    { src: img5 },
 ]
 
 const leaderboardLinks = [
@@ -612,7 +614,7 @@ const forums = [
         slug: 'community-hangout',
         name: 'Community Hangout',
         button: 'Join Hangout',
-        image: img5,
+        image: img7,
         description: 'Chill, chat, and connect with others.',
         conversations: [
             {
@@ -827,7 +829,7 @@ const groups = [
         "admin": "Rachel Hughes",
         "members": ["Chloe Harris", "Bella Moore", "Ivy Stone", "Emma Clark", "Lily Evans"],
         "dateCreated": "2024-05-30",
-        "image": img5,
+        "image": img7,
         "conversations": [
             {
                 "user": "Chloe Harris",
@@ -915,171 +917,64 @@ const galleries = [
     {
         slug: 'general-giveaway',
         name: 'General Giveaway',
-        image: img1,
+        image: img4,
         galleryImages: [
-            { src: img1, caption: 'Connect, interact, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img9, caption: 'Ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img10, caption: 'Eract, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
+            // { src: img1, caption: 'Connect, interact, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
         ]
     },
     {
         slug: 'healthcare-support',
         name: 'Healthcare Support',
-        image: img2,
-        galleryImages: [
-            { src: img1, caption: 'Connect, interact, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img2, caption: 'Like-minded people who believe in giving' },
-            { src: img3, caption: 'Interact, and share ideas with like-minded people who believe in giving, and sustainability' },
-            { src: img4, caption: 'And share ideas with like-minded people who and sustainability' },
-            { src: img5, caption: 'Share ideas with like-minded people' },
-            { src: img6, caption: 'Nect, interact, believe in giving, helping, and sustainability' },
-        ]
+        image: healthcare,
+        galleryImages: []
     },
     {
         slug: 'prison-outreach',
         name: 'Prison Outreach',
-        image: img3,
-        galleryImages: [
-            { src: img9, caption: 'Ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img10, caption: 'Eract, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-        ]
+        image: prison,
+        galleryImages: []
     },
     {
         slug: 'homeless-shelter',
         name: 'Homeless Shelter',
-        image: img4,
-        galleryImages: [
-
-        ]
+        image: homeless,
+        galleryImages: []
     },
     {
         slug: 'education-support',
         name: 'Education Support',
-        image: img5,
-        galleryImages: [
-            { src: img1, caption: 'Connect, interact, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img2, caption: 'Like-minded people who believe in giving' },
-            { src: img9, caption: 'Ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img10, caption: 'Eract, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-        ]
+        image: education,
+        galleryImages: []
     },
     {
         slug: 'orphanage-support',
         name: 'Orphanage Support',
-        image: img6,
-        galleryImages: [
-            { src: img1, caption: 'Connect, interact, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img2, caption: 'Like-minded people who believe in giving' },
-            { src: img3, caption: 'Interact, and share ideas with like-minded people who believe in giving, and sustainability' },
-            { src: img4, caption: 'And share ideas with like-minded people who and sustainability' },
-            { src: img5, caption: 'Share ideas with like-minded people' },
-            { src: img6, caption: 'Nect, interact, believe in giving, helping, and sustainability' },
-            { src: img7, caption: 'Connect, interact, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img8, caption: 'giving, helping, and sustainability' },
-            { src: img9, caption: 'Ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img10, caption: 'Eract, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-        ]
+        image: orphans,
+        galleryImages: []
     },
     {
         slug: 'disaster-relief',
         name: 'Disaster Relief',
-        image: img7,
-        galleryImages: [
-            { src: img9, caption: 'Ideas with like-minded people who believe in giving, helping, and sustainability' },
-            { src: img10, caption: 'Eract, and share ideas with like-minded people who believe in giving, helping, and sustainability' },
-        ]
+        image: disaster,
+        galleryImages: []
     },
     {
         slug: 'disability-support',
         name: 'Disability Support',
-        image: img8,
-        galleryImages: [
-
-        ]
+        image: disability,
+        galleryImages: []
     }
 ]
 
 const events = [
-    {
-        title: "Community Clean-Up Drive",
-        description: "Join us in making our neighborhood cleaner and greener with a group clean-up and tree-planting effort.",
-        location: "",
-        date: "",
-        time: "",
-        image: img1
-    },
-    {
-        title: "Tech Innovators Conference 2025",
-        description: "A gathering of the brightest minds in tech to explore emerging trends and innovations.",
-        location: "Silicon Valley Convention Center, San Jose, CA",
-        date: "2025-07-22",
-        time: "02:00 PM",
-        image: img2
-    },
-    {
-        title: "Local Farmers' Market Festival",
-        description: "Celebrate local produce, handmade goods, and live performances in a vibrant community atmosphere.",
-        location: "",
-        date: "2025-08-10",
-        time: "8:00 AM",
-        image: img3
-    },
-    {
-        title: "Annual Charity Marathon",
-        description: "Lace up for a run that supports local nonprofits and promotes a healthy lifestyle.",
-        location: "Lakefront Trail, Chicago, IL",
-        date: "2025-09-05",
-        time: "12:00 AM",
-        image: img4
-    },
-    {
-        title: "Art in the Park Exhibition",
-        description: "Explore stunning artworks by local creatives in an open-air art gallery setting.",
-        location: "Griffith Park, Los Angeles, CA",
-        date: "",
-        time: "",
-        image: img5
-    },
-    {
-        title: "Music & Food Truck Festival",
-        description: "A celebration of great tunes and tasty street food with performances and gourmet bites.",
-        location: "Waterfront Park, Seattle, WA",
-        date: "2025-08-30",
-        time: "10:50 AM",
-        image: img6
-    },
-    {
-        title: "Startup Pitch Night",
-        description: "Entrepreneurs pitch their big ideas to a panel of investors and mentors.",
-        location: "Innovation Hub, Boston, MA",
-        date: "2025-11-18",
-        time: "10:00 AM",
-        image: img7
-    },
-    {
-        title: "Outdoor Yoga Retreat",
-        description: "Recharge your body and mind with a peaceful yoga experience surrounded by nature.",
-        location: "Golden Gate Park, San Francisco, CA",
-        date: "",
-        time: "07:30 AM",
-        image: img8
-    },
-    {
-        title: "Film Under the Stars",
-        description: "Watch classic films on the big screen under the night sky with friends and family.",
-        location: "Millennium Park, Chicago, IL",
-        date: "2025-07-19",
-        time: "10:50 AM",
-        image: img9
-    },
-    {
-        title: "Winter Wonderland Carnival",
-        description: "Experience the magic of the holidays with rides, games, and festive cheer.",
-        location: "Bryant Park, New York City, NY",
-        date: "2025-12-10",
-        time: "",
-        image: img10
-    }
+    // {
+    //     title: "",
+    //     description: "",
+    //     location: "",
+    //     date: "",
+    //     time: "",
+    //     image: ''
+    // },
 ];
 
 

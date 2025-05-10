@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { fetchRequests } from "../../services/fetchServices";
 import { motion } from 'framer-motion'
+import API from '../../api/axiosInstance';
+import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Loader1 } from '../../components/utils/Preloader';
 import { SomethingWentWrong } from '../../components/utils/SomethingWentWrong';
@@ -10,7 +13,9 @@ import { SomethingWentWrong } from '../../components/utils/SomethingWentWrong';
 
 const MyRequests = () => {
     const { user } = useAuth();
+    const navigate = useNavigate()
     const [myRequests, setMyRequests] = useState([])
+    const [contacting, setContacting] = useState(null)
 
     const { data: requests, isLoading, isError, error, refetch, isFetching } = useQuery({
         queryKey: ['items-request'],
@@ -19,10 +24,42 @@ const MyRequests = () => {
 
     useEffect(() => {
         if (!requests || !user) return;
-    
         const myItemRequests = requests.filter(req => req.user?.id === user.id);
         setMyRequests(myItemRequests);
     }, [requests, user]);
+
+    useEffect(() => {
+        console.log(myRequests)
+    }, [myRequests])
+
+
+    const handleContactDonor =  async (donor) => {
+        console.log(donor)
+        setContacting(donor)
+        const mesageToDonor = `
+            Hello, I hope you're doing well! I wanted to reach out regarding the item I requested. I'm really excited you accepted my request and I’d love to discuss the next steps with you. Please let me know if you need any additional information from my side. Looking forward to hearing from you soon!\n
+            Best regards,\n
+            ${user?.full_name}
+        `;
+        try {
+            await API.post(`account/conversations/`, {
+                participant_2_id: donor,
+                initial_message: mesageToDonor
+            })
+            toast.success('Message sent to donor')
+            navigate('/dashboard/messages')
+        } catch (error) {
+            const err = error?.response?.data[0]
+            if (err == "A conversation with this user already exists.") {
+                toast.warning('You’ve already started a conversation. Continue it from your dashboard.')
+                navigate('/dashboard/messages')
+            } else {
+                toast.error('An error occurred')
+            }
+        } finally {
+            setContacting(false)
+        }
+    }
 
 
     return (
@@ -71,7 +108,7 @@ const MyRequests = () => {
                                                 </span>
                                             </td>
                                             <td className="flex justify-evenly items-center h-full gap-x-2">
-                                                <button className='px-3 py-1 pt-[4px] rounded-xl text-sm text-blue-600 cursor-pointer border border-blue-600 shadow-sm disabled:text-blue-200 disabled:border-blue-200 disabled:cursor-not-allowed' disabled={req.status !== 'Accepted'}>Contact donor</button>
+                                                <button className='px-3 py-1 pt-[4px] rounded-xl text-sm text-blue-600 cursor-pointer border border-blue-600 shadow-sm disabled:text-blue-200 disabled:border-blue-200 disabled:cursor-not-allowed' disabled={req.status !== 'Accepted' || contacting} onClick={() => {handleContactDonor(req.item.donor)}}>{ contacting === req.item.donor ? 'Contacting...' : 'Contact donor' }</button>
                                             </td>
                                         </tr>
                                     ))}

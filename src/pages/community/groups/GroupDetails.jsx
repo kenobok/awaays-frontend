@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { groups } from '/src/components/utils/UtilsData';
 import '/src/assets/styles/community.css';
-import userImg from '/src/assets/images/hero2.png'
+import userImg from '/src/assets/images/user.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
