@@ -17,11 +17,11 @@ const useGiveawayItemDetails = (slug) => {
     return useQuery({
         queryKey: ['giveawayItemDetails', slug],
         queryFn: () => fetchGiveawaysItemDetails(slug), 
-        enabled: !!slug, 
+        enabled: !!slug,
     });
 };
 
-const GiveawayItemDetails = () => {
+const GiveawayItemDetails = () => {// same as prefetch
     const { slug } = useParams()
     const location = useLocation();
     const navigate = useNavigate();

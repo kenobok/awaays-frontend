@@ -37,7 +37,7 @@ const HowItWorks = () => {
                 <div className="hiw-ul-li mt-3">
                     <h4 className="text-xl font-semibold">New Users – Sign Up & Verification</h4>
                     <ul className="pl-5 mt-2 space-y-2">
-                        <li>To create an account, click on <b className="text-[var(--p-color)]">Join</b> and sign up by filling the form (or Sign Up using Google/Apple).</li>
+                        <li>To create an account, click on <b className="text-[var(--p-color)]">Join</b> and sign up by filling the form (or Sign Up using Google).</li>
                         <li>A verification code will be sent to your email.</li>
                         <li>Use the code to verify your email in other and gain full access.</li>
                     </ul>
@@ -45,7 +45,7 @@ const HowItWorks = () => {
                 <div className="hiw-ul-li mt-3">
                     <h4 className="text-xl font-semibold">Existing Users – Sign In</h4>
                     <ul className="pl-5 mt-2 space-y-2">
-                        <li>If you already have an account, simply click on <b className="text-[var(--p-color)]">Join</b> and sign in with your registered email and password. (or Sign In using Google/Apple).</li>
+                        <li>If you already have an account, simply click on <b className="text-[var(--p-color)]">Join</b> and sign in with your registered email and password. (or Sign In using Google).</li>
                         <li>Forgot your password? Use the reset password option to recover your account.</li>
                     </ul>
                 </div>
@@ -71,7 +71,7 @@ const HowItWorks = () => {
                             For all other purposes, AWAAYS will handle the process. We will contact you, collect the item, and deliver it to the appropriate recipients based on the purpose you selected.
                         </li>
                         <li>
-                            <b id="scroll-to-view">Item Name:</b> Enter the name of the item you’re giving away (e.g., Clothes, Carton of Noodles, Chairs, ₦10,000, Generator, etc.).
+                            <b id="scroll-to-view">Item Name:</b> Enter the name of the item you’re giving away (e.g., Clothes, Carton of Noodles, Chairs, ₦10,000, Bicycle, Bag of rice, Baby walker,  etc.).
                         </li>
                         <li>
                             <b>Description:</b> Provide a detailed description of the item, including its condition, size, or any important details.
@@ -100,7 +100,7 @@ const HowItWorks = () => {
                             <b>Browse or Search:</b> Explore available giveaways by clicking on <b className="text-[var(--p-color)]">Giveaways</b> or use the search bar to find specific items.
                         </li>
                         <li>
-                            <b>Request an Item:</b> Click on the item you’re interested in and read the instructions carefully. Some givers may want to understand why you need the item, so it’s recommended to write a brief but clear note explaining your reason before clicking the Request Item button. <b>NOTE: Only General Giveaway items can be requested for. All other purposes are handled by Awaays.</b> Awaays collect the items and distribute it to Prisons, Hospitals, Orphanages or other purposes selected.
+                            <b>Request an Item:</b> Click on the item you’re interested in and read the instructions carefully. Some givers may want to understand why you need the item, so it’s recommended to write a brief but clear note explaining your reason before clicking the Request Item button. <b>NOTE: Only General Giveaway items can be requested for. All other purposes are handled by Awaays.</b> Awaays collect the items and distribute them to Prisons, Hospitals, Orphanages or other purposes selected.
                         </li>
                         <li>
                             <b>Wait for Approval:</b> If the giver approves your request, you’ll receive a notification and can proceed with collection.

@@ -15,7 +15,7 @@ const GalleryList = () => {
                         galleries.map((gallery, index) => (
                             <Link to={gallery.slug} key={index} className={`relative pb-4 shadow-lg rounded-xl hover:scale-105 transition-all duration-100 ease-in-out hover:text-[var(--p-color)]`}>
                                 <img src={gallery.image} alt={`${gallery.name} image`} className='w-full h-[12rem] object-cover mb-5 rounded-xl' />
-                                <h4 className='font-semibold text-[1rem] leading-[1.2rem] text-center'>{gallery.name}</h4>
+                                <h4 className='font-semibold text-[1rem] text-blue-800 leading-[1.2rem] text-center'>{gallery.name}</h4>
                             </Link>
                         ))
                     }

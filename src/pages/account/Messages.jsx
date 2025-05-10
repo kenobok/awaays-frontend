@@ -34,8 +34,7 @@ const Messages = () => {
             Array.isArray(convo.messages) && convo.messages.some(msg => msg.read === false)
         );
 
-        setUnRead(unreadConversations.map(conv => conv.slug)); // store only the slugs
-        // console.log("Unread conversations:", unreadConversations);
+        setUnRead(unreadConversations.map(conv => conv.slug)); 
     }, [data]);
 
 

@@ -5,7 +5,12 @@ export const fetchMe = async () => {
     return response.data;
 };
 
-export const fetcher = (url) => API.get(url).then(res => res.data);
+// export const fetcher = (url) => API.get(url).then(res => res.data);
+
+export const fetchAllGiveaways = async () => {
+    const response = await API.get('/giveaway-items/');
+    return response.data;
+};
 
 export const fetchCollectedGiveaways = async () => {
     const response = await API.get('/giveaway-items/collected/?no_pagination=true');

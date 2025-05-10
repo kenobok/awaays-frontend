@@ -52,25 +52,6 @@ const leaderboardLinks = [
     }
 ]
 
-const leaderboard = [
-    {
-        donor: "Alexander Jonathan MacArthur",
-        item: "Laptop",
-        receiver: "Olivia Grace Peterson",
-        location: { country: "USA", state: "California" },
-        top_giver: true,
-        date: "2025-04-05",
-    },
-    {
-        donor: "Jertson Sionis",
-        item: "Kitchen Set",
-        receiver: "Zoe Isabella Martin",
-        location: { country: "India", state: "Maharashtra" },
-        top_giver: true,
-        date: "2025-03-09",
-    },
-];
-
 const forums = [
     {
         id: 1,
@@ -895,12 +876,10 @@ const events = [
 ];
 
 
-
 export {
     HeaderLinks,
     heroImages,
     leaderboardLinks,
-    leaderboard,
     forums,
     groups,
     galleries,

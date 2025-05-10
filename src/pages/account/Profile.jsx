@@ -29,7 +29,7 @@ const Profile = () => {
 
 
     useEffect(() => {
-        setUserLocation(locationFromApi.country_code);
+        setUserLocation(locationFromApi?.country_code);
     }, [locationFromApi]);
 
     const handlePasswordToggle = () => {

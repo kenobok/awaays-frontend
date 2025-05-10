@@ -1,12 +1,21 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { leaderboard } from '../utils/UtilsData'
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchCollectedGiveaways } from '../../services/fetchServices'
 import { motion } from 'framer-motion'
 
 
 const HomeLeaderboard = () => {
+    const { data: leaderboard, isLoading, refetch } = useQuery({
+        queryKey: ['collected-items'],
+        queryFn: fetchCollectedGiveaways,
+        refetchOnWindowFocus: true,
+        refetchInterval: 1000 * 60 * 30,
+    });
+
+
     const sortByDate = (data) => data.sort((a, b) => new Date(b.date) - new Date(a.date));
-    const topGivers = sortByDate(leaderboard.filter(item => item.top_giver === true));
+    const topGivers = leaderboard && sortByDate(leaderboard?.filter(item => item.top_giver === true));
 
 
     return (
@@ -25,11 +34,11 @@ const HomeLeaderboard = () => {
                             </tr>
                         </thead>
                         <tbody className='text-gray-700'>
-                            {topGivers.length > 0 ? (
-                                topGivers.slice(0, 5).map((data, index) => (
+                            {topGivers?.length > 0 ? (
+                                topGivers?.slice(0, 5).map((item, index) => (
                                     <tr key={index} className={`${index % 2 === 0 ? "bg-gray-200" : "bg-gray-100"}`}>
-                                        <td className="border border-gray-300 p-4 text-center leading-[1.2rem]">{data.donor}</td>
-                                        <td className="border border-gray-300 p-4 text-center leading-[1.2rem]">{data.item}</td>
+                                        <td className="border border-gray-300 p-4 text-center leading-[1.2rem]">{item?.donor.full_name}</td>
+                                        <td className="border border-gray-300 p-4 text-center leading-[1.2rem]">{item?.name}</td>
                                     </tr>
                                 ))
                             ) : (

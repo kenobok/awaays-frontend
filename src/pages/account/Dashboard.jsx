@@ -37,6 +37,7 @@ const Dashboard = () => {
             queryKey: ['conversation', slug],
             queryFn: () => fetchConversationsDetails(slug),
             refetchOnWindowFocus: false,
+            refetchInterval: false,
             enabled: !!slug,
         })),
     });

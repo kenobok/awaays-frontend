@@ -110,6 +110,7 @@ footer {
     border-top-left-radius: 300px;
     border-top-right-radius: 300px;
     bottom: 0;
+    position: relative;
 }
 footer h4 {
     color: #eee;

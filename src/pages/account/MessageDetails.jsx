@@ -113,14 +113,14 @@ const MessageDetails = () => {
                 </div>
 
                 <div className='w-full h-18 mt-2 bg-white'>
-                    <form className='h-full flex gap-2 items-end' onSubmit={handleSend}>
+                    <form className='h-full flex' onSubmit={handleSend}>
                         <textarea
                             className='border border-gray-300 h-full w-full resize-none leading-[1.1rem] p-2 px-3 rounded-lg text-[.93rem] focus:outline-[var(--p-color)]'
                             placeholder='Enter your message'
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
                         ></textarea>
-                        <button type='submit' className='text-white bg-[var(--p-color)] h-full py-2 px-4 rounded-lg cursor-pointer'>
+                        <button type='submit' className='text-white bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'>
                             <FontAwesomeIcon icon='paper-plane' /> Send
                         </button>
                     </form>

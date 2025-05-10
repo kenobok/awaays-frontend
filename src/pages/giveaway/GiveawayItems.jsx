@@ -3,9 +3,10 @@ import { motion } from 'framer-motion'
 import { Link, useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from "../../context/AuthContext";
 import { useMediaQuery } from "react-responsive";
-import useSWRInfinite from 'swr/infinite';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { fetcher } from "../../services/fetchServices";
+// import useSWRInfinite from 'swr/infinite';
+// import InfiniteScroll from 'react-infinite-scroll-component';
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { fetchAllGiveaways } from "../../services/fetchServices";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FilterItem from '../../components/giveaway/FilterItems';
 import { useUserLocation } from "/src/hooks/useUserLocationFromAPI";
@@ -13,19 +14,20 @@ import { Loader1 } from '../../components/utils/Preloader';
 import { SomethingWentWrong } from "../../components/utils/SomethingWentWrong";
 
 
-const PAGE_SIZE = 4;
-const getKey = (pageIndex, previousPageData) => {
-    if (previousPageData && !previousPageData.next) return null;
-    if (pageIndex === 0) return `/giveaway-items/?page=1`;
-    return previousPageData.next;
-};
+// const PAGE_SIZE = 4;
+// const getKey = (pageIndex, previousPageData) => {
+//     if (previousPageData && !previousPageData.next) return null;
+//     if (pageIndex === 0) return `/giveaway-items/?page=1`;
+//     return previousPageData.next;
+// };
 
 
 const GiveawayItems = () => {
-    const { data, size, setSize, isLoading, isValidating, error } = useSWRInfinite(getKey, fetcher);
-    const allItems = data ? data.flatMap(page => page.results) : [];
-    const hasMore = data && data[data.length - 1]?.next !== null;
+    // const { data, size, setSize, isLoading, isValidating, error } = useSWRInfinite(getKey, fetcher);
+    // const allItems = data ? data.flatMap(page => page.results) : [];
+    // const hasMore = data && data[data.length - 1]?.next !== null;
 
+    const queryClient = useQueryClient();
     const hideFilter = useMediaQuery({ query: "(max-width: 940px)" });
     const { user } = useAuth();
     const filterIconRef = useRef(null);
@@ -40,36 +42,37 @@ const GiveawayItems = () => {
     const [userLocation, setUserLocation] = useState({ country: null, state: null });
     const [isCloseToMe, setIsCloseToMe] = useState(false);
 
+    const { data: allItems, isLoading, isError, refetch, isFetching } = useQuery({
+        queryKey: ['all-giveaway-items'],
+        queryFn: fetchAllGiveaways,
+        refetchOnWindowFocus: true,
+        refetchInterval: 1000 * 60 * 30 
+    });
 
-    const deduplicatedItems = useMemo(() => {
-        const seen = new Set();
-        return allItems.filter(item => {
-            if (seen.has(item.id)) return false;
-            seen.add(item.id);
-            return true;
-        });
-    }, [allItems]);
-
-    useEffect(() => {
-        if (!allItems || !Array.isArray(allItems)) return;
-
-        const validIds = new Set(allItems.map(item => String(item.id)));
-
-        Object.keys(localStorage).forEach((key) => {
-            if (key.startsWith('requested-')) {
-                const id = key.split('requested-')[1];
-                if (!validIds.has(id)) {
-                    localStorage.removeItem(key);
-                }
-            }
-        });
-    }, [allItems]);
+    // const deduplicatedItems = useMemo(() => {
+    //     const seen = new Set();
+    //     return allItems.filter(item => {
+    //         if (seen.has(item.id)) return false;
+    //         seen.add(item.id);
+    //         return true;
+    //     });
+    // }, [allItems]);
 
     // useEffect(() => {
-    //     const filteredDisplayItems = filterItems(deduplicatedItems, filteredItems, searchQuery);
-    //     // You should not call `useMemo` inside a `useEffect`. Memoize it outside
-    //     // since it should be derived from dependencies
-    // }, [deduplicatedItems, filteredItems, searchQuery, isCloseToMe]);
+    //     if (!allItems || !Array.isArray(allItems)) return;
+
+    //     const validIds = new Set(allItems.map(item => String(item.id)));
+
+    //     Object.keys(localStorage).forEach((key) => {
+    //         if (key.startsWith('requested-')) {
+    //             const id = key.split('requested-')[1];
+    //             if (!validIds.has(id)) {
+    //                 localStorage.removeItem(key);
+    //             }
+    //         }
+    //     });
+    // }, [allItems]);
+
 
     useEffect(() => {
         if (user && isCloseToMe) {
@@ -135,8 +138,8 @@ const GiveawayItems = () => {
     };
 
     const filteredDisplayItems = useMemo(() => {
-        return filterItems(deduplicatedItems, filteredItems, searchQuery);
-    }, [deduplicatedItems, filteredItems, searchQuery, isCloseToMe]);
+        return filterItems(allItems, filteredItems, searchQuery);
+    }, [allItems, filteredItems, searchQuery, isCloseToMe]);
 
     const handleClickOutside = (e) => {
         if (filterIconRef.current && !filterIconRef.current.contains(e.target) && filterRef.current && !filterRef.current.contains(e.target)) {
@@ -236,51 +239,48 @@ const GiveawayItems = () => {
             </div>
 
             {
-                error ?
-                    <SomethingWentWrong onHandleRefresh={() => setSize(1)} isError={!!error} isFetching={isValidating} />
-                    :
-                    <section className="relative flex-1 min-h-[75vh] ml-2 max-[941px]:ml-0 my-[6rem] max-[941px]:mt-[6.5rem]">
-                        {isLoading ? <div className='h-[75vh]'><Loader1 /></div> :
-                            <InfiniteScroll dataLength={filteredDisplayItems.length} next={() => setSize(size + 1)} hasMore={hasMore || filteredDisplayItems.length < deduplicatedItems.length} loader={filteredDisplayItems !== 0 && hasMore ? <Loader1 /> : null} style={{ overflow:'hidden', paddingBottom:'2rem', minHeight:'50vh' }}>
-                                <motion.div className="relative grid grid-cols-4 max-[1401px]:grid-cols-3 max-[1081px]:grid-cols-2 max-[941px]:grid-cols-3 max-[768px]:grid-cols-2 max-[321px]:grid-cols-1 gap-7 max-[941px]:gap-x-5 p-5 pb-25 max-[561px]:gap-x-" initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
-                                    {filteredDisplayItems.length > 0 ? (
-                                        filteredDisplayItems.map((item) => (
-                                            <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1, ease: "easeInOut" }}>
-                                                <Link to={`/giveaway-item-details/${item.slug}`} className='block'>
-                                                    <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
-                                                    <h3 className="font-bold mt-3 truncate">{item.purpose}</h3>
-                                                    <h3 className="text-[var(--p-color)] font-semibold truncate">{item.name}</h3>
-                                                    <p className="truncate">{item.description}</p>
-                                                    <p className="truncate">
-                                                        <FontAwesomeIcon icon="location-dot" className="mr-1 text-sm text-[var(--p-color)]" />
-                                                        {item.country}, {item.state}
-                                                    </p>
-                                                </Link>
-                                            </motion.div>
-                                        ))
-                                    ) : (
-                                        <div className="absolute w-full h-[50vh] mt-[7rem] w-[78vw] text-center text-[1rem] px-5">
-                                            <div>
-                                                <FontAwesomeIcon icon="box-open" className="mb-5 text-[5rem] text-orange-400" />
-                                                {isCloseToMe ?
-                                                    <>
-                                                        <p className="text-orange-500 text-[1.2rem] text-center font-semibold ">No items available close to you.</p>
-                                                        <p className="text-center">Use the filter <FontAwesomeIcon icon="filter" /> to browse other location(s) or click the button below for all locations.</p>
-                                                        <button className='mt-5 w-[10.5rem] text-[var(--p-color)] text-bold py-[5px] border-2 border-[var(--p-color)] rounded-xl mx-auto cursor-pointer' id='allLocate' onClick={handleSearchAllLocations}>Search All locations</button>
-                                                    </>
-                                                    :
-                                                    <>
-                                                        <p className="text-gray-500 text-[1.2rem] font-semi-bold ">Your search was not found</p>
-                                                        <button className='mt-5 w-[10rem] text-[var(--p-color)] text-bold py-[5px] border-2 border-[var(--p-color)] rounded-xl mx-auto cursor-pointer' id='allLocate' onClick={handleAllLocations}>All items/locations</button>
-                                                    </>
-                                                }
-                                            </div>
-                                        </div>
-                                    )}
-                                </motion.div>
-                            </InfiniteScroll>
-                        }
-                    </section>
+                isError ? <SomethingWentWrong onHandleRefresh={refetch} isError={isError} isFetching={isFetching} />
+                :
+                <section className="relative flex-1 min-h-[75vh] ml-2 max-[941px]:ml-0 my-[6rem] max-[941px]:mt-[6.5rem]">
+                    {isLoading ? <div className='h-[75vh]'><Loader1 /></div> :
+                        <motion.div className="relative grid grid-cols-4 max-[1401px]:grid-cols-3 max-[1081px]:grid-cols-2 max-[941px]:grid-cols-3 max-[768px]:grid-cols-2 max-[321px]:grid-cols-1 gap-7 max-[941px]:gap-x-5 p-5 pb-5 max-[561px]:gap-x-" initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
+                            {filteredDisplayItems.length > 0 ? (
+                                filteredDisplayItems.map((item) => (
+                                    <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1, ease: "easeInOut" }}>
+                                        <Link to={`/giveaway-item-details/${item.slug}`} className='block'>
+                                            <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
+                                            <h3 className="font-bold mt-3 truncate">{item.purpose}</h3>
+                                            <h3 className="text-[var(--p-color)] font-semibold truncate">{item.name}</h3>
+                                            <p className="truncate">{item.description}</p>
+                                            <p className="truncate">
+                                                <FontAwesomeIcon icon="location-dot" className="mr-1 text-sm text-[var(--p-color)]" />
+                                                {item.country}, {item.state}
+                                            </p>
+                                        </Link>
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <div className="absolute w-full h-[50vh] mt-[7rem] w-[78vw] text-center text-[1rem] px-5">
+                                    <div>
+                                        <FontAwesomeIcon icon="box-open" className="mb-5 text-[5rem] text-orange-400" />
+                                        {isCloseToMe ?
+                                            <>
+                                                <p className="text-orange-500 text-[1.2rem] text-center font-semibold ">No items available close to you.</p>
+                                                <p className="text-center">Use the filter <FontAwesomeIcon icon="filter" /> to browse other location(s) or click the button below for all locations.</p>
+                                                <button className='mt-5 w-[10.5rem] text-[var(--p-color)] text-bold py-[5px] border-2 border-[var(--p-color)] rounded-xl mx-auto cursor-pointer' id='allLocate' onClick={handleSearchAllLocations}>Search All locations</button>
+                                            </>
+                                            :
+                                            <>
+                                                <p className="text-gray-500 text-[1.2rem] font-semi-bold ">Your search was not found</p>
+                                                <button className='mt-5 w-[10rem] text-[var(--p-color)] text-bold py-[5px] border-2 border-[var(--p-color)] rounded-xl mx-auto cursor-pointer' id='allLocate' onClick={handleAllLocations}>All items/locations</button>
+                                            </>
+                                        }
+                                    </div>
+                                </div>
+                            )}
+                        </motion.div>
+                    }
+                </section>
             }
         </main>
     );
