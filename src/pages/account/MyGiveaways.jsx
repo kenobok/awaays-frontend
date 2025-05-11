@@ -19,10 +19,6 @@ const MyGiveaways = () => {
     const navigate = useNavigate();
     const [deleting, setDeleting] = useState(null)
 
-    // useEffect(() => {
-    //     console.log(items)
-    // }, [items])
-
 
     const handleDelete = async (slug) => {
         const result = await Swal.fire({
@@ -57,13 +53,13 @@ const MyGiveaways = () => {
 
 
     return (
-        <motion.section className='user-requests flex-1 p-7 pb-20 max-[1221px]:px-5' initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-xl font-bold text-center border-b border-gray-100 mb-10'>My Giveaways</h2>
+        <motion.section className='user-requests flex-1 p-7 pb-20 max-[1221px]:px-5 max-[941px]:px-0' initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100 min-[941px]:mb-10'>My Giveaways</h2>
             {
                 isError ?
                         <SomethingWentWrong onHandleRefresh={refetch} isError={isError} isFetching={isFetching} />
                     :
-                    <div className='requests-data border border-gray-300 p-10 px-8 max-[1221px]:px-5 min-[1081px]:px-0 min-[1222px]:px-10 rounded-2xl'>
+                    <div className='requests-data min-[941px]:border border-gray-300 p-10 px-8 max-[1221px]:px-5 min-[1081px]:px-0 min-[1222px]:px-10 max-[941px]:px-0 max-[941px]:py-5 rounded-2xl'>
                         {
                             isLoading ? <div className='h-[75vh]'><Loader1 /></div> :
                             items?.length === 0 ? 
@@ -130,7 +126,7 @@ const MyGiveaways = () => {
                                 {/* Card Layout for Smaller Screens */}
                                 <div className="table-small hidden max-[1081px]:block">
                                     {items?.map((item, index) => (
-                                        <div key={index} className="space-y-1 leading-[1.2rem] py-4 mb-5 border-b border-gray-200 rounded-lg shadow-lg">
+                                        <div key={index} className="space-y-1 leading-[1.2rem] py-4 px-5 mb-5 border-b border-gray-200 rounded-lg shadow-lg">
                                             <p><strong>#:</strong> {index + 1}</p>
                                             <p><strong>Purpose:</strong> {item.purpose}</p>
                                             <p><strong>Item:</strong> {item.name}</p>

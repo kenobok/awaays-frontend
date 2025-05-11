@@ -86,8 +86,8 @@ const MessageDetails = () => {
                 Chats with {conversation?.participant_1_id === user?.id ? conversation?.participant_2_name : conversation?.participant_1_name}
             </p>
 
-            <div className={`h-full py-0`}>
-                <div className='relative h-[58vh] overflow-x-hidden overflow-y-auto px-2'>
+            <div className={`relative h-full py-0`}>
+                <div className='overflow-x-hidden overflow-y-auto min-[651px]:h-[64vh] max-[651px]:h-[calc(100vh-15rem)] px-0'>
                     {
                         isLoading ? (
                             <div className='h-[100%]'><Loader1 /></div>

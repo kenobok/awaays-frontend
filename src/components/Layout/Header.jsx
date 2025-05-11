@@ -21,9 +21,7 @@ const Header = () => {
     const dropDownRef = useRef(null);
     const [isFocused, setIsFocused] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
     const [isSticky, setIsSticky] = useState(false);
-    const [blurBackground, setBlurBackground] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const { user } = useAuth();
@@ -74,16 +72,12 @@ const Header = () => {
     };
 
     const handleMenuToggle = () => {
-        setIsOpen(prevState => !prevState);
         setShowMenu(prevState => !prevState);
-        setBlurBackground(prevState => !prevState)
     };
 
     const handleClickOutside = (e) => {
         if (menuIconRef.current && !menuIconRef.current.contains(e.target) && menuRef.current && !menuRef.current.contains(e.target)) {
-            setIsOpen(false);
             setShowMenu(false);
-            setBlurBackground(false);
         }
         if (dropDownRef.current && !dropDownRef.current.contains(e.target)) {
             setIsDropdownOpen(false)
@@ -105,7 +99,7 @@ const Header = () => {
     return (
         <header>
             <ToastContainer position="top-right" autoClose={5000} />
-            <div className={`blur-bg ${blurBackground ? 'bluring' : ''}`}></div>
+            <div className={`blur-bg ${showMenu ? 'bluring' : ''}`}></div>
             <nav className={`navbar flex align-center justify-between gap-x-5 p-3 px-[20px] md:px-[50px] ${isSticky ? 'sticky' : ''}`}>
                 <Link to="/" className={`my-auto`}>
                     <img src={logo} loading="lazy" alt="Awaays"/>
@@ -120,7 +114,7 @@ const Header = () => {
                                         <div key={index} ref={dropDownRef} className="relative">
                                             <button className={`${isDropdownOpen ? "active" : ""}`} onClick={toggleDropdown}>{ link.name }<b className={`${isDropdownOpen ? 'arrow-up' : ''}`}>{`>`}</b></button>
                                             {isDropdownOpen && (
-                                                <motion.div className="dropdown-links mt-1 p-5 absolute max-[941px]:top-[2.9rem] left-[50%] transform -translate-x-[50%] w-[12rem] max-[941px]:w-full bg-[var(--bg-color)] max-[941px]:bg-indigo-100 shadow-xl rounded-2xl z-5" initial={{y: 100, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: .5, ease: "easeInOut"}}>
+                                                <motion.div className="dropdown-links mt-1 p-5 absolute max-[941px]:top-[2.9rem] left-[50%] transform -translate-x-[50%] w-[12rem] max-[941px]:w-full bg-[var(--bg-color)] max-[941px]:bg-indigo-100 shadow-xl rounded-2xl z-5" initial={{y: 50, opacity: 0}} animate={{y: 0, opacity: 1}} transition={{duration: .5, ease: "easeInOut"}}>
                                                     { link.dropdown.map((item, index) => (
                                                         <Link key={index} to={ item.goto } className="inline-block px-4 py-2" onClick={() => {if (isMobile) handleMenuToggle(); toggleDropdown();}}>{ item.name }</Link>
                                                     ))}
@@ -148,9 +142,9 @@ const Header = () => {
                     </form>
                 </div>
                 <div onClick={handleMenuToggle} ref={menuIconRef} className={`relative w-[30px] h-[25px] my-auto cursor-pointer overflow-hidden min-[941px]:hidden z-[5] ${isFocused ? 'hide-menu-bar' : ''}`}>
-                    <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ease-in-out ${isOpen ? 'rotate-45 top-[11px] bg-[#777]' : 'top-0 right-0 bg-[#777]'}`}></div>
-                    <div className={`h-[3px] w-[85%] absolute transition-all duration-300 ease-in-out ${isOpen ? 'opacity-0 top-0 bg-[#777]': 'opacity-100 top-[11px] bg-[#777]'}`}></div>
-                    <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ease-in-out ${isOpen ? '-rotate-45 top-[11px] bg-[#777]' : 'bottom-0 right-0 bg-[#777]'}`}></div>
+                    <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ease-in-out ${showMenu ? 'rotate-45 top-[11px] bg-[#777]' : 'top-0 right-0 bg-[#777]'}`}></div>
+                    <div className={`h-[3px] w-[85%] absolute transition-all duration-300 ease-in-out ${showMenu ? 'opacity-0 top-0 bg-[#777]': 'opacity-100 top-[11px] bg-[#777]'}`}></div>
+                    <div className={`h-[3px] w-[90%] absolute transition-all duration-300 ease-in-out ${showMenu ? '-rotate-45 top-[11px] bg-[#777]' : 'bottom-0 right-0 bg-[#777]'}`}></div>
                 </div>
             </nav>
         </header>
@@ -159,3 +153,4 @@ const Header = () => {
 
 
 export default Header;
+

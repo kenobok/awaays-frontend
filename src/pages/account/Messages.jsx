@@ -64,13 +64,13 @@ const Messages = () => {
 
 
     return (
-        <motion.section className={`space-y-7 flex-1 p-7 pb-20 max-[941px]:px-5`} initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+        <motion.section className={`space-y-7 flex-1 p-7 pb-5 max-[941px]:px-5 max-[651px]:px-0`} initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
             <h2 className='text-xl font-bold text-center border-b border-gray-100'>Messages</h2>
             <div className='flex justify-evenly flex-wrap gap-5'>
-                <div className={`message-list relative border border-gray-300 rounded-xl p-4 py-3 shadow-lg w-[18rem] max-[651px]:flex-1 max-[768px]:w-[15rem] h-[72vh] overflow-x-hidden overflow-y-auto ${isMessageList ? '' : 'hide-list'}`}>
+                <div className={`message-list relative min-[651px]:border border-gray-300 rounded-xl p-4 py-3 min-[651px]:shadow-lg w-[18rem] max-[651px]:flex-1 max-[768px]:w-[15rem] min-[651px]:h-[78vh] overflow-x-hidden overflow-y-auto ${isMessageList ? '' : 'hide-list'}`}>
                     {/* <FontAwesomeIcon onClick={() => handleRefresh()} icon='fa-refresh' className={`absolute top-2 right-2 cursor-pointer hover:text-[var(--p-color)] ${isFetching ? 'animate-spin text-[var(--p-color)]' : ''}`} /> */}
                     {isLoading ? <div className='h-[100%]'><Loader1 /></div> :
-                        <ul className={`space-y-3 mt-4`}>
+                        <ul className={`space-y-3 min-[651px]:mt-4`}>
                             {data.length > 0 ? data.map((conv, index) => {
                                 let last_message = conv?.last_message;
                                 if (!last_message) { last_message = '' };
@@ -103,8 +103,8 @@ const Messages = () => {
                         </ul>
                     }
                 </div>
-                <div className={`message-outlet relative flex-1 border border-gray-300 rounded-xl p-4 py-0 pb-2 shadow-lg flex justify-center items-center ${isMessageList ? '' : 'hide-outlet'}`}><h5 className=''>Select a chat</h5></div>
-                <div className={`message-outlet relative flex-1 border border-gray-300 rounded-xl p-4 py-0 pb-2 shadow-lg ${isMessageList ? 'hide-outlet' : 'small-outlet'}`}>
+                <div className={`message-outlet relative flex-1 min-[651px]:border border-gray-300 rounded-xl p-4 py-0 pb-2 min-[651px]:shadow-lg flex justify-center items-center ${isMessageList ? '' : 'hide-outlet'}`}><h5 className=''>Select a chat</h5></div>
+                <div className={`message-outlet relative flex-1 min-[651px]:border border-gray-300 rounded-xl p-4 py-0 pb-2 min-[651px]:shadow-lg ${isMessageList ? 'hide-outlet' : 'small-outlet'}`}>
                     <Outlet />
                 </div>
             </div>

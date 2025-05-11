@@ -96,9 +96,9 @@ const ViewItemRequests = () => {
 
 
     return (
-        <motion.section className="user-requests flex-1 p-7 pb-20 max-[466px]:px-5" initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-xl font-bold text-center border-b border-gray-100 mb-10 leading-[1.5rem]'>{itemName}</h2> 
-            <div className='requests-data border border-gray-300 p-10 px-8 rounded-2xl max-[577px]:px-5'>
+        <motion.section className="user-requests flex-1 p-7 pb-20 max-[577px]:px-0 max-[577px]:py-5" initial={{ opacity: 0, x: -300 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100 min-[577px]:mb-10 leading-[1.5rem]'>{itemName}</h2> 
+            <div className='requests-data min-[577px]:border border-gray-300 p-10 px-8 rounded-2xl max-[577px]:px-0'>
                 { isLoading ?
                     <div className='h-[65vh]'><Loader1/></div>
                     :
@@ -151,7 +151,7 @@ const ViewItemRequests = () => {
 
                                 <div className="hidden max-[577px]:block">
                                     {itemRequests.map((req, index) => (
-                                        <div key={index} className="space-y-1 leading-[1.2rem] p-3 mb-5 border-b border-gray-200 rounded-lg shadow-lg">
+                                        <div key={index} className="space-y-1 leading-[1.2rem] py-4 px-5 mb-5 border-b border-gray-200 rounded-lg shadow-lg">
                                             <p><strong>#:</strong> {index + 1}</p>
                                             <p><strong>Name:</strong> {req.user?.full_name }</p>
                                             <p><strong>Location:</strong> {req.user?.region}, {req.user?.country}</p>

@@ -63,13 +63,13 @@ const MyRequests = () => {
 
 
     return (
-        <motion.section className='user-requests flex-1 p-7 pb-20 max-[466px]:px-5' initial={{ opacity: 0, x: -300 }}  animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <h2 className='text-xl font-bold text-center border-b border-gray-100 mb-10'>My Requests</h2>
+        <motion.section className='user-requests flex-1 p-7 pb-20 max-[577px]:px-0 max-[577px]:py-5' initial={{ opacity: 0, x: -300 }}  animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+            <h2 className='text-xl font-bold text-center border-b border-gray-100 min-[577px]:mb-10'>My Requests</h2>
             
             {isError ?
                 <SomethingWentWrong onHandleRefresh={refetch} isError={isError} isFetching={isFetching} />
             :
-                <div className='requests-data border border-gray-300 p-10 pt-5 px-8 rounded-2xl max-[577px]:px-5'>
+                <div className='requests-data min-[577px]:border border-gray-300 p-10 pt-5 px-8 rounded-2xl max-[577px]:px-0'>
                     { myRequests.length > 0 && <p className='text-orange-500 text-center leading-[1.1rem] italic mb-5'>If you made a request and it's not here, it was declined by donor.</p> }
                     <div className="overflow-x-auto">
                         { isLoading ? <div className='h-[65vh]'><Loader1/></div>
@@ -117,7 +117,7 @@ const MyRequests = () => {
 
                             <div className="hidden max-[577px]:block">
                                 {myRequests.map((req, index) => (
-                                    <div key={index} className="space-y-1 leading-[1.2rem] py-4 mb-5 border-b border-gray-200 rounded-lg shadow-lg">
+                                    <div key={index} className="space-y-1 leading-[1.2rem] py-4 px-5 mb-5 border-b border-gray-200 rounded-lg shadow-lg">
                                         <p><strong>#:</strong> {index + 1}</p>
                                         <p><strong>Item:</strong> {req.item.name}</p>
                                         <p><strong>Location:</strong> {req.item.state}, {req.item.country}</p>

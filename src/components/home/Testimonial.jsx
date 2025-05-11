@@ -25,41 +25,6 @@ const testimonies = [
         testimony: "I got a laptop that helped me continue my studies. This website is a blessing!",
         location: "Accra, Ghana"
     },
-    {
-        name: "Sophia Martinez",
-        testimony: "I love the transparency and ease of use. Donating and receiving items is seamless!",
-        location: "London, UK"
-    },
-    {
-        name: "James Wilson",
-        testimony: "I was able to furnish my new apartment with items from generous donors. Thank you so much!",
-        location: "Toronto, Canada"
-    },
-    {
-        name: "Emily Davis",
-        testimony: "This giveaway platform is life-changing. I was able to donate clothes and help many people in need!",
-        location: "Johannesburg, South Africa"
-    },
-    {
-        name: "William Anderson",
-        testimony: "I gave away my old gadgets and saw them bring joy to others. Best decision ever!",
-        location: "Sydney, Australia"
-    },
-    {
-        name: "Olivia Thomas",
-        testimony: "The community is so supportive. I received a stroller for my newborn, and I couldn't be more grateful!",
-        location: "Nairobi, Kenya"
-    },
-    {
-        name: "Ethan White",
-        testimony: "This platform is a true example of kindness and generosity. I got a bicycle that helps me commute daily!",
-        location: "Berlin, Germany"
-    },
-    {
-        name: "David Lee",
-        testimony: "The process is so simple, and the impact is huge. I'm proud to be part of this giving community!",
-        location: "Dubai, UAE"
-    }
 ];
 
 
