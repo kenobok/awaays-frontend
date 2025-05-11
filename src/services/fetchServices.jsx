@@ -43,6 +43,15 @@ export const fetchConversationsDetails = async (slug) => {
 };
 
 
+// COMMUNITY
+export const fetchForums = async () => {
+    const response = await API.get(`/community/forums`);
+    return response.data;
+};
 
+export const fetchForumsConversations = async (slug) => {
+    const response = await API.get(`/community/forum-conversations/?forum_slug=${slug}`);
+    return response.data;
+};
 
 

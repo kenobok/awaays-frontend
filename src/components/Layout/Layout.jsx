@@ -9,7 +9,7 @@ import Footer from "./Footer";
 import { toast } from 'react-toastify';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { fetchCollectedGiveaways, fetchAllGiveaways } from '../../services/fetchServices';
+import { fetchCollectedGiveaways, fetchAllGiveaways, fetchForums, fetchForumsConversations } from '../../services/fetchServices';
 
 
 const Layout = () => {
@@ -61,6 +61,18 @@ const Layout = () => {
                 await queryClient.prefetchQuery({
                     queryKey: ['collected-items'],
                     queryFn: fetchCollectedGiveaways,
+                    staleTime: 1000 * 60 * 60,
+                });
+
+                await queryClient.prefetchQuery({
+                    queryKey: ['forums-list'],
+                    queryFn: fetchForums,
+                    staleTime: 1000 * 60 * 60,
+                });
+
+                await queryClient.prefetchQuery({
+                    queryKey: ['forums-conversations'],
+                    queryFn: fetchForumsConversations,
                     staleTime: 1000 * 60 * 60,
                 });
             } catch (error) {
