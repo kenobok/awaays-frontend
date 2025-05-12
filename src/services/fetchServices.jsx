@@ -55,3 +55,10 @@ export const fetchForumsConversations = async (slug) => {
 };
 
 
+// CONTACT
+export const fetchContacts = async () => {
+    const response = await API.get(`/contact/contact-details`);
+    return response.data;
+};
+
+

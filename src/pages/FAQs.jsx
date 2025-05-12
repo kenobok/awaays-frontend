@@ -9,7 +9,7 @@ const faqsData = [
     {
         question: "How do I participate in a giveaway?",
         answer:
-            "Simply browse available giveaways, click on the one you're interested in, and follow the instructions to enter.",
+            "Simply browse available giveaways, click on the one you're interested in, and send a request to the donor. NOTE: only General Giveaway items can be requested for.",
     },
     {
         question: "Is this platform completely free?",
@@ -29,17 +29,17 @@ const faqsData = [
     {
         question: "How do I ensure fair participation?",
         answer:
-            "We use a random selection process for most giveaways, ensuring fair chances for all participants.",
+            "For General Giveaway items, the donor selects a recipient from the item request list. However, for other purposes—such as healthcare support, prison outreach, or orphanage support—Awaays collects the donated items and distributes them directly to hospitals, prisons, orphanages, or any other cause specified by the donor.",
     },
     {
         question: "Are there any restrictions on what I can give away?",
         answer:
-            "Yes. You cannot give away illegal items, hazardous materials, or anything that violates our Terms & Conditions.",
+            "YES. Please note that illegal items, stolen goods, hazardous materials, or any items that violate our policies cannot be accepted. For more information, please refer to our Terms and Conditions page.",
     },
     {
         question: "How do I report a fraudulent giveaway?",
         answer:
-            "If you suspect a giveaway is a scam, click the 'Report' button on the listing or contact our support team.",
+            "If you suspect any fraudulent activity on our platform, please contact our support team immediately. To contact us, scroll down to the footer and click on the 'Contact Us' link. You can reach us via direct call, WhatsApp, email, or by submitting a message through the contact form.",
     },
     {
         question: "Can I delete my giveaway after posting?",
@@ -49,7 +49,7 @@ const faqsData = [
     {
         question: "How do I contact support?",
         answer:
-            "You can reach out to our support team via the 'Contact Us' page or email us at awaays.info@gmail.com.",
+            "To contact us, scroll down to the footer and click on the 'Contact Us' link. You can reach us via direct call, WhatsApp, email, or by submitting a message through the contact form.",
     },
 ];
 

@@ -48,9 +48,9 @@ const GroupDetails = () => {
                     <button className='border-2 border-[var(--p-color)] py-[1px] px-3 rounded-full cursor-pointer hover:bg-[var(--p-color)] hover:text-white max-[577px]:text-[.9rem]'>Join Group</button>
                 </div>
             </div>
-            <div className='flex justify-between gap-x-5 h-[75vh] overflow-y-auto'>
-                <div className={`flex-1 border border-gray-300 rounded-xl`}>
-                    <div className={`w-full h-full rounded-xl px-3 ${showMembers ? 'hidden' : ''}`}>
+            <div className='flex justify-between gap-x-5 h-[75vh] max-[651px]:h-[calc(100vh-13rem)] overflow-y-hidden'>
+                <div className={`flex-1 min-[651px]:border border-gray-300 rounded-xl`}>
+                    <div className={`w-full h-full rounded-xl px-3 max-[651px]:px-0 ${showMembers ? 'hidden' : ''}`}>
                         <div className='w-full h-[64vh] overflow-y-scroll'>
                             { 
                                 group.conversations.length > 0 ? group.conversations.map((post, index) => (
@@ -73,7 +73,7 @@ const GroupDetails = () => {
                         <div className='w-full h-18 mt-2 bg-white'>
                             <form className='h-full flex'>
                                 <textarea className='border border-gray-300 h-full w-full resize-none leading-[1.1rem] p-2 px-3 rounded-lg text-[.93rem] focus:outline-[var(--p-color)]' placeholder='Enter your message'></textarea>
-                                <button className='text-white bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'><FontAwesomeIcon icon='paper-plane' /> Send</button>
+                                <button className='text-white text-[1.5rem] bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer px-2'><FontAwesomeIcon icon='paper-plane' /></button>
                             </form>
                         </div>
                     </div>

@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import API from '/src/api/axiosInstance'
 import isEmail from 'validator/lib/isEmail';
+import { useQuery } from "@tanstack/react-query";
+import { fetchContacts } from "../services/fetchServices";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { SubmitButton } from "../components/utils/SubmitButton";
+import { toast } from 'react-toastify'
 
 
 const ContactUs = () => {
@@ -8,6 +13,37 @@ const ContactUs = () => {
     const [inputFocus, setInputFocus] = useState({name: false, email: false, message: false});
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
+    const [contact, setContact] = useState({phone_number: '', email: ''})
+
+    const { data, isLoading, isError, refetch, isFetching } = useQuery({
+        queryKey: ['contacts'],
+        queryFn: fetchContacts,
+        staleTime: 1000 * 60 * 60 * 24 * 30,
+        cacheTime: 1000 * 60 * 60 * 24 * 30,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+    })
+
+    useEffect(() => {
+        const localContact = localStorage.getItem('contact_info');
+        if (localContact) {
+            try {
+                const parsed = JSON.parse(localContact);
+                setContact(parsed);
+            } catch (err) {
+                console.error("Failed to parse contact info from localStorage:", err);
+            }
+        }
+    }, []);
+    
+    useEffect(() => {
+        if (data?.phone_number && data?.email) {
+            const contactDetails = {phone_number: data.phone_number, email: data.email};
+            localStorage.setItem('contact_info', JSON.stringify(contactDetails));
+            setContact(contactDetails);
+        }
+    }, [data]);
     
     const handleInputFocus = (field) => {
         setInputFocus((prev) => ({ ...prev, [field]: true }));
@@ -36,15 +72,15 @@ const ContactUs = () => {
                 break;
             case "message":
                 const wordCount = value.trim().split(/\s+/).filter(Boolean).length;
-                if (wordCount < 10) {
-                    error = "Must be at least 10 words";
+                if (wordCount < 5) {
+                    error = "Must be at least 5 words";
                 }
                 break;
         }
         setErrors((prev) => ({ ...prev, [field]: error }));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         let newErrors = {};
@@ -58,19 +94,39 @@ const ContactUs = () => {
         setErrors(newErrors);
 
         if (Object.keys(newErrors).length > 0) {
-            console.log("Errors exist:", newErrors);
             return;
         }
 
-        setFormData({ name: "", email: "", message: "" });
+        setLoading(true)
+        try {
+            const res = await API.post('/contact/message/', formData)
+            toast.success("Message sent, we'll get back to you shortly")
+            setFormData({ name: "", email: "", message: "" });
+            setInputFocus({name: false, email: false, message: false});
+            setErrors({});
+        } catch(error) {
+            toast.error('An error occured, try again...')
+        } finally {
+            setLoading(false)
+        }
     };
 
     return (
         <main className="max-w-xl mx-auto p-15 pb-20 rounded-lg translate-y-[6rem] max-[941px]:p-5">
-            <h1 className="text-3xl font-bold m-0 p-0 mb-2 text-center">Contact Us</h1>
-            <p className="text-center text-gray-600 m-0 p-0 mb-4">
-                Have questions? We're here to help. Fill out the form below and we'll get back to you as soon as possible.
-            </p>
+            <h1 className="text-3xl font-bold m-0 p-0 mb-3 text-center">Contact Us</h1>
+            <p className="text-center text-gray-600 m-0 p-0 leading-[1.3rem]">Have questions? We're here to help.</p>
+
+            <div className="text-center my-5">
+                <div>
+                    <b><FontAwesomeIcon icon={['fab', 'whatsapp']} className="text-green-800 text-[1.2rem]"/> : </b>
+                    <a href={`https://wa.me/${contact?.phone_number.slice(1)}`} target="_blank" rel="noopener noreferrer" className="text-[var(--p-color)] cursor-pointer font-semibold text-[1.2rem]">{contact?.phone_number || 'Fetching data.....'}</a>
+                </div>
+                <div>
+                    <b><FontAwesomeIcon icon={['far', 'envelope']} className="text-blue-800 text-[1.2rem]"/> : </b><a href={`mailto:${contact?.email}`} className="text-[var(--p-color)] cursor-pointer font-semibold text-[1.2rem]">{contact?.email || 'Fetching data.....'}</a>
+                </div>
+            </div>
+
+            <p className="text-gray-600 text-center">Or fill the form below, we'll get back to you shortly!</p>
 
             <form onSubmit={handleSubmit} className=" py-1">
                 <div className="form-input">
@@ -92,11 +148,6 @@ const ContactUs = () => {
                 </div>
                 <SubmitButton loading={loading} />
             </form>
-
-            <div className="text-center mt-3">
-                <p className="text-gray-600">Or email us directly at</p>
-                <a href="mailto:awaays.info@gmail.com" className="text-[var(--p-color)] cursor-pointer font-semibold">awaays.info@gmail.com</a>
-            </div>
         </main>
     );
 };

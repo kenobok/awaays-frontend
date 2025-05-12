@@ -83,11 +83,11 @@ const MessageDetails = () => {
     return (
         <>
             <p className='pt-1 text-center border-b border-gray-300 text-sm'>
-                Chats with {conversation?.participant_1_id === user?.id ? conversation?.participant_2_name : conversation?.participant_1_name}
+                Chats with {conversation?.participant_1_id === user?.id ? conversation?.participant_2_name : conversation?.participant_1_name || '......'}
             </p>
 
             <div className={`relative h-full py-0`}>
-                <div className='overflow-x-hidden overflow-y-auto min-[651px]:h-[64vh] max-[651px]:h-[calc(100vh-15rem)] px-0'>
+                <div className='overflow-x-hidden overflow-y-auto min-[651px]:h-[64vh] max-[651px]:h-[calc(100vh-13rem)] px-0'>
                     {
                         isLoading ? (
                             <div className='h-[100%]'><Loader1 /></div>
@@ -120,8 +120,8 @@ const MessageDetails = () => {
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
                         ></textarea>
-                        <button type='submit' className='text-white bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'>
-                            <FontAwesomeIcon icon='paper-plane' /> Send
+                        <button type='submit' className='text-white text-[1.5rem] px-2 bg-[var(--p-color)] leading-[1.2rem] rounded-lg cursor-pointer'>
+                            <FontAwesomeIcon icon='paper-plane' />
                         </button>
                     </form>
                 </div>
