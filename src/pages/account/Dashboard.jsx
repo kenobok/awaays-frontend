@@ -26,8 +26,6 @@ const Dashboard = () => {
     const { data: conversations } = useQuery({
         queryKey: ['fetch-conversations'],
         queryFn: fetchConversations,
-        refetchOnWindowFocus: false,
-        refetchInterval: false,
     });
 
     const slugs = conversations?.map((conv) => conv.slug) || [];
@@ -36,9 +34,9 @@ const Dashboard = () => {
         queries: slugs.map((slug) => ({
             queryKey: ['conversation', slug],
             queryFn: () => fetchConversationsDetails(slug),
-            refetchOnWindowFocus: false,
-            refetchInterval: false,
-            enabled: !!slug,
+            // refetchOnWindowFocus: false,
+            // refetchInterval: false,
+            // enabled: !!slug,
         })),
     });
 

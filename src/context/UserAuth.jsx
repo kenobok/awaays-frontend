@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { CheckingUser } from '../components/utils/CheckingUser';
@@ -35,9 +35,8 @@ const BlockIfSignedIn = ({ children }) => {
     useEffect(() => {
         if (!authChecked) return;
 
-        const from = (location.pathname + location.search) || '/give-item';
-
-        console.log(from)
+        const searchParams = new URLSearchParams(location.search);
+        const from = searchParams.get('from') || '/give-item';
 
         if (user) {
             if (user.is_verified) {
@@ -45,11 +44,7 @@ const BlockIfSignedIn = ({ children }) => {
                     from === '/auth' || 
                     from === '/auth/' || 
                     from.includes('verify-email') || 
-                    from.includes('reset-password') ||
-                    location.pathname === '/auth' || 
-                    location.pathname === '/auth/' || 
-                    location.pathname.includes('verify-email') || 
-                    location.pathname.includes('reset-password')
+                    from.includes('reset-password')
                 ) {
                     navigate( '/give-item', { replace: true });
                 } else {
@@ -57,7 +52,7 @@ const BlockIfSignedIn = ({ children }) => {
                 }
             }
         } else {
-            if (from.includes('verify-email') || location.pathname.includes('verify-email')) {
+            if (location.pathname.includes('verify-email')) {
                 navigate('/auth', { replace: true })
             }
         }
