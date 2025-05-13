@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams, useOutletContext } from 'react-router-dom';
+import { Link, useOutletContext } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader1 } from '../../../components/utils/Preloader';
 import '/src/assets/styles/community.css';
 
 const ForumList = () => {
-    const { forums, isLoading, error } = useOutletContext();
+    const { forums, isLoading, isError } = useOutletContext();
 
     return (
         <div className='ml-25 max-[768px]:ml-0'>

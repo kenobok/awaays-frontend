@@ -46,7 +46,6 @@ const GiveawayItems = () => {
         queryKey: ['all-giveaway-items'],
         queryFn: fetchAllGiveaways,
         refetchOnWindowFocus: true,
-        refetchInterval: 1000 * 60 * 30 
     });
 
     // const deduplicatedItems = useMemo(() => {

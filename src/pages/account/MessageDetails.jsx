@@ -18,7 +18,6 @@ const MessageDetails = () => {
     const { data: conversation, isLoading, refetch } = useQuery({
         queryKey: ['conversation', slug],
         queryFn: () => fetchConversationsDetails(slug),
-        refetchOnWindowFocus: false,
         refetchInterval: 5000,
         enabled: true,
     });

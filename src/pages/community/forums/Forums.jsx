@@ -17,7 +17,7 @@ const Forums = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const { data: forums, isLoading, error, isError, refetch } = useQuery({
+    const { data: forums, isLoading, isError, refetch } = useQuery({
         queryKey: ['forums-list'],
         queryFn: fetchForums,
     })
@@ -119,24 +119,23 @@ const Forums = () => {
         <main className='space-x-10 flex max-[768px]:flex-col mt-[5.5rem] max-[941px]:mt-[4rem] py-10'>
             <section className='w-[10rem] max-[768px]:w-[80%]'>
                     <div className='px-5 min-[768px]:fixed max-[768px]:mb-10'>
-                        <ul className='com-side-link relative space-y-5 p-7 text-center border-r-2 border-[var(--p-color)]'>
-                { isLoading ? <div><FontAwesomeIcon icon='spinner' className='animate-spin text-[1.2rem] text-[var(--p-color)]' /></div> :
-                            
-                            <>
-                                {forums?.map((forum, index) => (
-                                    <li key={index} className={`lb-link border-b border-gray-300 hover:text-[var(--p-color)] hover:border-[var(--p-color)] ${forum?.slug === slug ? 'active show-icon' : ''}`}><Link to={`/community/forums/${forum?.slug}`}>{forum?.name}</Link></li>
-                                ))}
-                                {forums?.map((forum, index) => (
-                                    <button key={index} className={`mt-2 border-2 border-[var(--p-color)] p-1 pt-[5px] px-3 rounded-full text-[var(--p-color)] cursor-pointer shadow-md hover:scale-105 ${forum?.slug === slug ? '' : 'hidden'}`} onClick={() => setForumForm(true)} >{forum?.button}</button>
-                                ))}
-                            </>
-                }
+                        <ul className='com-side-link relative space-y-5 p-7 text-center border-r-2 border-[var(--p-color)] min-[768px]:max-w-[17rem]'>
+                            { isLoading ? <div><FontAwesomeIcon icon='spinner' className='animate-spin text-[1.2rem] text-[var(--p-color)] w-[10rem]' /></div> :
+                                <>
+                                    {forums?.map((forum, index) => (
+                                        <li key={index} className={`lb-link border-b border-gray-300 hover:text-[var(--p-color)] hover:border-[var(--p-color)] ${forum?.slug === slug ? 'active show-icon' : ''}`}><Link to={`/community/forums/${forum?.slug}`}>{forum?.name}</Link></li>
+                                    ))}
+                                    {forums?.map((forum, index) => (
+                                        <button key={index} className={`mt-2 border-2 border-[var(--p-color)] p-1 pt-[5px] px-3 rounded-full text-[var(--p-color)] cursor-pointer shadow-md hover:scale-105 ${forum?.slug === slug ? '' : 'hidden'}`} onClick={() => setForumForm(true)} >{forum?.button}</button>
+                                    ))}
+                                </>
+                            }
                         </ul>
                     </div>
             </section>
 
             <section className='relative flex-1 overflow-hidden'>
-                <Outlet context={{ forums, isLoading, error, isError, refetch, loading }} />
+                <Outlet context={{ forums, isLoading, isError, refetch, loading }} />
                 <div className={`fixed w-full h-full top-0 left-0 bg-[rgba(0,0,0,.2)] overflow-hidden ${!slug ? 'hidden' : ''} ${!forumForm ? 'hidden' : ''}`}>
                     {forums?.map((forum, index) => (
                         forum?.slug === slug &&

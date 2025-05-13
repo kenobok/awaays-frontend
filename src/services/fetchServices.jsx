@@ -54,6 +54,16 @@ export const fetchForumsConversations = async (slug) => {
     return response.data;
 };
 
+export const fetchGroups = async () => {
+    const response = await API.get(`/community/groups`);
+    return response.data;
+};
+
+export const fetchGroupsConversations = async (slug) => {
+    const response = await API.get(`/community/group-conversations/?group_slug=${slug}`);
+    return response.data;
+};
+
 
 // CONTACT
 export const fetchContacts = async () => {
