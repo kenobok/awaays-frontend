@@ -7,6 +7,7 @@ import isEmail from "validator/lib/isEmail";
 import { toast } from 'react-toastify';
 import { SubmitButton } from '../../components/utils/SubmitButton'
 import '../../assets/styles/account.css';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 const VerifyEmail = () => {
@@ -173,14 +174,14 @@ const VerifyEmail = () => {
                     <div className='flex justify-between'>
                         <p className="text-[.95rem] leading-[1.2rem]">Check email for code...</p>
                         { loading2 ?
-                            <span className="text-[.95rem] leading-[1.2rem]">Sending OTP...</span>
+                            <span className="text-[.95rem] leading-[1.2rem]"><FontAwesomeIcon icon='spinner' className="animate-spin text-[var(--p-color)]" /></span>
                             :
-                            <span to="" className={`text-[.95rem] leading-[1.2rem] text-[var(--p-color)] cursor-pointer ${cooldown > 0 ? 'cursor-progress' : ''}`} onClick={() => handleRequestNewCode()}>{cooldown > 0 ? `OTP Sent - (${cooldown}s)` : 'Request new code'}</span>
+                            <span to="" className={`text-[.95rem] leading-[1.2rem] text-[var(--p-color)] cursor-pointer ${cooldown > 0 ? 'cursor-progress text-orange-600' : ''}`} onClick={() => handleRequestNewCode()}>{cooldown > 0 ? `OTP sent - (${cooldown}s)` : 'Resend code'}</span>
                         }
                     </div>
                 }
                 <div className={`flex justify-between ${!changeEmail ? 'mt-2' : ''}`}>
-                    <p className={`text-[.95rem] leading-[1.2rem] ${!changeEmail ? 'text-orange-500' : ''}`}>{ !changeEmail ? 'Wrong email...?' : 'Verify the email...' }</p>
+                    <p className={`text-[.95rem] leading-[1.2rem] ${!changeEmail ? 'text-orange-700' : ''}`}>{ !changeEmail ? 'Wrong email...?' : 'Verify the email...' }</p>
                     <span className={`text-[.95rem] leading-[1.2rem] text-[var(--p-color)] cursor-pointer`} onClick={handleMode}>{ !changeEmail ? 'Change' : 'Verify' } email</span>
                 </div>
                 
