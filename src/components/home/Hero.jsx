@@ -25,7 +25,7 @@ const Hero = () => {
                 </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }} className="hero-slide-wrp">
-                <Swiper
+                {/* <Swiper
                     modules={[Navigation, Pagination, Autoplay, EffectCards, Mousewheel]}
                     spaceBetween={0}
                     slidesPerView={1}
@@ -40,7 +40,7 @@ const Hero = () => {
                         <SwiperSlide key={index}><img src={image.src} alt={`Slide ${index}`} /></SwiperSlide>
                     )) :
                     <Loader1 />}
-                </Swiper>
+                </Swiper> */}
             </motion.div>
         </section>
     );
