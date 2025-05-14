@@ -1,5 +1,5 @@
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom'
-import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram, faFacebookF, faTwitter, faLinkedin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import logo from '../../assets/images/logo1.png'
@@ -8,6 +8,7 @@ import '../../assets/styles/header-footer.css'
 
 export default function Footer() {
     const location = useLocation();
+    const [newsLetterEmail, setNewsLetterEmail] = useState('')
     const [bactToTop, setBactToTop] = useState(false);
 
     useEffect(() => {
@@ -31,6 +32,10 @@ export default function Footer() {
         setBactToTop(false);
     };
 
+    const handleSubscribe = async (e) => {
+        e.preventDefault()
+        setNewsLetterEmail('')
+    }
 
 
     return (
@@ -66,9 +71,9 @@ export default function Footer() {
 
                     <div>
                         <h4 style={{ color:'#fff' }}>Newsletter</h4>
-                        <form className="mx-auto" >
-                            <input type="email" placeholder="Your email address" className='border-2 border-white focus:outline-none rounded-md p-2 mb-4 w-[100%] block text-white'/>
-                            <button type="submit" className="p-1 px-3 text-[#444] bg-gray-200 rounded-lg shadow-sm cursor-pointer text-sm">Subscribe</button>
+                        <form className="mx-auto" onSubmit={handleSubscribe}>
+                            <input type="email" placeholder="Your email address" className='border-2 border-white focus:outline-none rounded-md p-2 mb-4 w-[100%] block text-white' value={newsLetterEmail} onChange={(e) => {setNewsLetterEmail(e.target.value)}}/>
+                            <button className="p-1 px-3 text-[#444] bg-gray-200 rounded-lg shadow-sm cursor-pointer text-sm">Subscribe</button>
                         </form>
                     </div>
                 </div>

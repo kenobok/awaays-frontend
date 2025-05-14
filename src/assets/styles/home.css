@@ -1,20 +1,18 @@
 .hero {
     position: relative;
-    padding: 5rem .5rem;
+    padding: 0 0 0 2rem;
     transform: translateY(5.5rem);
-    margin: 0 0 5rem 0;
     height: auto;
-    z-index: 2;
     background: white url('../images/awaays1.png') no-repeat center;
     background-size: cover;
-    border-radius: 30rem 15rem  15rem 30rem;
+    border-radius: 30rem ;
     overflow: hidden;
 }
 .hero-text {
     position: relative;
     text-align: center;
     padding-left: 1rem;
-    overflow: hidden;
+    /* overflow-x: hidden; */
 }
 .hero-text h1 {
     color: #fff;
@@ -35,11 +33,14 @@
     font-weight: 100;
     text-shadow: 0 0 10px #7730fc;
 }
+.hero-text h1:nth-child(3) {
+    margin-bottom: 1.5rem;
+}
 .hero-text p {
     color: #fff;
     padding: 0;
-    margin: 1.5rem 0 0 0;
-    max-width: 30rem;
+    margin: 0 auto;
+    max-width: 80%;
     font-family: "Josefin Sans",  Arial, sans-serif;
     font-size: 1.5rem;
     font-weight: 400;
@@ -56,36 +57,10 @@
     transform: scale(1.1);
     transition: all .3s ease-in-out;
 }
-.hero .hero-slide {
-    position: relative;
-    width: 40rem;
-    height: 28rem;
-    overflow: hidden;
-    border-radius: 2rem;
-}
-.hero .hero-slide::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background-image: url(../images/ovalbg.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    z-index: 2;
-}
-.hero .hero-slide img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    object-fit: cover;
-    object-position: center;
+
+.hero .hero-anim {
+    z-index: 3;
+    /* display: none; */
 }
 
 
@@ -189,43 +164,15 @@
 
 /* ============== MEDIA QUERIES ============== */
 @media (max-width: 1300px) {
-    .hero h1 {
-        font-size: 3rem;
-        line-height: 3rem;
-    }
-    .hero h1:nth-child(2) {
-        font-size: 1.7rem;
-    }
-    .hero p {
-        max-width: 24rem;
-        font-size: 1.3rem;
-        line-height: 1.8rem;
+    .hero {
+        border-radius: 15rem ;
     }
 }
 
-@media (max-width: 1180px) {
-    .hero .hero-slide {
-        width: 34.5rem;
-        height: 24rem;
-    } 
-}
 
 @media (max-width: 1080px) {
-    .hero h1 {
-        font-size: 2.5rem;
-        line-height: 2.5rem;
-    }
-    .hero h1:nth-child(2) {
-        font-size: 1.45rem;
-    }
-    .hero p {
-        max-width: 20rem;
-        font-size: 1.15rem;
-        line-height: 1.5rem;
-    }
-    .hero .hero-slide {
-        width: 32rem;
-        height: 23rem;
+    .hero {
+        border-radius: 13rem ;
     }
     .hiwi-outer {
         margin-bottom: 2rem;
@@ -245,30 +192,14 @@
 @media (max-width: 992px) {
     .hero {
         border-radius: 15rem;
-        padding: 5rem 3rem 0.5rem 3rem;
+        padding: 5rem 0 0 0;
     }
     .hero .hero-text {
         padding-left: 0;
+        margin-bottom: 2rem;
     }
-    .hero h1 {
-        font-size: 3rem;
-        line-height: 3rem;
-    }
-    .hero h1:nth-child(2) {
-        font-size: 1.7rem;
-    }
-    .hero p {
-        max-width: 50%;
-        font-size: 1.2rem;
-        line-height: 1.5rem;
-        margin: 1rem auto 0 auto;
-    }
-    .hero .hero-slide-wrp {
-        margin-top: 5rem;
-    }
-    .hero .hero-slide {
-        width: 40rem;
-        height: 28rem;
+    .hero .hero-anim {
+        z-index: 4;
     }
 }
 
@@ -281,52 +212,28 @@
 
 @media (max-width: 767px) {
     .hero {
-        border-radius: 10rem;
-        padding: 4rem 1rem .5rem 1rem;
-    }
-    .hero h1 {
-        font-size: 2.5rem;
-        line-height: 2.5rem;
-    }
-    .hero h1:nth-child(2) {
-        font-size: 1.4rem;
-    }
-    .hero p {
-        max-width: 80%;
-        margin: 1rem auto 0 auto;
-    }
-    .hero .hero-slide {
-        width: 35rem;
-        height: 24rem;
+        border-radius: 12rem;
     }
 }
 
 @media (max-width: 576px) {
     .hero {
-        border-radius: 7rem;
-    }
-    .hero .hero-slide {
-        width: 30.5rem;
-        height: 21rem;
+        border-radius: 10rem;
     }
 }
 
 @media (max-width: 505px) {
     .hero h1 {
-        font-size: 2rem;
-        line-height: 2.1rem;
+        font-size: 2.5rem;
+        line-height: 2.5rem;
     }
     .hero h1:nth-child(2) {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
     .hero p {
         max-width: 90%;
-        font-size: 1.1rem;
-        line-height: 1.5rem;
-    }
-    .hero .hero-slide {
-        width: 20rem;
-        height: 14rem;
+        font-size: 1.4rem;
+        line-height: 1.7rem;
     }
     .hiwi-outer,
     .hiwi-outer:nth-of-type(3) {
@@ -343,7 +250,7 @@
 
 @media (max-width: 400px) {
     .hero {
-        border-radius: 5rem;
+        border-radius: 7rem;
     }
 }
 
