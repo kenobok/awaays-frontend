@@ -59,6 +59,11 @@ export const fetchGroups = async () => {
     return response.data;
 };
 
+export const fetchMyGroups = async () => {
+    const response = await API.get(`/community/groups/my-groups`);
+    return response.data;
+};
+
 export const fetchGroupsConversations = async (slug) => {
     const response = await API.get(`/community/group-conversations/?group_slug=${slug}`);
     return response.data;

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useQuery, useQueries } from '@tanstack/react-query';
-import { fetchMyGiveaways, fetchRequests, fetchConversations, fetchConversationsDetails } from '../../services/fetchServices';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchMyGiveaways, fetchRequests, fetchConversations, fetchForums, fetchMyGroups } from '../../services/fetchServices';
 import { useAuth } from '../../context/AuthContext';
 import { SomethingWentWrong } from '../../components/utils/SomethingWentWrong';
 
@@ -12,8 +12,10 @@ const Dashboard = () => {
     const [totalGiveaway, setTotalGiveaway] = useState(0)
     const [totalRequest, setTotalRequest] = useState(0)
     const [totalRecieved, setTotalReceived] = useState(0)
+    const [unread_msg, setUnreadMsg] = useState(null)
+    const queryClient = useQueryClient();
 
-    const { data: items, isLoading, isError, error, refetch, isFetching } = useQuery({
+    const { data: items, isLoading, isError, refetch, isFetching } = useQuery({
         queryKey: ['my-giveaway-items'],
         queryFn: fetchMyGiveaways,
     });
@@ -28,19 +30,6 @@ const Dashboard = () => {
         queryFn: fetchConversations,
     });
 
-    const slugs = conversations?.map((conv) => conv.slug) || [];
-
-    const conversationQueries = useQueries({
-        queries: slugs.map((slug) => ({
-            queryKey: ['conversation', slug],
-            queryFn: () => fetchConversationsDetails(slug),
-            // refetchOnWindowFocus: false,
-            // refetchInterval: false,
-            // enabled: !!slug,
-        })),
-    });
-
-
     useEffect(() => {
         if (items) {
             setTotalGiveaway(items?.length || 0);
@@ -51,6 +40,46 @@ const Dashboard = () => {
             setTotalRequest(requests?.filter(req => req?.user?.id === user?.id).length || 0);
         }
     }, [items, user, requests]);
+
+    useEffect(() => {
+        const unread_msg = conversations?.some((conv) => conv?.messages?.some((msg) => msg.read === false && msg.receiver === user?.id));
+        setUnreadMsg(unread_msg)
+    }, [conversations])
+
+    useEffect(() => {
+        const prefetchData = async () => {
+            try {
+                await queryClient.prefetchQuery({
+                    queryKey: ['forums-list'],
+                    queryFn: fetchForums,
+                    staleTime: 1000 * 60 * 60,
+                });
+
+                await queryClient.prefetchQuery({
+                    queryKey: ['my-groups'],
+                    queryFn: fetchMyGroups,
+                    staleTime: 1000 * 60 * 60,
+                });
+            } catch (error) {
+                console.error('Prefetching failed:', error);
+            }
+        };
+        const handle = window.requestIdleCallback
+            ? requestIdleCallback(() => {
+                prefetchData();
+            })
+            : setTimeout(() => {
+                prefetchData();
+            }, 5000);
+            
+        return () => {
+            if (window.cancelIdleCallback && typeof handle === 'number') {
+                cancelIdleCallback(handle);
+            } else {
+                clearTimeout(handle);
+            }
+        };
+    }, []);
 
 
     return (
@@ -87,15 +116,17 @@ const Dashboard = () => {
                     </div>
                     <div className='flex justify-evenly flex-wrap gap-5'>
                         <div className='border border-gray-300 rounded-xl p-3 shadow-lg w-[17rem] h-[20rem] overflow-x-hidden overflow-y-auto'>
-                            <h4 className='text-lg py-1 bg-[var(--bg-color)] font-bold text-center border-b border-b-gray-300'>Notifications <FontAwesomeIcon icon="bell" /></h4>
-                            <ul className='space-y-3 mt-4 list-disc px-7'>
-                                {/* <li className='leading-[1.1rem]'>You have 2 new requests.</li>
-                                <li className='leading-[1.1rem]'>You have 2 new requests.</li>
-                                <li className='leading-[1.1rem]'>You have 1 new message. You have 1 new message.</li>
-                                <li className='leading-[1.1rem]'>You have 2 new requests.</li>
-                                <li className='leading-[1.1rem]'>You have 2 new requests.</li>
-                                <li className='leading-[1.1rem]'>You have 1 new message. You have 1 new message.</li> */}
-                            </ul>
+                            <h4 className='text-lg py-1 bg-[var(--bg-color)] font-bold text-center border-b border-b-gray-300'>Notifications <FontAwesomeIcon icon="bell" className='text-orange-500 animate-bounce' /></h4>
+                            { isLoading ? <div className='flex justify-center mt-5'><FontAwesomeIcon icon='spinner' className='animate-spin' /></div> :
+                                <ul className='space-y-3 mt-4 list-none px-2'>
+                                    { unread_msg && <li className='leading-[1.1rem]'> <FontAwesomeIcon icon="envelope" className='text-blue-500 animate-pulse' />&nbsp; You have a new message.</li> }
+                                    {/* <li className='leading-[1.1rem]'>You have 2 new requests.</li>
+                                    <li className='leading-[1.1rem]'>You have 1 new message. You have 1 new message.</li>
+                                    <li className='leading-[1.1rem]'>You have 2 new requests.</li>
+                                    <li className='leading-[1.1rem]'>You have 2 new requests.</li>
+                                    <li className='leading-[1.1rem]'>You have 1 new message. You have 1 new message.</li> */}
+                                </ul>
+                            }
                         </div>
                         <div className='flex-1 min-w-[17rem] border border-gray-300 rounded-xl p-3 shadow-lg h-[20rem] overflow-x-hidden overflow-y-auto'>
                             <h4 className='text-lg py-1 font-bold text-center border-b border-b-gray-300'>Forum & Groups <FontAwesomeIcon icon="users" /></h4>

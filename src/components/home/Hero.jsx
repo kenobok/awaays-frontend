@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
-import free from '../../assets/animations/free.json'
 import hhb from '../../assets/animations/hhb.json'
-import mcbw from '../../assets/animations/mcbw.json'
 import mrin from '../../assets/animations/mrin.json'
 
 const Hero = () => {
@@ -24,7 +22,6 @@ const Hero = () => {
                 </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5, ease: "easeInOut"  }} className="hero-anim relative flex-col justify-center align-center relative w-full h-[38rem] max-[993px]:h-[35rem] max-[768px]:h-[30rem] max-[451px]:h-[27rem] z-3">
-                {/* <motion.div animate={{ x: [0, 350, 0] }} transition={{ repeat: Infinity, duration: 30, ease: "easeInOut" }}><Lottie className='absolute left-[-8rem]' animationData={free} loop={true} autoplay={true} style={{ height: 200, width: 200 }} /></motion.div> */}
                 <Lottie className='w-[200px] absolute left-[0] top-[-2rem] max-[993px]:hidden' animationData={hhb} loop={true} autoplay={true} style={{ transform: 'rotate(-5deg)' }} />
                 <Lottie className='w-[800px] max-[768px]:w-[600px] max-[451px]:w-[450px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-[993px]:pr-[5rem]' animationData={mrin} loop={true} autoplay={true} />
             </motion.div>

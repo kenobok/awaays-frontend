@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
         queryFn: fetchMe,
         staleTime: 5 * 60 * 1000, 
         retry: 2,
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: true
     });
 
     const authChecked = !isLoading && !isFetching;

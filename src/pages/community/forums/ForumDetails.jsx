@@ -147,8 +147,8 @@ const ForumDetails = () => {
                         conversations?.length>0 ?
                             conversations?.map((conv, index) => (
                                 <div key={index} className={`single-discussion relative border-b-2 border-gray-300 pb-4`}>
-                                    <h4 className='font-semibold text-[1.1rem] leading-[1.2rem]'>{conv.topic}</h4>
-                                    <p className={`leading-[1.3rem] max-[600px]:leading-[1.2rem] ${expandedPosts.includes(index) ? '' : 'line-clamp-3'}`}>{conv.content}</p>
+                                    <h4 className='font-semibold text-[1.1rem] text-blue-900 leading-[1.2rem]'>{conv.topic}</h4>
+                                    <p className={`leading-[1.3rem] max-[600px]:leading-[1.2rem] text-gray-600 ${expandedPosts.includes(index) ? '' : 'line-clamp-3'}`}>{conv.content}</p>
                                     <div className='flex justify-end pr-3'>
                                         {conv.content.length > 250 && (
                                             <button onClick={() => handleReadMoreToggle(index)} className="text-sm text-blue-500 hover:font-bold leading-[1rem] cursor-pointer border border-blue-500 p-[1px] pt-[3px] px-[7px] rounded-full">
@@ -179,7 +179,7 @@ const ForumDetails = () => {
                                                 conv?.replies &&
                                                 conv?.replies.map((reply, index) => (
                                                     <div key={index} className='my-3 pb-2 border-b border-gray-200'>
-                                                        <p className='leading-[1rem] text-[0.95rem]'>{ reply.content }</p>
+                                                        <p className='leading-[1rem] text-[0.95rem] text-gray-600'>{ reply.content }</p>
                                                         <div className='flex'>
                                                             <p className='mr-5 font-semibold text-[var(--p-color)] text-[0.9rem] leading-[1.3rem]'>{reply.author.full_name}</p>
                                                             <p className='italic leading-[1.3rem] text-[.8rem]'>{reply.date}</p>

@@ -12,12 +12,19 @@ import { SomethingWentWrong } from '../../components/utils/SomethingWentWrong';
 
 
 const MyGiveaways = () => {
-    const { data: items, isLoading, isError, error, refetch, isFetching } = useQuery({
+    const { data: itemsData, isLoading, isError, error, refetch, isFetching } = useQuery({
         queryKey: ['my-giveaway-items'],
         queryFn: fetchMyGiveaways,
     });
     const navigate = useNavigate();
-    const [deleting, setDeleting] = useState(null)
+    const [items, setItems] = useState([]);
+    const [deleting, setDeleting] = useState(null);
+
+    useEffect(() => {
+        if (itemsData) {
+            setItems(itemsData);
+        }
+    }, [itemsData]);
 
 
     const handleDelete = async (slug) => {
@@ -41,6 +48,7 @@ const MyGiveaways = () => {
             try {
                 await API.delete(`/giveaway-items/${slug}/`);
                 toast.success('Item deleted successfully');
+                setItems(prevItems => prevItems.filter(item => item.slug !== slug));
                 refetch()
             } catch (error) {
                 console.error(error);

@@ -27,7 +27,7 @@ const GroupDetails = () => {
 
     const { groups, refetch, isFetching } = useOutletContext();
 
-    const { data: conversations, isLoading, refetch: reload } = useQuery({
+    const { data: conversations, isLoading, refetch: reload, isFetching: reloading } = useQuery({
         queryKey: ['group-conversations', slug],
         queryFn: () => fetchGroupsConversations(slug),
         refetchInterval: 5000,
@@ -42,7 +42,7 @@ const GroupDetails = () => {
     useEffect(() => {
         const isUserMember = currentGroup?.members?.some(member => member?.user?.id === user?.id);
         setIsMember(isUserMember);
-    }, [currentGroup, user]);
+    }, [currentGroup, user, location.pathname]);
 
     useEffect(() => {
         setMessages(conversations)
@@ -52,7 +52,7 @@ const GroupDetails = () => {
         const isUserMember = JSON.parse(localStorage.getItem(`pourg-${currentGroup?.id}`))
         setIsMember(isUserMember)
         setMessages(conversations)
-        refetch()
+        // refetch()
     }, [location.pathname])
 
     useEffect(() => {
@@ -171,7 +171,7 @@ const GroupDetails = () => {
                     </div>
                 </div>
                 <div className='flex max-[577px]:flex-col items-center space-x-4 max-[577px]:space-x-0 mb-1 min-[768px]:space-x-0'>
-                    <button ref={membersRefButton} className={`border border-[var(--p-color)] py-[1px] px-3 rounded-full cursor-pointer hover:bg-[var(--p-color)] hover:text-white min-[651px]:hidden max-[577px]:text-[.9rem] max-[577px]:mb-2 ${showMembers ? 'border-red-400 text-red-500' : ''}`} onClick={() => setShowMembers(prev => !prev)}>Members</button>
+                    <button ref={membersRefButton} className={`border border-[var(--p-color)] py-[1px] px-3 rounded-full cursor-pointer hover:bg-[var(--p-color)] hover:text-white min-[651px]:hidden max-[577px]:text-[.9rem] max-[577px]:mb-2 ${showMembers ? 'text-red-500 w-23' : ''}`} onClick={() => setShowMembers(prev => !prev)}>{showMembers ? 'Close' : 'Members'}</button>
                     { isMember ?
                         <button className='border border-red-500 text-red-500 py-[1px] px-3 rounded-full cursor-pointer max-[577px]:text-[.9rem] disabled:text-red-300 disabled:border-red-300 disabled:cursor-not-allowed' disabled={currentGroup?.admin?.id === user?.id || isFetching} onClick={() => handleExitGroup()}>
                             { processing === 'exit' ? <FontAwesomeIcon icon='spinner' className='animate-spin translate-y-[2px] w-[4.7rem]' /> : 'Exit Group' }
@@ -184,24 +184,28 @@ const GroupDetails = () => {
                 </div>
             </div>
             <div className='flex justify-between gap-x-5 h-[75vh] max-[651px]:h-[calc(100vh-5%)] overflow-y-hidden'>
-                <div className={`flex-1 min-[651px]:border border-gray-300 rounded-xl`}>
+                <div className={`flex-1 min-[651px]:border max-[651px]:border-t border-gray-300 rounded-xl`}>
                     <div className={`w-full h-full rounded-xl px-3 max-[651px]:px-0 ${showMembers ? 'hidden' : ''}`}>
                         <div className='w-full h-[64vh] overflow-y-scroll'>
                             { 
-                                isLoading ? <div className='h-full'><Loader1 /></div> :
                                 messages?.length > 0 ? messages?.map((conv, index) => (
                                     <div key={index} className={`flex relative ${conv.user.id === user?.id ? 'justify-end' : 'justify-start'}`}>
                                         <div className={`relative p-[10px] pb-[5px] mt-3 max-w-[70%] max-[1081px]:max-w-[80%] rounded-lg ${conv.user.id === user?.id ? 'bg-blue-200' : 'bg-gray-200'}`}>
-                                            <h5 className='text-[1rem] leading-[1rem] mb-1 font-semibold'>{conv.user.full_name}</h5>
-                                            <p className='text-[.93rem] leading-[1rem] mb-1'>{conv.message}</p>
+                                            <h5 className='text-[.95rem] text-blue-900 leading-[1rem] mb-1 font-semibold'>{conv.user.full_name}</h5>
+                                            <p className='text-[.93rem] text-gray-600 leading-[1rem] mb-1'>{conv.message}</p>
                                             <address className='text-black text-[.66rem]'>{formatTo12Hour(conv.time)} || {conv.date}</address>
                                         </div>
                                     </div>
                                 )) 
                                 :
                                 <div className='text-center'>
-                                    <h4 className='text-[1.2rem] font-semibold mt-20'>No conversations available</h4>
-                                    <p>Enter a message below.</p>
+                                    {
+                                        isLoading || reloading ? <FontAwesomeIcon icon='spinner' className='animate-spin text-[1.3rem] text-[var(--p-color)] translate-y-20' /> :
+                                        <>
+                                            <h4 className='text-[1.2rem] font-semibold mt-20'>No conversations available</h4>
+                                            <p>Enter a message below.</p>
+                                        </>
+                                    }
                                 </div>
                             }
                             <div ref={messageEndRef} />
