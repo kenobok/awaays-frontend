@@ -67,11 +67,11 @@ const GiveawayItemDetails = () => {
     }, [data?.id, location.pathname]);
 
     const redirectToVerifyEmail = () => {
-        navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`, { replace: true });
+        navigate(`/auth/verify-email?from=${encodeURIComponent(from)}`);
     }
 
     const redirectToAuthPage = () => {
-        navigate(`/auth?from=${encodeURIComponent(from)}`, { replace: true });
+        navigate(`/auth?from=${encodeURIComponent(from)}`);
     }
 
     const countWords = (str) => str.trim().split(/\s+/).filter(Boolean).length;

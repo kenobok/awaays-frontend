@@ -123,13 +123,13 @@ const VerifyEmail = () => {
                 setInputFocus({ email: false });
                 setError({});
                 refetch();
-                handleRequestNewCode();
+                // handleRequestNewCode();
             } catch (error) {
                 console.log(error)
                 const err = error?.response?.data
                 if(err.email[0]) {
-                    toast.error(err.email[0]);
-                    setError({'email': err.email[0]})
+                    toast.error(err.email);
+                    setError({'email': err.email})
                 } else {
                     toast.error("An error occurred...try again");
                 }
@@ -145,7 +145,7 @@ const VerifyEmail = () => {
             <div className="auth-switch relative flex justify-center mb-10 mx-auto"></div>
             <motion.form onSubmit={handleSubmit} className="auth-form w-[23rem] max-[501px]:w-[90%] p-7 rounded-2xl mx-auto" transition={{ duration: 0.3 }}>
                 <h3 className="text-center font-semibold text-[1.3rem]">{ changeEmail ? 'Change' : 'Verify' } Email</h3>
-                <p className="leading-[1rem] text-center text-[var(--p-color)]">{ user && user.email }</p>
+                <p className="leading-[.96rem] text-center text-blue-900">{ user && user.email }</p>
                 { !changeEmail ?
                 <div className="form-input my-3">
                     <label htmlFor="resetPasswordCode" className={`block text-gray-600 font-medium ${inputFocus.code ? 'is-focus' : ''}`}>Code</label>

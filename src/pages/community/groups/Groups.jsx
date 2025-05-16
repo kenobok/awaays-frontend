@@ -83,7 +83,7 @@ const Groups = () => {
             setFormData({ name: "", description: "", image: null });
             setInputFocus({ name: false, description: false });
         } else {
-            navigate(`/auth?from=${encodeURIComponent(from)}`, { replace: true });
+            navigate(`/auth?from=${encodeURIComponent(from)}`);
         }
     }
 

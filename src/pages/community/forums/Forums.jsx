@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link, Outlet, useParams } from 'react-router-dom'
+import { Link, Outlet, useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query';
 import { fetchForums } from '../../../services/fetchServices';
+import { useAuth } from '/src/context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { toast } from 'react-toastify'
 import { SubmitButton } from '../../../components/utils/SubmitButton'
@@ -9,13 +10,17 @@ import API from '/src/api/axiosInstance';
 import '/src/assets/styles/community.css'
 
 const Forums = () => {
-    const { slug } = useParams();
+    const { slug } = useParams()
+    const { user } = useAuth()
+    const location = useLocation()
+    const navigate = useNavigate()
     const forumFormRef = useRef();
     const [forumForm, setForumForm] = useState(false);
     const [formData, setFormData] = useState({ forum: null, topic: "", content: "" });
     const [inputFocus, setInputFocus] = useState({ topic: false, content: false });
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
+    const from = location.pathname + location.search
 
     const { data: forums, isLoading, isError, refetch } = useQuery({
         queryKey: ['forums-list'],
@@ -43,6 +48,14 @@ const Forums = () => {
             }
         });
     }, [forums, slug]);
+
+    const handleForumForm = () => {
+        if (user && user?.is_verified) { 
+            setForumForm(true)
+        } else {
+            navigate(`/auth?from=${encodeURIComponent(from)}`);
+        }
+    }
 
     const handleClickOutside = (e) => {
         if (forumFormRef.current && !forumFormRef.current.contains(e.target)) {
@@ -126,7 +139,7 @@ const Forums = () => {
                                         <li key={index} className={`lb-link border-b border-gray-300 hover:text-[var(--p-color)] hover:border-[var(--p-color)] ${forum?.slug === slug ? 'active show-icon' : ''}`}><Link to={`/community/forums/${forum?.slug}`}>{forum?.name}</Link></li>
                                     ))}
                                     {forums?.map((forum, index) => (
-                                        <button key={index} className={`mt-2 border-2 border-[var(--p-color)] p-1 pt-[5px] px-3 rounded-full text-[var(--p-color)] cursor-pointer shadow-md hover:scale-105 ${forum?.slug === slug ? '' : 'hidden'}`} onClick={() => setForumForm(true)} >{forum?.button}</button>
+                                        <button key={index} className={`mt-2 border-2 border-[var(--p-color)] p-1 pt-[5px] px-3 rounded-full text-[var(--p-color)] cursor-pointer shadow-md hover:scale-105 ${forum?.slug === slug ? '' : 'hidden'}`} onClick={() => handleForumForm()} >{forum?.button}</button>
                                     ))}
                                 </>
                             }
