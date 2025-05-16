@@ -18,6 +18,7 @@ const SignUpSignIn = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [authMode, setAuthMode] = useState("signup");
+    const [socialAuth, setSocialAuth] = useState(null);
 	const [formData, setFormData] = useState({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", org: "", city: "", region: "", country: ""});
     const [inputFocus, setInputFocus] = useState({full_name: false, email: false, mobile: false, password: false, agree: false});
     const [passwordToggle, setPasswordToggle] = useState(false);
@@ -200,6 +201,15 @@ const SignUpSignIn = () => {
 		}
 	};
 
+    const handleSocialAuth = (authType) => {
+        setSocialAuth(authType);
+
+        setTimeout(() => {
+            setSocialAuth(null);
+            setErrors({social: 'Something went wrong...'})
+        }, 5000);
+    };
+
 
     return (
         <>
@@ -259,20 +269,16 @@ const SignUpSignIn = () => {
                     <p className="inline-block text-[.95rem] leading-[1.2rem]">Forgot Password? <Link to="/auth/reset-password" className="text-[var(--p-color)] cursor-pointer">Reset Password</Link></p>
                 }
                 <SubmitButton loading={loading} />
-                {/* <div className="mt-3 mb-4">
-                    <button type="submit" className={`w-full bg-[var(--p-color)] cursor-pointer text-white text-[1.2rem] h-12 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition disabled:cursor-progress`} >
-                    { loading ? 'Loading...' : 'Submit' }
-                    </button>
-                </div> */}
-                <div className="flex justify-between gap-x-5 my-3 p-1 continue-with-google">
-                    <button className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center">
+                <div className="relative flex justify-between gap-x-5 my-3 p-1 continue-with-google text-center">
+                    <button type="button" className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center" onClick={() => {handleSocialAuth('google')}}>
                         <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" className="w-5 h-5 mr-1"/>
-                        Continue with Google
+                        { socialAuth === 'google' ? <FontAwesomeIcon icon='spinner' className="animate-spin px-5 text-[1rem]" /> : 'Continue with Google' }
                     </button>
-                    <button className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center">
+                    <button type="button" className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center"  onClick={() => {handleSocialAuth('apple')}}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" className="w-5 h-5 mr-1"/>
-                        Continue with Apple
+                        { socialAuth === 'apple' ? <FontAwesomeIcon icon='spinner' className="animate-spin px-5 text-[1rem]" /> : 'Continue with Apple' }
                     </button>
+                { errors.social && <small className="absolute -bottom-[1.2rem] text-red-500 left-[50%] transform translate-x-[-50%]">{ errors.social }</small> }
                 </div>
             </motion.form>
         </>

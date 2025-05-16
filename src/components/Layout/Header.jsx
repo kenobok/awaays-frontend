@@ -95,18 +95,29 @@ const Header = () => {
         setIsDropdownOpen(!isDropdownOpen);
     };
 
+    const gotoHome = () => {
+        navigate('/')
+        setShowMenu(false);
+    }
+
+    const gotoAccount = () => {
+        navigate('/dashboard')
+        setShowMenu(false);
+    }
+
 
     return (
         <header>
             <ToastContainer position="top-right" autoClose={5000} />
             <div className={`blur-bg ${showMenu ? 'bluring' : ''}`}></div>
             <nav className={`navbar flex align-center justify-between gap-x-5 p-3 px-[20px] md:px-[50px] ${isSticky ? 'sticky' : ''}`}>
-                <Link to="/" className={`my-auto`}>
+                <Link onClick={() => {gotoHome()}} className={`my-auto`}>
                     <img src={logo} loading="lazy" alt="Awaays"/>
                 </Link>
                 <div className={`flex-1 ${isFocused ? 'max-[577px]:hidden' : ''}`}></div>
                 <div className="block min-[941px]:flex gap-x-5 align-center justify-end">
                     <div ref={menuRef} className={`nav-links fixed min-[941px]:relative min-[941px]:flex my-auto text-[.95rem] ${isFocused ? 'min-[941px]:text-[.45rem]' : ''} ${isFocused ? 'min-[993px]:text-[.6rem]' : ''} ${showMenu ? 'show-menu' : ''} z-[5]`}>
+                        { isMobile && user && <span className='absolute top-3 left-6 flex items-center'><img src={user?.profile_image} alt='dp' className='object-cover rounded-full border-2 border-white shadow-xl cursor-pointer' style={{width:'3rem', height:'3rem'}} onClick={() => {gotoAccount()}}/></span> }
                         {
                             HeaderLinks.map((link, index) => {
                                 if(link.name === "Community") {
