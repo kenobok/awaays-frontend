@@ -116,13 +116,13 @@ const ContactUs = () => {
             <h1 className="text-3xl font-bold m-0 p-0 mb-3 text-center">Contact Us</h1>
             <p className="text-center text-gray-600 m-0 p-0 leading-[1.3rem]">Have questions? We're here to help.</p>
 
-            <div className="text-center my-5">
-                <div>
+            <div className="text-center my-4">
+                {/* <div>
                     <b><FontAwesomeIcon icon={['fab', 'whatsapp']} className="text-green-800 text-[1.2rem]"/> : </b>
                     <a href={`https://wa.me/${contact?.phone_number.slice(1)}`} target="_blank" rel="noopener noreferrer" className="text-[var(--p-color)] cursor-pointer font-semibold text-[1.2rem]">{contact?.phone_number || 'Fetching data.....'}</a>
-                </div>
+                </div> */}
                 <div>
-                    <b><FontAwesomeIcon icon={['far', 'envelope']} className="text-blue-800 text-[1.2rem]"/> : </b><a href={`mailto:${contact?.email}`} className="text-[var(--p-color)] cursor-pointer font-semibold text-[1.2rem]">{contact?.email || 'Fetching data.....'}</a>
+                    <b><FontAwesomeIcon icon={['far', 'envelope']} className="text-blue-800 text-[1.2rem] translate-y-[.2rem]"/> : </b><a href={`mailto:${contact?.email}`} className="text-[var(--p-color)] cursor-pointer  text-[1.2rem]">{contact?.email || 'Fetching data.....'}</a>
                 </div>
             </div>
 
