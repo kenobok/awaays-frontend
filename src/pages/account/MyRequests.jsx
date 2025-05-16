@@ -28,13 +28,8 @@ const MyRequests = () => {
         setMyRequests(myItemRequests);
     }, [requests, user]);
 
-    useEffect(() => {
-        console.log(myRequests)
-    }, [myRequests])
-
 
     const handleContactDonor =  async (donor) => {
-        console.log(donor)
         setContacting(donor)
         const mesageToDonor = `
             Hello, I hope you're doing well! I'm reaching out to you regarding the item I requested. I'm really excited you accepted my request and I’d love to discuss the next steps with you. Please let me know if you need any additional information from my side. Looking forward to hearing from you soon!\n

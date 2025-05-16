@@ -10,7 +10,7 @@ import { SomethingWentWrong } from '../../components/utils/SomethingWentWrong';
 
 
 const ItemsRequest = () => {
-    const { data: requests, isLoading, isError, error, refetch } = useQuery({
+    const { data: requests, isLoading, isError, error, refetch, isFetching } = useQuery({
         queryKey: ['items-request'],
         queryFn: fetchRequests,
     });
