@@ -128,7 +128,7 @@ const router = createBrowserRouter([
 
             // Events Link
             { path: 'community/events', element: <Events /> },
-            // { path: "page-not-found", element: <NotFound /> }
+            { path: "page-not-found", element: <NotFound /> }
         ]
     },
     { path: "*", element: <NotFound /> },
