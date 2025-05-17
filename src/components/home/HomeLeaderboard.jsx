@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { fetchCollectedGiveaways } from '../../services/fetchServices'
 import { motion } from 'framer-motion'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const HomeLeaderboard = () => {
-    const { data: leaderboard, isLoading, refetch } = useQuery({
+    const { data: leaderboard, isLoading, refetch, isFetching } = useQuery({
         queryKey: ['collected-items'],
         queryFn: fetchCollectedGiveaways,
         refetchOnWindowFocus: true,
-        refetchInterval: 1000 * 60 * 30,
+        // refetchInterval: 1000 * 60 * 30,
     });
 
 
@@ -43,7 +44,12 @@ const HomeLeaderboard = () => {
                                 ))
                             ) : (
                                 <tr>
+                                    { 
+                                    isLoading || isFetching ?
+                                    <td className="border border-gray-300 p-3 text-center" colSpan="2"><FontAwesomeIcon icon='spinner' className='animate-spin text-[1.3rem] text-[var(--p-color)]' /></td>
+                                    :
                                     <td className="border border-gray-300 p-3 text-center" colSpan="2">No data available</td>
+                                    }
                                 </tr>
                             )}
                         </tbody>

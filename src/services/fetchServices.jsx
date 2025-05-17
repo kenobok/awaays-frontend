@@ -54,6 +54,11 @@ export const fetchForumsConversations = async (slug) => {
     return response.data;
 };
 
+export const fetchTestimonials = async () => {
+    const response = await API.get(`/community/forum-conversations/testimonials`);
+    return response.data;
+};
+
 export const fetchGroups = async () => {
     const response = await API.get(`/community/groups`);
     return response.data;
