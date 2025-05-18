@@ -40,7 +40,7 @@ const Hero = () => {
     };
 
     const secondAnimation = {
-        x: isMobile ? [300, -300] : [500, -500],
+        x: isMobile ? [300, -300] : [450, -450],
     };
 
 
@@ -63,7 +63,7 @@ const Hero = () => {
                 <motion.div animate={firstAnimation} transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }} className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-[993px]:pr-[5rem]'>
                     <Lottie className='w-[700px] max-[768px]:w-[600px] max-[451px]:w-[450px]' animationData={mrinAnim} loop autoplay />
                 </motion.div>
-                <motion.div animate={secondAnimation} transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }} className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-[993px]:pr-[5rem]'>
+                <motion.div animate={secondAnimation} transition={{ repeat: Infinity, duration: 20, ease: "easeInOut" }} className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-[993px]:pr-[5rem]'>
                     <Lottie className='w-[480px] max-[768px]:w-[380px] max-[451px]:w-[310px]' animationData={mcbwAnim} loop autoplay />
                 </motion.div>
             </motion.div>
