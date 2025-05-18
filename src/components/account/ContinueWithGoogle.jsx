@@ -41,8 +41,8 @@ export function ContinueWithGoogle() {
         });
 
         if (res.ok) {
-            toast.success("Login successful");
             window.location.reload()
+            toast.success("Login successful");
         } else {
             toast.error("Login failed, please try again");
         }
