@@ -11,6 +11,7 @@ import { Loader1 } from '../../components/utils/Preloader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
 import { SomethingWentWrong } from '../../components/utils/SomethingWentWrong'
+import gift from '/src/assets/images/gift.avif';
 
 
 const GiveawayItemDetails = () => {
@@ -172,11 +173,16 @@ const GiveawayItemDetails = () => {
                                 className={`modal-img-slide ${isEnlarged ? 'enlarge-img bg-gray-700 cursor-zoom-out' : '' }`}
                             >
                                 {
-                                    data.images.map((image, index) => (
-                                        <SwiperSlide key={index}>
-                                            <img src={image} alt={`slide-${index}`} loading='lazy' className={`w-full h-[30rem] m-auto rounded-xl object-contain transition-transform duration-300 ${isEnlarged ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} onClick={() => {setIsEnlarged(!isEnlarged)}}/>
+                                    data?.images.length>0 ? 
+                                        data?.images.map((image, index) => (
+                                            <SwiperSlide key={index}>
+                                                <img src={image} alt={`slide-${index}`} loading='lazy' className={`w-full h-[30rem] m-auto rounded-xl object-contain transition-transform duration-300 ${isEnlarged ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} onClick={() => {setIsEnlarged(!isEnlarged)}}/>
+                                            </SwiperSlide>
+                                        ))
+                                    :
+                                        <SwiperSlide>
+                                            <img src={gift} alt={`giveaway`} loading='lazy' className={`w-full h-[30rem] m-auto rounded-xl object-contain transition-transform duration-300 ${isEnlarged ? 'cursor-zoom-out' : 'cursor-zoom-in'}`} onClick={() => {setIsEnlarged(!isEnlarged)}}/>
                                         </SwiperSlide>
-                                    ))
                                 }
                             </Swiper>
                         </motion.div>
@@ -192,7 +198,7 @@ const GiveawayItemDetails = () => {
                             </div>
                             <div className="mb-3">
                                 <h3 className="text-[1.1rem] font-semibold">Instructions</h3>
-                                <p className="leading-[1.3rem]">{data.instruction}</p>
+                                <p className="leading-[1.3rem]">{data.instruction || '(No instructions)'}</p>
                             </div>
                             <div className="mb-3">
                                 <h3 className="text-[1.1rem] font-semibold">Location</h3>

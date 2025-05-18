@@ -12,7 +12,7 @@ import FilterItem from '../../components/giveaway/FilterItems';
 import { useUserLocation } from "/src/hooks/useUserLocationFromAPI";
 import { Loader1 } from '../../components/utils/Preloader';
 import { SomethingWentWrong } from "../../components/utils/SomethingWentWrong";
-
+import gift from '/src/assets/images/gift.avif';
 
 // const PAGE_SIZE = 4;
 // const getKey = (pageIndex, previousPageData) => {
@@ -247,7 +247,7 @@ const GiveawayItems = () => {
                                 filteredDisplayItems.map((item) => (
                                     <motion.div key={item.id} className="single-giveaway-item {w-[15rem]} bg-white rounded-2xl shadow-lg pb-3 hover:shadow-xl hover:scale-[1.05] transition-all duration-200 ease-in-out cursor-pointer" initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 1, ease: "easeInOut" }}>
                                         <Link to={`/giveaway-item-details/${item.slug}`} className='block'>
-                                            <img src={item.images[0]} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
+                                            <img src={item.images[0] || gift} alt={item.name} loading="lazy" className="w-full h-45 object-cover rounded-2xl" />
                                             <h3 className="font-bold mt-3 truncate">{item.purpose}</h3>
                                             <h3 className="text-[var(--p-color)] font-semibold truncate">{item.name}</h3>
                                             <p className="truncate">{item.description}</p>

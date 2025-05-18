@@ -156,11 +156,11 @@ const GiveItem = () => {
                     error = "Must be at least 5 words";
                 }
                 break;
-            case "instruction":
-                if (!value.trim()) {
-                    error = "Pickup location or other instruction";
-                }
-                break;
+            // case "instruction":
+            //     if (!value.trim()) {
+            //         error = "Pickup location or other instruction";
+            //     }
+            //     break;
             case "country":
                 if (!value.trim()) error = "Select a country";
                 break;
@@ -168,7 +168,7 @@ const GiveItem = () => {
                 if (!value.trim()) error = "Select a state/region";
                 break;
             case "images":
-                if (value.length < 1 || value.length > 3) error = "Upload between 1 to 3 images";
+                if (value.length > 3) error = "Upload between 1 to 3 images";
                 break;
         }
         setErrors((prev) => ({ ...prev, [field]: error }));
@@ -180,6 +180,8 @@ const GiveItem = () => {
         let newErrors = {};
         Object.keys(formData).forEach((field) => {
             if (field === "showNumber") return;
+            if (field === "instruction") return;
+            if (field === 'images' && formData.images.length == 0) return;
             validateField(field, formData[field]);
             if (formData[field] == "" || errors[field]) {
                 newErrors[field] = errors[field] || "This field is required";
@@ -248,7 +250,7 @@ const GiveItem = () => {
         <main className="give-item-wrp flex w-full m-auto overflow-x-hidden py-20 max-[993px]:pt-15 max-[768px]:pt-10 translate-y-[5.3rem] max-[941px]:translate-y-[4.2rem]">
             <motion.section className="give-item-img flex-1" initial={{ opacity: 0, x: -500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }}></motion.section>
 
-            <motion.section className="p-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-5 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
+            <motion.section className="p-10 max-[577px]:translate-y-[-2rem] max-[501px]:px-3 max-[501px]:pt-0" initial={{ opacity: 0, x: 500 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, ease: "easeInOut" }}>
                 <div className="relative flex justify-center mb-4 mx-auto">
                     <button className={`border-b-2 py-2 px-6 rounded-2xl shadow-lg text-center text-[var(--p-color)] text-xl font-bold `}>{slug ? 'EDIT' : 'GIVE'} ITEM</button>
                 </div>
@@ -273,13 +275,13 @@ const GiveItem = () => {
                             {errors.description && <small>{errors.description}</small>}
                         </div>
                         <div className="form-input textarea">
-                            <label htmlFor="instruction" className={`block text-gray-700 font-medium ${inputFocus.instruction ? 'is-focus' : ''}`}>Instructions</label>
+                            <label htmlFor="instruction" className={`block text-gray-700 font-medium ${inputFocus.instruction ? 'is-focus' : ''}`}>Instructions (Optional)</label>
                             <textarea name="instruction" id="instruction" className={`h-25 ${errors.instruction ? 'error' : ''}`} value={formData.instruction} onChange={handleChange} onFocus={() => handleInputFocus("instruction")} onBlur={() => handleInputBlur("instruction")} />
                             {errors.instruction && <small>{errors.instruction}</small>}
                         </div>
                     </div>
                     <CountryStateSelector value={{ country: formData.country, state: formData.state }} onChange={handleLocationChange} error={{ country: errors.country, state: errors.state }} />
-                    <div className='flex gap-x-7 max-[601px]:flex-col'>
+                    <div className='flex gap-x-7 mb-5 max-[601px]:flex-col'>
                         <div className="form-input flex items-center gap-x-5">
                             <input type="checkbox" name="show_number" id='showNumber' className='inline-block' checked={formData.showNumber} onChange={(e) => setFormData((prev) => ({ ...prev, showNumber: e.target.checked }))} />
                             <label htmlFor='showNumber' className="block ml-3 text-gray-600 pt-[4px]" style={{ cursor: 'pointer' }}>Show my phone number</label>
@@ -293,7 +295,7 @@ const GiveItem = () => {
                                     <label htmlFor="images" className={`block px-[13px] py-[10.5px] border border-[#D1D5DB] rounded-[.5rem] ${errors.images ? 'border-red-500' : ''}`} style={{ position: 'relative', width: '99.5%', transform: 'translateX(-1rem)', cursor: 'pointer' }}>{formData.images < 1 ? 'Select Image(s)' : 'Change Image(s)'} </label>
                                 }
                                 <input type="file" name="images" id="images" accept="image/*" className={`${errors.images ? 'error' : ''} hidden`} multiple onChange={handleImageChange} />
-                                {!compressing && errors.images && <small>{errors.images}</small>}
+                                {!compressing && errors.images ? <small>{errors.images}</small> : <small style={{color:'goldenrod'}}>Please upload images (optional)</small>}
                             </div>
                             {compressing ?
                                 <div className="flex justify-center items-center h-20">
