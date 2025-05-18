@@ -1,13 +1,9 @@
-import { useEffect, useState, useRef } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
+import { useUserLocation } from "../../hooks/useUserLocationFromAPI";
 
 export function ContinueWithGoogle() {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const searchParams = new URLSearchParams(location.search);
-    const next = searchParams.get("next") || "/give-item";
-    const [loading, setLoading] = useState(false);
+    const { locationFromApi } = useUserLocation();
     const googleButtonRef = useRef(null);
 
     useEffect(() => {
@@ -26,6 +22,8 @@ export function ContinueWithGoogle() {
             shape: "pill",    // or "rectangular"
             logo_alignment: "center",
         });
+
+        document.getElementsByClassName("nsm7Bb-HzV7m-LgbsSe-BPrWId")[0].innerText = "Continue with Google";
     }, []);
 
     const handleGoogleResponse = async (response) => {
@@ -37,7 +35,11 @@ export function ContinueWithGoogle() {
                 "Content-Type": "application/json",
             },
             credentials: "include",
-            body: JSON.stringify({ id_token: idToken }),
+            body: JSON.stringify({ 
+                id_token: idToken,
+                country: locationFromApi.country_name,
+                region: locationFromApi.region
+            }),
         });
 
         if (res.ok) {
