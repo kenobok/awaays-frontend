@@ -42,11 +42,7 @@ export function ContinueWithGoogle() {
 
         if (res.ok) {
             toast.success("Login successful");
-            if(next) {
-                navigate(next); 
-            } else {
-                window.location.href = "/give-item";
-            }
+            window.location.reload()
         } else {
             toast.error("Login failed, please try again");
         }
