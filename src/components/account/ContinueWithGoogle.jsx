@@ -1,13 +1,30 @@
-import { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export function ContinueWithGoogle() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const searchParams = new URLSearchParams(location.search);
+    const next = searchParams.get("next") || "/give-item";
     const [loading, setLoading] = useState(false);
+    const googleButtonRef = useRef(null);
 
     useEffect(() => {
+        if (!window.google || !googleButtonRef.current) return;
+        googleButtonRef.current.innerHTML = "";
+
         window.google.accounts.id.initialize({
             client_id: "972409687092-ap50aanokaofs65m8to9cn3s147f8vcp.apps.googleusercontent.com",
             callback: handleGoogleResponse,
+        });
+
+        window.google.accounts.id.renderButton(googleButtonRef.current, {
+            theme: "outline", // or "filled_blue"
+            size: "large",    // or "medium", "small"
+            type: "standard", // or "icon"
+            shape: "pill",    // or "rectangular"
+            logo_alignment: "center",
         });
     }, []);
 
@@ -24,28 +41,15 @@ export function ContinueWithGoogle() {
         });
 
         if (res.ok) {
-            console.log("Logged in with Google");
+            toast.success("Login successful");
+            navigate(next); 
         } else {
-            console.error("Google login failed");
-        }
-    };
-
-    const triggerGoogleLogin = () => {
-        setLoading(true);
-        try {
-            window.google.accounts.id.prompt();
-        } catch (error) {
-            console.error("An error occurred, try again...");
-        } finally {
-            setLoading(false);
+            toast.error("Login failed, please try again");
         }
     };
 
     return (
-        <button type="button" className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center" onClick={triggerGoogleLogin}>
-            <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" className="w-5 h-5 mr-1"/>
-            { loading ? <FontAwesomeIcon icon='spinner' className="animate-spin px-5 text-[1rem]" /> : 'Continue with Google' }
-        </button>
+        <div className="mt-6 mb-3 mx-auto" ref={googleButtonRef}></div>
     );
 }
 

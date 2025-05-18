@@ -19,7 +19,6 @@ const SignUpSignIn = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const [authMode, setAuthMode] = useState("signup");
-    const [socialAuth, setSocialAuth] = useState(null);
 	const [formData, setFormData] = useState({ full_name: "", email: "", mobile: "", password: "", agree: false, ip: "", org: "", city: "", region: "", country: ""});
     const [inputFocus, setInputFocus] = useState({full_name: false, email: false, mobile: false, password: false, agree: false});
     const [passwordToggle, setPasswordToggle] = useState(false);
@@ -202,15 +201,6 @@ const SignUpSignIn = () => {
 		}
 	};
 
-    const handleSocialAuth = (authType) => {
-        setSocialAuth(authType);
-
-        setTimeout(() => {
-            setSocialAuth(null);
-            setErrors({social: 'Something went wrong...'})
-        }, 5000);
-    };
-
 
     return (
         <>
@@ -270,14 +260,7 @@ const SignUpSignIn = () => {
                     <p className="inline-block text-[.95rem] leading-[1.2rem]">Forgot Password? <Link to="/auth/reset-password" className="text-[var(--p-color)] cursor-pointer">Reset Password</Link></p>
                 }
                 <SubmitButton loading={loading} />
-                <div className="relative flex justify-between gap-x-5 my-3 p-1 continue-with-google text-center">
-                    <ContinueWithGoogle />
-                    <button type="button" className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center"  onClick={() => {handleSocialAuth('apple')}}>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" className="w-5 h-5 mr-1"/>
-                        { socialAuth === 'apple' ? <FontAwesomeIcon icon='spinner' className="animate-spin px-5 text-[1rem]" /> : 'Continue with Apple' }
-                    </button>
-                { errors.social && <small className="absolute -bottom-[1.2rem] text-red-500 left-[50%] transform translate-x-[-50%]">{ errors.social }</small> }
-                </div>
+                <ContinueWithGoogle />
             </motion.form>
         </>
     )
