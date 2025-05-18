@@ -10,6 +10,7 @@ import { isValidPhoneNumber } from 'react-phone-number-input'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from 'react-toastify';
 import { SubmitButton } from '../../components/utils/SubmitButton'
+import { ContinueWithGoogle } from '../../components/account/ContinueWithGoogle';
 import 'react-phone-number-input/style.css';
 import '../../assets/styles/account.css';
 
@@ -270,10 +271,7 @@ const SignUpSignIn = () => {
                 }
                 <SubmitButton loading={loading} />
                 <div className="relative flex justify-between gap-x-5 my-3 p-1 continue-with-google text-center">
-                    <button type="button" className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center" onClick={() => {handleSocialAuth('google')}}>
-                        <img src="https://www.svgrepo.com/show/355037/google.svg" alt="Google" className="w-5 h-5 mr-1"/>
-                        { socialAuth === 'google' ? <FontAwesomeIcon icon='spinner' className="animate-spin px-5 text-[1rem]" /> : 'Continue with Google' }
-                    </button>
+                    <ContinueWithGoogle />
                     <button type="button" className="bg-[var(--bg-color)] leading-[0.8rem] rounded-lg hover:bg-white transition flex items-center justify-center"  onClick={() => {handleSocialAuth('apple')}}>
                         <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" className="w-5 h-5 mr-1"/>
                         { socialAuth === 'apple' ? <FontAwesomeIcon icon='spinner' className="animate-spin px-5 text-[1rem]" /> : 'Continue with Apple' }
