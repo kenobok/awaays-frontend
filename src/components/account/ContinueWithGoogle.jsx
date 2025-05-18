@@ -42,14 +42,18 @@ export function ContinueWithGoogle() {
 
         if (res.ok) {
             toast.success("Login successful");
-            navigate(next); 
+            if(next) {
+                navigate(next); 
+            } else {
+                window.location.href = "/give-item";
+            }
         } else {
             toast.error("Login failed, please try again");
         }
     };
 
     return (
-        <div className="mt-6 mb-3 mx-auto" ref={googleButtonRef}></div>
+        <div className="flex justify-center mt-6 mb-3 mx-auto" ref={googleButtonRef}></div>
     );
 }
 
