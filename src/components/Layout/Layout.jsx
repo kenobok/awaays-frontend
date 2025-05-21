@@ -36,9 +36,9 @@ const Layout = () => {
         };
     }, [isOffline, location.pathname, user, authChecked]);
 
-    useEffect(() => {
-        console.log({user})
-    }, [location.pathname])
+    // useEffect(() => {
+    //     console.log({user})
+    // }, [location.pathname])
 
     usePrefetchData();
 
