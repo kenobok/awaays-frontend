@@ -113,7 +113,7 @@ const MyGiveaways = () => {
                                                 <td>
                                                     <div className="flex flex-col justify-center items-center gap-y-3">
                                                         {item.status == 'Collected' || item.status == 'Selected' ?
-                                                            <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-green-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}`)}>Repost <FontAwesomeIcon icon='list' /></button>
+                                                            <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-green-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}?action=repost`)}>Repost <FontAwesomeIcon icon='list' /></button>
                                                             :
                                                             <>
                                                                 <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-blue-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}`)}>Edit <FontAwesomeIcon icon='edit' /></button>
@@ -154,7 +154,7 @@ const MyGiveaways = () => {
                                             <div className='flex mt-2'>
                                                 <div className="flex-1 flex justify-start gap-x-5">
                                                     {item.status == 'Collected' || item.status == 'Selected' ?
-                                                        <button className='ml-2 min-w-[4rem] pt-[3px] rounded-xl text-sm text-green-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}`)}>Repost <FontAwesomeIcon icon='list' /></button>
+                                                        <button className='ml-2 min-w-[4rem] pt-[3px] rounded-xl text-sm text-green-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}?action=repost`)}>Repost <FontAwesomeIcon icon='list' /></button>
                                                         :
                                                         <>
                                                             <button className='min-w-[4rem] pt-[3px] rounded-xl text-sm text-blue-500 cursor-pointer' onClick={() => navigate(`/give-item/${item.slug}`)}>Edit <FontAwesomeIcon icon='edit' /></button>
