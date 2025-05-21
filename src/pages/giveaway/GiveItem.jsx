@@ -121,7 +121,20 @@ const GiveItem = () => {
     };
 
     const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
+        const files = Array
+            // if (slug) {
+            //     await API.patch(`/giveaway-items/${slug}/`, data, {
+            //         headers: { "Content-Type": "multipart/form-data" }
+            //     })
+            // } else if (repost) {
+            //     await API.post('/giveaway-items/', data, {
+            //         headers: { "Content-Type": "multipart/form-data" }
+            //     })
+            // } else {
+            //     await API.post('/giveaway-items/', data, {
+            //         headers: { "Content-Type": "multipart/form-data" }
+            //     })
+            // }.from(e.target.files);
     
         setCompressing(true)
         const resizeImages = async (files) => {
@@ -214,19 +227,6 @@ const GiveItem = () => {
 
         setLoading(true)
         try {
-            // if (slug) {
-            //     await API.patch(`/giveaway-items/${slug}/`, data, {
-            //         headers: { "Content-Type": "multipart/form-data" }
-            //     })
-            // } else if (repost) {
-            //     await API.post('/giveaway-items/', data, {
-            //         headers: { "Content-Type": "multipart/form-data" }
-            //     })
-            // } else {
-            //     await API.post('/giveaway-items/', data, {
-            //         headers: { "Content-Type": "multipart/form-data" }
-            //     })
-            // }
             const method = isRepost || !slug ? 'post' : 'patch';
             const url = method === 'post' ? '/giveaway-items/' : `/giveaway-items/${slug}/`;
             await API[method](url, data, {
