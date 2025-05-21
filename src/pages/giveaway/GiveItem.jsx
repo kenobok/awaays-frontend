@@ -227,7 +227,7 @@ const GiveItem = () => {
             //         headers: { "Content-Type": "multipart/form-data" }
             //     })
             // }
-            const method = repost || !slug ? 'post' : 'patch';
+            const method = isRepost || !slug ? 'post' : 'patch';
             const url = method === 'post' ? '/giveaway-items/' : `/giveaway-items/${slug}/`;
             await API[method](url, data, {
                 headers: { "Content-Type": "multipart/form-data" }
