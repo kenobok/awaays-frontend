@@ -240,7 +240,7 @@ const GiveItem = () => {
             navigate('/dashboard/my-giveaways')
         } catch (error) {
             const err = error?.response?.data
-
+            console.log(error)
             if (err?.uploaded_images) {
                 if (err?.uploaded_images == 'You must upload between 1 and 3 images.') {
                     toast.error('Upload between 1 - 3 Images');
