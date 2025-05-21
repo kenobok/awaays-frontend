@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { motion } from "framer-motion";
 import API from '/src/api/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
@@ -24,6 +24,7 @@ const GiveItem = () => {
         });
     };
     const navigate = useNavigate();
+    const location = useLocation();
     const [formData, setFormData] = useState({ purpose: "", item: "", description: "", instruction: "", country: "", state: "", showNumber: false, images: [] });
     const [inputFocus, setInputFocus] = useState({ purpose: false, item: false, description: false, instruction: false, images: false });
     const [errors, setErrors] = useState({});
@@ -31,6 +32,9 @@ const GiveItem = () => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(false);
     const [compressing, setCompressing] = useState(false);
+    
+    const params = new URLSearchParams(location.search);
+    const isRepost = params.get('action') === 'repost'
 
 
     useEffect(() => {
@@ -210,15 +214,25 @@ const GiveItem = () => {
 
         setLoading(true)
         try {
-            if (slug) {
-                await API.patch(`/giveaway-items/${slug}/`, data, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                })
-            } else {
-                await API.post('/giveaway-items/', data, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                })
-            }
+            // if (slug) {
+            //     await API.patch(`/giveaway-items/${slug}/`, data, {
+            //         headers: { "Content-Type": "multipart/form-data" }
+            //     })
+            // } else if (repost) {
+            //     await API.post('/giveaway-items/', data, {
+            //         headers: { "Content-Type": "multipart/form-data" }
+            //     })
+            // } else {
+            //     await API.post('/giveaway-items/', data, {
+            //         headers: { "Content-Type": "multipart/form-data" }
+            //     })
+            // }
+            const method = repost || !slug ? 'post' : 'patch';
+            const url = method === 'post' ? '/giveaway-items/' : `/giveaway-items/${slug}/`;
+            await API[method](url, data, {
+                headers: { "Content-Type": "multipart/form-data" }
+            });
+            
             toast.success(`Thank you ${user.full_name} for your donation 💖`)
             setFormData({ purpose: "", item: "", description: "", instruction: "", country: "", state: "", showNumber: false, images: [] });
             setInputFocus({ purpose: false, item: false, description: false, instruction: false, images: false });
